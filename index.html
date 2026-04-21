@@ -3,269 +3,454 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gaia AI — Operating Model &amp; Change Reference</title>
-  <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  <title>Gaia AI — Unified Operating Model &amp; System Blueprints</title>
+  <meta name="description" content="Gaia Digital Agency — Venturi AI Operating Model, Figma→Site Automation, Social Media Automation, and Sample POC." />
 
+  <!-- Favicons -->
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon-180.png" />
+  <link rel="manifest" href="assets/site.webmanifest" />
+  <meta name="theme-color" content="#E8B830" />
+
+  <!-- OpenGraph -->
+  <meta property="og:title" content="Gaia AI — Unified Operating Model &amp; System Blueprints" />
+  <meta property="og:description" content="Gaia Digital Agency — Venturi Model, Figma→Site Automation, Social Media Automation, and Sample POC." />
+  <meta property="og:image" content="assets/og-image.jpg" />
+  <meta property="og:type" content="website" />
+
+  <!-- Mermaid -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+
+  <style>
+    /* ─── GDA palette (sampled from docs/gda.jpg) ─── */
+    :root {
+      --gda-gold:       #E8B830;
+      --gda-gold-soft:  #FBEAB0;
+      --gda-gold-dark:  #B6871C;
+      --gda-ink:        #070201;
+      --gda-teal:       #36776C;
+      --gda-blue:       #56A3D6;
+      --gda-orange:     #D36525;
+      --gda-purple:     #7C3AED;
+      --gda-red:        #DC2626;
+      --deep-blue:      #0B5394;
+      --muted:          #6b7280;
+      --border:         #e5e7eb;
+      --bg:             #f8fafc;
+      --card:           #ffffff;
+      --nav-h:          56px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      font-size: 15px;
-      line-height: 1.7;
+      font-size: 14.5px;
+      line-height: 1.65;
       color: #1f2937;
-      background: #f8fafc;
+      background: var(--bg);
+    }
+    a { color: var(--deep-blue); }
+
+    /* ── Top sticky nav ── */
+    .top-nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--gda-ink);
+      border-bottom: 3px solid var(--gda-gold);
+      height: var(--nav-h);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+    }
+    .nav-inner {
+      max-width: 1400px; margin: 0 auto;
+      display: flex; align-items: center;
+      gap: 20px; padding: 0 24px; height: 100%;
+    }
+    .nav-brand {
+      display: flex; align-items: center; gap: 10px;
+      color: var(--gda-gold); text-decoration: none;
+      font-weight: 700; font-size: 15px; letter-spacing: 0.02em;
+    }
+    .nav-brand img { width: 32px; height: 32px; border-radius: 4px; }
+    .nav-brand:hover { color: #fff; }
+    .nav-links { display: flex; gap: 4px; margin-left: auto; flex-wrap: wrap; }
+    .nav-links a {
+      color: #e5e7eb; text-decoration: none;
+      font-size: 13px; font-weight: 500;
+      padding: 6px 10px; border-radius: 6px;
+      border-bottom: 2px solid transparent;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+    .nav-links a:hover {
+      background: rgba(232, 184, 48, 0.12);
+      color: var(--gda-gold);
+      border-bottom-color: var(--gda-gold);
+    }
+    .nav-key {
+      display: inline-block; background: rgba(255,255,255,0.08);
+      border-radius: 3px; padding: 0 5px; margin-left: 5px;
+      font-size: 10.5px; color: var(--gda-gold); font-family: monospace;
     }
 
-    .page {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 48px 40px 80px;
-    }
+    section, .section { scroll-margin-top: calc(var(--nav-h) + 16px); }
 
-    /* ── Header ── */
+    .page { max-width: 1400px; margin: 0 auto; padding: 24px 24px 32px; }
+
+    /* ── Doc header ── */
     .doc-header {
-      border-bottom: 3px solid #0B5394;
-      padding-bottom: 24px;
-      margin-bottom: 40px;
+      background: linear-gradient(135deg, var(--gda-gold) 0%, var(--gda-gold-soft) 100%);
+      border-bottom: 4px solid var(--gda-ink);
+      padding: 24px 24px;
     }
-    .doc-header h1 {
-      font-size: 2rem;
-      font-weight: 800;
-      color: #0B5394;
-      margin-bottom: 10px;
+    .header-inner {
+      max-width: 1400px; margin: 0 auto;
+      display: flex; align-items: center; gap: 20px;
+    }
+    .header-logo {
+      width: 84px; height: 84px; border-radius: 12px;
+      box-shadow: 0 4px 14px rgba(7,2,1,0.15); flex-shrink: 0;
+    }
+    .header-text h1 {
+      font-size: 1.6rem; font-weight: 800;
+      color: var(--gda-ink); margin-bottom: 6px;
+      letter-spacing: -0.01em;
     }
     .doc-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px 24px;
-      font-size: 13px;
-      color: #6b7280;
+      display: flex; flex-wrap: wrap;
+      gap: 2px 18px; font-size: 12.5px; color: #3a2d0a;
     }
-    .doc-meta span strong { color: #374151; }
+    .doc-meta span strong { color: var(--gda-ink); }
 
-    /* ── Sections ── */
+    /* ── Section cards ── */
     .section {
-      background: #fff;
-      border: 1px solid #e5e7eb;
-      border-radius: 12px;
-      padding: 32px 36px;
-      margin-bottom: 32px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--gda-gold);
+      border-radius: 10px;
+      padding: 22px 28px;
+      margin-bottom: 18px;
       box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+      position: relative;
     }
+    .section.arch { border-left-color: var(--deep-blue); }
+    .section.appendix-card { border-left-color: var(--gda-teal); }
 
-    h2 {
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: #0B5394;
-      margin-bottom: 10px;
-      padding-bottom: 8px;
-      border-bottom: 2px solid #e5e7eb;
+    .section-tools {
+      position: absolute; top: 18px; right: 22px;
+      display: flex; gap: 10px; font-size: 11.5px;
     }
-    h3 {
-      font-size: 1rem;
-      font-weight: 700;
-      color: #374151;
-      margin: 24px 0 10px;
+    .section-tools a {
+      color: var(--muted); text-decoration: none;
+      padding: 2px 7px; border-radius: 4px; background: #f3f4f6;
     }
+    .section-tools a:hover { background: var(--gda-gold-soft); color: var(--gda-ink); }
 
+    .section h2 {
+      font-size: 1.1rem; font-weight: 700;
+      color: var(--gda-ink); margin-bottom: 4px; padding-right: 100px;
+    }
+    .section h2 .part-tag {
+      display: inline-block;
+      background: var(--gda-ink); color: var(--gda-gold);
+      font-size: 10.5px; font-weight: 700; letter-spacing: 0.06em;
+      padding: 3px 8px; border-radius: 4px; margin-right: 10px;
+      vertical-align: middle;
+    }
+    .section.arch h2 .part-tag { background: var(--deep-blue); color: #fff; }
+    .section h3 {
+      font-size: 0.92rem; font-weight: 700;
+      color: var(--gda-ink); margin: 12px 0 6px;
+    }
     .section-desc {
-      font-size: 14px;
-      color: #4b5563;
-      margin-bottom: 20px;
+      font-size: 13px; color: #4b5563; margin-bottom: 8px;
     }
-    .section-desc strong { color: #111827; }
+    .section-desc strong { color: var(--gda-ink); }
 
-    /* ── Diagrams ── */
+    .prev-next {
+      margin-top: 14px; padding-top: 10px;
+      border-top: 1px dashed var(--border);
+      display: flex; justify-content: space-between; font-size: 12px;
+    }
+    .prev-next a { color: var(--deep-blue); text-decoration: none; }
+    .prev-next a:hover { text-decoration: underline; }
+
+    /* ── Chips ── */
+    .chip-row { display: flex; flex-wrap: wrap; gap: 5px; margin: 6px 0 4px; }
+    .chip {
+      display: inline-block;
+      background: var(--gda-gold-soft); color: var(--gda-ink);
+      border: 1px solid var(--gda-gold); border-radius: 20px;
+      padding: 2px 10px; font-size: 11.5px; font-weight: 500;
+    }
+    .chip.blue   { background:#dbeafe; color:#1e3a8a; border-color:#93c5fd; }
+    .chip.teal   { background:#ccfbf1; color:#115e59; border-color:#5eead4; }
+    .chip.orange { background:#ffedd5; color:#7c2d12; border-color:#fdba74; }
+    .chip.purple { background:#ede9fe; color:#4c1d95; border-color:#c4b5fd; }
+    .chip.red    { background:#fee2e2; color:#7f1d1d; border-color:#fca5a5; }
+    .chip.ink    { background:var(--gda-ink); color:var(--gda-gold); border-color:var(--gda-ink); }
+
+    /* ── Mermaid wrapper ── */
     .diagram-wrap {
-      background: #fafafa;
-      border: 1px solid #e5e7eb;
-      border-radius: 8px;
-      padding: 32px 24px;
-      overflow-x: auto;
+      background: #fafafa; border: 1px solid var(--border);
+      border-radius: 8px; padding: 14px 12px; overflow-x: auto; margin: 8px 0;
     }
-    .diagram-wrap .mermaid {
-      display: block;
-      width: 100%;
-    }
+    .diagram-wrap .mermaid { display: block; width: 100%; }
     .diagram-wrap .mermaid svg {
-      width: 100% !important;
-      height: auto !important;
-      min-height: 400px;
+      width: 100% !important; height: auto !important;
+      min-height: 300px; max-height: 460px;
     }
 
     /* ── Tables ── */
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 14px;
-      margin-top: 12px;
-    }
-    thead tr {
-      background: #0B5394;
-      color: #fff;
-    }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 8px 0; }
+    thead tr { background: var(--gda-ink); color: var(--gda-gold); }
     thead th {
-      padding: 10px 14px;
-      text-align: left;
-      font-weight: 600;
+      padding: 7px 11px; text-align: left;
+      font-weight: 600; font-size: 12px; letter-spacing: 0.02em;
     }
-    tbody tr:nth-child(odd)  { background: #f9fafb; }
+    tbody tr:nth-child(odd)  { background: #fafaf5; }
     tbody tr:nth-child(even) { background: #fff; }
     tbody td {
-      padding: 9px 14px;
-      border-bottom: 1px solid #e5e7eb;
-      vertical-align: top;
+      padding: 6px 11px; border-bottom: 1px solid var(--border); vertical-align: top;
     }
-    tbody td strong { color: #0B5394; }
-
-    /* ── Principles grid ── */
-    .principles-table thead tr { background: #065F46; }
+    tbody td strong { color: var(--gda-ink); }
+    .principles-table thead tr { background: var(--deep-blue); color: #fff; }
 
     /* ── Blockquote ── */
     blockquote {
-      border-left: 4px solid #0B5394;
-      background: #eff6ff;
-      padding: 14px 18px;
-      border-radius: 0 8px 8px 0;
-      font-size: 15px;
-      color: #1e40af;
-      margin: 16px 0;
+      border-left: 4px solid var(--gda-gold);
+      background: linear-gradient(90deg, var(--gda-gold-soft) 0%, #fff 100%);
+      padding: 8px 14px; border-radius: 0 8px 8px 0;
+      font-size: 13.5px; color: #3a2d0a; margin: 8px 0;
     }
+    blockquote strong { color: var(--gda-ink); }
+
+    /* ── Key-metrics grid ── */
+    .metrics {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 8px; margin: 8px 0;
+    }
+    .metric {
+      background: var(--gda-gold-soft); border: 1px solid var(--gda-gold);
+      border-radius: 8px; padding: 8px 10px;
+    }
+    .metric .v { display:block; font-size: 1.1rem; font-weight: 800; color: var(--gda-ink); }
+    .metric .l {
+      display:block; font-size: 10.5px; color: #78571a;
+      text-transform: uppercase; letter-spacing: 0.04em; margin-top: 2px;
+    }
+
+    /* ── Reference link chips ── */
+    .ref-list {
+      list-style: none; padding: 0;
+      display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px;
+    }
+    .ref-list li { list-style: none; }
+    .ref-link {
+      background: #eff6ff; border: 1px solid #bfdbfe;
+      border-radius: 6px; padding: 4px 10px;
+      font-size: 12px; color: #1d4ed8;
+      font-family: monospace; text-decoration: none;
+      display: inline-block; cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .ref-link:hover { background: #dbeafe; border-color: #93c5fd; }
+
+    /* ── Bottom nav ── */
+    .bottom-nav {
+      max-width: 1400px; margin: 16px auto 0;
+      padding: 12px 22px; background: var(--gda-ink);
+      border-radius: 10px;
+      display: flex; align-items: center; flex-wrap: wrap; gap: 6px 12px;
+    }
+    .bottom-nav .nav-brand { color: var(--gda-gold); }
+    .bottom-nav .nav-brand img { width: 22px; height: 22px; }
+    .bottom-nav a {
+      color: #e5e7eb; text-decoration: none;
+      font-size: 12.5px; padding: 4px 10px; border-radius: 5px;
+    }
+    .bottom-nav a:hover { background: rgba(232,184,48,0.12); color: var(--gda-gold); }
 
     /* ── Footer ── */
     .doc-footer {
-      text-align: center;
-      font-size: 12px;
-      color: #9ca3af;
-      margin-top: 48px;
-      padding-top: 20px;
-      border-top: 1px solid #e5e7eb;
+      text-align: center; font-size: 11.5px;
+      color: var(--muted); margin: 16px auto 24px; padding-top: 12px;
     }
+    .doc-footer strong { color: var(--gda-ink); }
 
-    /* ── Reference list ── */
-    .ref-list {
-      list-style: none;
-      padding: 0;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 12px;
-    }
-    .ref-list li {
-      list-style: none;
-    }
-    .ref-link {
-      background: #eff6ff;
-      border: 1px solid #bfdbfe;
-      border-radius: 6px;
-      padding: 6px 14px;
-      font-size: 13px;
-      color: #1d4ed8;
-      font-family: monospace;
-      text-decoration: none;
-      display: inline-block;
-      cursor: pointer;
-      transition: background 0.2s ease, border-color 0.2s ease;
-    }
-    .ref-link:hover {
-      background: #dbeafe;
-      border-color: #93c5fd;
-    }
-
+    /* ── Reference modal ── */
     .doc-modal {
-      position: fixed;
-      inset: 0;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-      background: rgba(15, 23, 42, 0.55);
-      z-index: 1000;
+      position: fixed; inset: 0;
+      display: none; align-items: center; justify-content: center;
+      padding: 24px; background: rgba(15, 23, 42, 0.6); z-index: 1000;
     }
-    .doc-modal.is-open {
-      display: flex;
-    }
+    .doc-modal.is-open { display: flex; }
     .doc-modal-content {
-      width: min(1100px, 100%);
-      height: min(85vh, 900px);
-      background: #fff;
-      border-radius: 16px;
+      width: min(1100px, 100%); height: min(85vh, 900px);
+      background: #fff; border-radius: 14px;
       border: 1px solid #cbd5e1;
       box-shadow: 0 24px 60px rgba(15, 23, 42, 0.22);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
+      overflow: hidden; display: flex; flex-direction: column;
     }
     .doc-modal-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 14px 18px;
-      border-bottom: 1px solid #e5e7eb;
-      background: #f8fafc;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      background: var(--gda-ink); color: var(--gda-gold);
     }
-    .doc-modal-title {
-      font-size: 14px;
-      font-weight: 600;
-      color: #0f172a;
-      word-break: break-all;
-    }
+    .doc-modal-title { font-size: 13px; font-weight: 600; word-break: break-all; }
     .doc-modal-close {
-      border: 0;
-      background: #e2e8f0;
-      color: #0f172a;
-      font-size: 22px;
-      line-height: 1;
-      width: 34px;
-      height: 34px;
-      border-radius: 999px;
-      cursor: pointer;
+      border: 0; background: var(--gda-gold); color: var(--gda-ink);
+      font-size: 18px; font-weight: 700;
+      width: 28px; height: 28px; border-radius: 999px; cursor: pointer;
     }
-    .doc-modal-close:hover {
-      background: #cbd5e1;
+    .doc-modal-close:hover { background: #fff; }
+    .doc-viewer { width: 100%; flex: 1; border: 0; background: #fff; }
+
+    /* Hint strip */
+    .kbd-hint {
+      max-width: 1400px; margin: 0 auto;
+      padding: 5px 24px; font-size: 11px;
+      color: var(--muted); background: #fff;
+      border-bottom: 1px solid var(--border);
     }
-    .doc-viewer {
-      width: 100%;
-      flex: 1;
-      border: 0;
-      background: #fff;
+    .kbd-hint kbd {
+      background: #f3f4f6; border: 1px solid var(--border);
+      border-radius: 3px; padding: 1px 5px;
+      font-family: monospace; font-size: 10px; color: var(--gda-ink);
+    }
+
+    /* Print: one section per page */
+    @media print {
+      .top-nav, .bottom-nav, .kbd-hint, .section-tools, .prev-next, .doc-modal { display: none !important; }
+      body { background: #fff; font-size: 9.5pt; }
+      .section {
+        break-after: page; page-break-after: always;
+        border: 0; box-shadow: none;
+        margin-bottom: 0; padding: 12px 6px;
+      }
+      .section:last-child { break-after: auto; page-break-after: auto; }
+      .doc-header { break-after: avoid; page-break-after: avoid; }
+      .diagram-wrap .mermaid svg { max-height: 360px !important; }
+    }
+
+    @media (max-width: 720px) {
+      .nav-links { gap: 2px; }
+      .nav-links a { font-size: 11.5px; padding: 5px 7px; }
+      .nav-key { display:none; }
+      .header-logo { width: 56px; height: 56px; }
+      .header-text h1 { font-size: 1.2rem; }
+      .section { padding: 16px 14px; }
     }
   </style>
 </head>
-<body>
-<div class="page">
+<body id="top">
 
-  <!-- ── Header ─────────────────────────────────── -->
-  <div class="doc-header">
-    <h1>Gaia AI — Operating Model &amp; Change Reference</h1>
-    <div class="doc-meta">
-      <span><strong>Organization:</strong> Gaia Digital Agency (www.gaiada.com)</span>
-      <span><strong>Model:</strong> Venturi-based, Claude-centric AI Operating Architecture</span>
-      <span><strong>Companion to:</strong> Gaia AI Business Plan</span>
+<!-- ══════ Sticky top nav ══════ -->
+<nav class="top-nav" aria-label="Primary">
+  <div class="nav-inner">
+    <a href="#top" class="nav-brand" title="Back to top">
+      <img src="assets/gda-logo-nav.png" alt="GDA" />
+      <span>Gaia AI</span>
+    </a>
+    <div class="nav-links">
+      <a href="#part-a">Business Plan<span class="nav-key">1</span></a>
+      <a href="#part-b">Figma→Site<span class="nav-key">2</span></a>
+      <a href="#part-c">Socmed<span class="nav-key">3</span></a>
+      <a href="#part-d">POC<span class="nav-key">4</span></a>
+      <a href="#appendix">Appendix<span class="nav-key">5</span></a>
+      <a href="#references">Refs</a>
     </div>
   </div>
+</nav>
 
-  <!-- ── 1. One-Line Positioning ───────────────────── -->
-  <div class="section">
-    <h2>1. One-Line Positioning</h2>
-    <blockquote>
-      <strong>Gaia AI</strong> — <em>The service-enabled tech platform where AI labour, GCP scales, and humans give it thinking soul.</em>
-    </blockquote>
-    <p style="font-size:13px;color:#6b7280;margin-top:12px;">
-      Single reference document · merges operating architecture + change management · renders in any Mermaid-compatible viewer (GitHub, Notion, Obsidian, VS Code).
-    </p>
+<div class="kbd-hint">
+  Jump: <kbd>1</kbd>–<kbd>5</kbd> Parts · <kbd>0</kbd> Top · <kbd>Home</kbd>/<kbd>End</kbd> · <kbd>Ctrl</kbd>+<kbd>F</kbd> Search
+</div>
+
+<!-- ══════ Doc header ══════ -->
+<header class="doc-header">
+  <div class="header-inner">
+    <img src="assets/gda-logo.png" alt="Gaia Digital Agency" class="header-logo" />
+    <div class="header-text">
+      <h1>Gaia AI — Unified Operating Model &amp; System Blueprints</h1>
+      <div class="doc-meta">
+        <span><strong>Organization:</strong> Gaia Digital Agency</span>
+        <span><strong>Web:</strong> www.gaiada.com</span>
+        <span><strong>Scope:</strong> Business Plan · Figma→Site · Socmed · POC</span>
+        <span><strong>Repo:</strong> Gaia-Digital-Agency/gaia_plans</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="page">
+
+<!-- ══════════════════════════════════════════════════════════════
+     PAGE 1 · PART A · OVERVIEW — BUSINESS PLAN (Venturi)
+     ══════════════════════════════════════════════════════════════ -->
+<section class="section" id="part-a">
+  <div class="section-tools"><a href="#top">↑ Top</a></div>
+  <h2><span class="part-tag">PART A · 1/2</span>Business Plan — The Venturi Model</h2>
+  <p class="section-desc">
+    <strong>Gaia AI</strong> is a service-enabled tech platform where <em>AI labour scales on GCP, and humans give it thinking soul</em>. The Venturi thesis: channel broad market demand through a narrow AI throat to produce high-velocity outputs — grow revenue without growing headcount.
+  </p>
+
+  <blockquote>
+    <strong>Target state:</strong> 25 AI-assisted orchestrators delivering the work of 75 producers · RM 1M revenue by Month 18 · 20% IRR · recurring &gt; one-off billable.
+  </blockquote>
+
+  <h3>Service verticals (7)</h3>
+  <div class="chip-row">
+    <span class="chip">Hospitality</span><span class="chip">F&amp;B</span>
+    <span class="chip">Web Dev</span><span class="chip">SEO</span>
+    <span class="chip">Branding</span><span class="chip">Ads</span>
+    <span class="chip">Social Media</span>
   </div>
 
-  <!-- ── 2. Core Operating Model ────────────────── -->
-  <div class="section">
-    <h2>2. Core Operating Model — The Concentric Architecture</h2>
-    <p class="section-desc">
-      Reads inside-out: <strong>GCP ecosystem + Claude AI core → Claude tools → Operations layer (QA + Openclaw) → 7 client service verticals</strong>,
-      with Knowledge Base, MCP, Governance, and Feedback as supporting layers.
-    </p>
-    <div class="diagram-wrap">
-      <div class="mermaid">
+  <h3>Core targets</h3>
+  <div class="metrics">
+    <div class="metric"><span class="v">RM 1M</span><span class="l">revenue · month 18</span></div>
+    <div class="metric"><span class="v">25</span><span class="l">orchestrators</span></div>
+    <div class="metric"><span class="v">20%</span><span class="l">internal rate of return</span></div>
+    <div class="metric"><span class="v">3×</span><span class="l">output / headcount</span></div>
+  </div>
+
+  <h3>Guiding principles</h3>
+  <div class="chip-row">
+    <span class="chip ink">Venturi Compression</span>
+    <span class="chip ink">No-Manpower-Growth</span>
+    <span class="chip ink">Revenue Quality &gt; Volume</span>
+    <span class="chip ink">Coexist Before Cutover</span>
+    <span class="chip ink">Single Source of Truth</span>
+    <span class="chip ink">Human Judgment at the Edges</span>
+  </div>
+
+  <p class="section-desc" style="margin-top:10px;">
+    Full business plan: <a class="ref-link" href="docs/ai_business_plan.html" data-doc="docs/ai_business_plan.html">docs/ai_business_plan.html</a>
+    &nbsp;·&nbsp;
+    <a class="ref-link" href="docs/ai_business_plan_appendix.html" data-doc="docs/ai_business_plan_appendix.html">appendix</a>
+  </p>
+
+  <div class="prev-next">
+    <span></span>
+    <a href="#part-a-arch">Part A · Architecture →</a>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════
+     PAGE 2 · PART A · FULL SYSTEM ARCHITECTURE
+     Preserves: Concentric Architecture + Delivery Pipelines (3 flows)
+     ══════════════════════════════════════════════════════════════ -->
+<section class="section arch" id="part-a-arch">
+  <div class="section-tools"><a href="#top">↑ Top</a></div>
+  <h2><span class="part-tag">PART A · 2/2</span>Business Plan — Full System Architecture</h2>
+  <p class="section-desc">
+    Reads inside-out: <strong>GCP + Claude core → Claude tools → Ops layer (QA + Openclaw) → 7 verticals</strong>, with KB · MCP · HITL · Feedback as supporting layers.
+  </p>
+
+  <div class="diagram-wrap">
+    <div class="mermaid">
 %%{init: {"flowchart": {"subGraphTitleMargin": {"top": 20, "bottom": 10}}}}%%
 flowchart TB
     classDef core fill:#0B5394,stroke:#052E5C,stroke-width:3px,color:#fff,font-weight:bold
@@ -277,7 +462,7 @@ flowchart TB
     classDef governance fill:#DC2626,stroke:#7F1D1D,stroke-width:2px,color:#fff
 
     subgraph CORE["CORE — Ecosystem + Engine"]
-        GCP["Google Cloud Platform<br/>Infrastructure · BigQuery · Looker"]
+        GCP["Google Cloud Platform<br/>Infra · BigQuery · Looker"]
         CLAUDE["Claude AI<br/>Central Intelligence Engine"]
         GCP --- CLAUDE
     end
@@ -290,8 +475,8 @@ flowchart TB
     end
 
     subgraph RING2["Ring 2 — Operations Layer"]
-        QA["Python QA Engine<br/>7 Web Tools → Simplified to Claude"]
-        OC["Openclaw<br/>Multi-agent Orchestration"]
+        QA["Python QA Engine<br/>7 web tools → Claude actions"]
+        OC["Openclaw<br/>Multi-agent orchestration"]
     end
 
     subgraph RING3["Ring 3 — Service Verticals"]
@@ -305,8 +490,8 @@ flowchart TB
     end
 
     subgraph SUPPORT["Support &amp; Governance"]
-        KB["Knowledge Base<br/>(Brand · SOPs · Context)"]
-        MCP["MCP Connectors<br/>(Workspace · CRM · Drive)"]
+        KB["Knowledge Base<br/>Brand · SOPs · Context"]
+        MCP["MCP Connectors<br/>Workspace · CRM · Drive"]
         HITL["Human-in-the-Loop<br/>Review Gates"]
         LOOP["Feedback Loop<br/>→ KB improvement"]
     end
@@ -327,19 +512,15 @@ flowchart TB
     class HOSP,FB,WEB,SEO,BRAND,ADS,SMM services
     class KB,MCP,LOOP support
     class HITL governance
-      </div>
     </div>
   </div>
 
-  <!-- ── 2. Delivery Pipelines ───────────────────── -->
-  <div class="section">
-    <h2>3. Delivery Pipelines — Three Signature Flows</h2>
-    <p class="section-desc">
-      Three service pipelines share one orchestration core: <strong>Web Dev</strong> (Figma→Code→GCP),
-      <strong>Social Media</strong> (platforms ↔ Openclaw ↔ Claude), and the <strong>QA engine</strong> (7 tools → Python → Claude actions).
-    </p>
-    <div class="diagram-wrap">
-      <div class="mermaid">
+  <h3>Delivery pipelines — three signature flows</h3>
+  <p class="section-desc">
+    Three pipelines share one orchestration core: <strong>Web Dev</strong> (Figma→Code→GCP · Part B), <strong>Social Media</strong> (Part C), and the <strong>QA engine</strong> (7 tools → Python → Claude actions).
+  </p>
+  <div class="diagram-wrap">
+    <div class="mermaid">
 %%{init: {"flowchart": {"subGraphTitleMargin": {"top": 20, "bottom": 10}}}}%%
 flowchart LR
     classDef input fill:#F472B6,stroke:#9D174D,color:#fff,stroke-width:2px
@@ -365,19 +546,468 @@ flowchart LR
         direction LR
         Q1["Lighthouse · axe-core<br/>SEMrush · OWASP ZAP<br/>Screaming Frog<br/>BrowserStack · GA4"]:::input --> Q2["Python<br/>Orchestrator"]:::check --> Q3["Claude<br/>Action items"]:::ai
     end
-      </div>
     </div>
   </div>
 
-  <!-- ── 3. Change Management ────────────────────── -->
-  <div class="section">
-    <h2>4. Change Management — Dual-Track Transformation</h2>
-    <p class="section-desc">
-      Two parallel tracks (<strong>People + IT</strong>) running from Today's labor-heavy state to the Venturi target state,
-      gated by the 90-day build-to-operate checkpoints.
-    </p>
-    <div class="diagram-wrap">
-      <div class="mermaid">
+  <h3>Ring responsibilities</h3>
+  <table>
+    <thead><tr><th>Ring</th><th>Role</th><th>Key Assets</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Core</strong></td><td>Compute + intelligence substrate</td><td>GCP (BigQuery · Looker · IAM · Cloud Run) + Claude</td></tr>
+      <tr><td><strong>Ring 1</strong></td><td>Claude product surfaces</td><td>Claude Code · Cowork · Claude Design · Claude Chat</td></tr>
+      <tr><td><strong>Ring 2</strong></td><td>Reliability + orchestration</td><td>Python QA engine + Openclaw multi-agent runtime</td></tr>
+      <tr><td><strong>Ring 3</strong></td><td>Client-facing verticals</td><td>Hospitality · F&amp;B · Web Dev · SEO · Branding · Ads · Social Media</td></tr>
+      <tr><td><strong>Support</strong></td><td>Shared memory + connectors + review</td><td>KB · Vector DB · MCP · HITL gates · feedback loop</td></tr>
+    </tbody>
+  </table>
+
+  <div class="prev-next">
+    <a href="#part-a">← Part A · Overview</a>
+    <a href="#part-b">Part B · Figma→Site →</a>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════
+     PAGE 3 · PART B · OVERVIEW — FIGMA→SITE (Templatebase + Victor)
+     ══════════════════════════════════════════════════════════════ -->
+<section class="section" id="part-b">
+  <div class="section-tools"><a href="#top">↑ Top</a></div>
+  <h2><span class="part-tag">PART B · 1/2</span>Figma → Site Automation (Templatebase + Victor)</h2>
+  <p class="section-desc">
+    Design in Figma, ship a running production site in a fraction of the time. Combines <strong>Templatebase</strong> (a reusable VRTPN-stack scaffold) with <strong>Victor</strong> — the Openclaw multi-agent orchestrator (repo <code>openclaw_var</code>) — plus Claude Code for build work and a Python QA engine for validation.
+  </p>
+
+  <blockquote>
+    <strong>Stack in one line:</strong> Figma MCP → Victor (Openclaw) ⇄ Claude Code → Templatebase (Vite SSR + React 19 + Tailwind v4 + Payload CMS + Node + Postgres) → Python QA → GCP.
+  </blockquote>
+
+  <h3>Components</h3>
+  <div class="chip-row">
+    <span class="chip blue">Templatebase (VRTPN)</span>
+    <span class="chip orange">Victor — Openclaw Agent</span>
+    <span class="chip purple">Claude Code</span>
+    <span class="chip blue">Figma MCP</span>
+    <span class="chip teal">Payload CMS</span>
+    <span class="chip teal">Python QA (7 tools)</span>
+    <span class="chip ink">GCP</span>
+  </div>
+
+  <h3>Victor's agent roster (openclaw_var)</h3>
+  <div class="chip-row">
+    <span class="chip">main (Victor · orchestrator)</span>
+    <span class="chip">web-manager (CMS / blog)</span>
+    <span class="chip">copywriter</span>
+    <span class="chip">writer (email + letters)</span>
+    <span class="chip">booking (calendar)</span>
+    <span class="chip">drive-manager</span>
+    <span class="chip">analyst</span>
+  </div>
+
+  <h3>Phases of a project run</h3>
+  <div class="chip-row">
+    <span class="chip blue">1 · Scaffold from Templatebase</span>
+    <span class="chip blue">2 · Rebrand &amp; isolate</span>
+    <span class="chip blue">3 · Go live</span>
+    <span class="chip blue">3.5 · Seed strategy</span>
+    <span class="chip blue">4 · Figma MCP setup</span>
+    <span class="chip blue">4.1 · Tokens-first</span>
+    <span class="chip blue">4.3 · IA rework</span>
+    <span class="chip blue">4.4 · Home blocks</span>
+    <span class="chip blue">4.5 · Header/Footer</span>
+    <span class="chip blue">4.7 · Polish</span>
+  </div>
+
+  <h3>Value metrics</h3>
+  <div class="metrics">
+    <div class="metric"><span class="v">1 day</span><span class="l">scaffold → live</span></div>
+    <div class="metric"><span class="v">7 tools</span><span class="l">automated QA</span></div>
+    <div class="metric"><span class="v">Tokens-first</span><span class="l">Figma → Tailwind</span></div>
+    <div class="metric"><span class="v">Payload</span><span class="l">client-editable CMS</span></div>
+  </div>
+
+  <p class="section-desc" style="margin-top:10px;">
+    Full playbook: <a class="ref-link" href="docs/figma_to_site_automation.html" data-doc="docs/figma_to_site_automation.html">docs/figma_to_site_automation.html</a>
+    &nbsp;·&nbsp;
+    QA details: <a class="ref-link" href="docs/qa_automation.html" data-doc="docs/qa_automation.html">docs/qa_automation.html</a>
+  </p>
+
+  <div class="prev-next">
+    <a href="#part-a-arch">← Part A · Architecture</a>
+    <a href="#part-b-arch">Part B · Architecture →</a>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════
+     PAGE 4 · PART B · FULL SYSTEM ARCHITECTURE
+     ══════════════════════════════════════════════════════════════ -->
+<section class="section arch" id="part-b-arch">
+  <div class="section-tools"><a href="#top">↑ Top</a></div>
+  <h2><span class="part-tag">PART B · 2/2</span>Figma → Site — Full System Architecture</h2>
+  <p class="section-desc">
+    End-to-end pipeline from Figma through Victor's orchestration into a Payload-CMS-backed Vite SSR site on GCP, with Python QA gating every deploy.
+  </p>
+
+  <div class="diagram-wrap">
+    <div class="mermaid">
+%%{init: {"flowchart": {"subGraphTitleMargin": {"top": 20, "bottom": 10}}}}%%
+flowchart LR
+    classDef design fill:#F472B6,stroke:#9D174D,color:#fff,stroke-width:2px
+    classDef ai fill:#D97706,stroke:#7C2D12,color:#fff,stroke-width:2px
+    classDef build fill:#7C3AED,stroke:#4C1D95,color:#fff,stroke-width:2px
+    classDef cms fill:#059669,stroke:#064E3B,color:#fff,stroke-width:2px
+    classDef check fill:#0B5394,stroke:#052E5C,color:#fff,stroke-width:2px
+    classDef host fill:#E8B830,stroke:#B6871C,color:#070201,stroke-width:2px,font-weight:bold
+    classDef human fill:#DC2626,stroke:#7F1D1D,color:#fff,stroke-width:2px
+
+    FIG["Figma<br/>Design source"]:::design --> MCP["Figma MCP<br/>tokens + frames"]:::design
+    MCP --> VIC["Victor (main)<br/>openclaw_var :19289<br/>DeepSeek · Gemini fallback"]:::ai
+
+    VIC --> WM["web-manager<br/>CMS + blog"]:::ai
+    VIC --> CW["copywriter"]:::ai
+    VIC --> AN["analyst"]:::ai
+
+    VIC --> CC["Claude Code<br/>build + refactor"]:::build
+    CC --> TB["Templatebase (VRTPN)<br/>Vite SSR · React 19 · Tailwind v4"]:::build
+    WM --> PAY["Payload CMS<br/>Next 16 admin + REST/GraphQL<br/>Collections · Blocks · Globals"]:::cms
+    TB <--> PAY
+
+    TB --> QA["Python QA Engine<br/>Lighthouse · axe · ZAP<br/>SEMrush · Screaming Frog<br/>BrowserStack · GA4"]:::check
+    QA -.fail.-> CC
+    QA --> REV["Human Review<br/>HITL gate"]:::human
+    REV --> GCP["GCP Hosting<br/>Cloud Run · Postgres · CDN"]:::host
+    </div>
+  </div>
+
+  <h3>Component responsibilities</h3>
+  <table>
+    <thead><tr><th>Component</th><th>Repo / Runtime</th><th>Owns</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Figma MCP</strong></td><td>Figma + MCP server</td><td>Tokens + frame structures into the agent layer</td></tr>
+      <tr><td><strong>Victor (main)</strong></td><td><code>openclaw_var</code> · agents/main · gateway :19289</td><td>Receives intent (Telegram / Mission Control), delegates, relays</td></tr>
+      <tr><td><strong>web-manager</strong></td><td><code>openclaw_var/workspace-web-manager</code></td><td>Publishes / updates content on templategen.gaiada.online</td></tr>
+      <tr><td><strong>copywriter</strong></td><td><code>openclaw_var/workspace-copywriter</code></td><td>Drafts blog, ad copy, SEO material (fetch + filesystem MCPs)</td></tr>
+      <tr><td><strong>Claude Code</strong></td><td>Anthropic</td><td>Generates / refactors code into Templatebase packages</td></tr>
+      <tr><td><strong>Templatebase</strong></td><td><code>web_templatebase</code> · VRTPN stack</td><td><code>packages/cms</code> (Payload + Next 16) + <code>packages/web</code> (Vite SSR + React 19 + Tailwind v4)</td></tr>
+      <tr><td><strong>Payload CMS</strong></td><td><code>packages/cms</code></td><td>Users · Media · Pages · Posts · Services · Globals · plugins (seo, form-builder, search, redirects, nested-docs)</td></tr>
+      <tr><td><strong>Python QA</strong></td><td>QA automation</td><td>7-tool scan → Claude action items → fix loop</td></tr>
+      <tr><td><strong>GCP</strong></td><td>Cloud Run · Postgres · CDN</td><td>Production runtime + revalidation + preview</td></tr>
+    </tbody>
+  </table>
+
+  <p class="section-desc">
+    <strong>Handoff model:</strong> Intake on Telegram / Mission Control → Victor delegates → specialists draft → Claude Code builds into Templatebase → QA scans → HITL gate approves → GCP deploy → Payload revalidation callback. Same loop for initial build and ongoing updates.
+  </p>
+
+  <div class="prev-next">
+    <a href="#part-b">← Part B · Overview</a>
+    <a href="#part-c">Part C · Socmed →</a>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════
+     PAGE 5 · PART C · OVERVIEW — SOCMED AUTOMATION (SOMA)
+     ══════════════════════════════════════════════════════════════ -->
+<section class="section" id="part-c">
+  <div class="section-tools"><a href="#top">↑ Top</a></div>
+  <h2><span class="part-tag">PART C · 1/2</span>Social Media Automation (SOMA)</h2>
+  <p class="section-desc">
+    Five-platform orchestration where AI drafts content and replies, <strong>humans approve before publishing</strong>, and Openclaw executes the push. Extends the Openclaw framework with platform-specialist agents.
+  </p>
+
+  <blockquote>
+    <strong>Core rule:</strong> OpenClaw performs every publish — never the AI direct. GDA retains human approval over all AI-generated content.
+  </blockquote>
+
+  <h3>Platforms</h3>
+  <div class="chip-row">
+    <span class="chip purple">Instagram (Graph API)</span>
+    <span class="chip purple">Facebook (Graph API)</span>
+    <span class="chip purple">YouTube (Data API v3)</span>
+    <span class="chip purple">X (API v2)</span>
+    <span class="chip purple">TikTok (Content Posting)</span>
+  </div>
+
+  <h3>Agents</h3>
+  <div class="chip-row">
+    <span class="chip orange">SocialContentAgent</span>
+    <span class="chip orange">SocialInteractionAgent</span>
+    <span class="chip orange">SocialPublisherAgent</span>
+    <span class="chip orange">SocialMonitorAgent</span>
+    <span class="chip orange">BrandComplianceChecker</span>
+    <span class="chip orange">ContentPlanner</span>
+  </div>
+
+  <h3>Portal roles</h3>
+  <div class="chip-row">
+    <span class="chip">content_creator</span>
+    <span class="chip">reviewer</span>
+    <span class="chip">supervisor</span>
+  </div>
+
+  <h3>Value metrics</h3>
+  <div class="metrics">
+    <div class="metric"><span class="v">5</span><span class="l">platforms orchestrated</span></div>
+    <div class="metric"><span class="v">100%</span><span class="l">human-approved</span></div>
+    <div class="metric"><span class="v">Sonnet 4.6</span><span class="l">content + interaction</span></div>
+    <div class="metric"><span class="v">Prompt cache</span><span class="l">brand + brief</span></div>
+  </div>
+
+  <p class="section-desc" style="margin-top:10px;">
+    Full plan: <a class="ref-link" href="docs/socmed_plan_01.md" data-doc="docs/socmed_plan_01.md">docs/socmed_plan_01.md</a>
+  </p>
+
+  <div class="prev-next">
+    <a href="#part-b-arch">← Part B · Architecture</a>
+    <a href="#part-c-arch">Part C · Architecture →</a>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════
+     PAGE 6 · PART C · FULL SYSTEM ARCHITECTURE
+     ══════════════════════════════════════════════════════════════ -->
+<section class="section arch" id="part-c-arch">
+  <div class="section-tools"><a href="#top">↑ Top</a></div>
+  <h2><span class="part-tag">PART C · 2/2</span>Social Media Automation — Full System Architecture</h2>
+  <p class="section-desc">
+    Five layers: Intake · Venturi Throat (Openclaw + Claude) · GDA Review Portal · Publisher · Monitoring. State-machine-driven content flow from draft to published.
+  </p>
+
+  <div class="diagram-wrap">
+    <div class="mermaid">
+%%{init: {"flowchart": {"subGraphTitleMargin": {"top": 20, "bottom": 10}}}}%%
+flowchart TB
+    classDef intake fill:#F472B6,stroke:#9D174D,color:#fff,stroke-width:2px
+    classDef ai fill:#D97706,stroke:#7C2D12,color:#fff,stroke-width:2px
+    classDef portal fill:#7C3AED,stroke:#4C1D95,color:#fff,stroke-width:2px
+    classDef db fill:#0B5394,stroke:#052E5C,color:#fff,stroke-width:2px
+    classDef platform fill:#E8B830,stroke:#B6871C,color:#070201,stroke-width:2px,font-weight:bold
+    classDef monitor fill:#059669,stroke:#064E3B,color:#fff,stroke-width:2px
+
+    IN["INTAKE<br/>Brief · Brand voice · Calendar · Media"]:::intake
+
+    subgraph THROAT["VENTURI THROAT — Openclaw + Claude Sonnet 4.6"]
+        CA["Content Agent"]:::ai
+        IA["Interaction Agent"]:::ai
+        BC["Brand Compliance Checker"]:::ai
+        CP["Content Planner"]:::ai
+    end
+
+    Q[("Content Queue (Postgres)<br/>draft → brand_check → pending_review<br/>→ approved → scheduled → publishing → published")]:::db
+
+    subgraph PORTAL["GDA Review Portal — Next.js + NestJS"]
+        QV["Queue"]:::portal
+        AP["Approve/Edit/Reject"]:::portal
+        ML["Media Library"]:::portal
+        CAL["Calendar"]:::portal
+        IB["Interaction Inbox"]:::portal
+        MC["Mission Control"]:::portal
+    end
+
+    PUB["OpenClaw Publisher<br/>dispatcher"]:::ai
+
+    subgraph PLATS["Platforms"]
+        IG["Instagram"]:::platform
+        FB["Facebook"]:::platform
+        YT["YouTube"]:::platform
+        X["X"]:::platform
+        TT["TikTok"]:::platform
+    end
+
+    MON["Monitoring &amp; Analytics<br/>performance · errors · audit"]:::monitor
+
+    IN --> CA & IA & BC & CP
+    CA & IA & BC & CP --> Q
+    Q <--> PORTAL
+    PORTAL -- approved --> PUB
+    PUB --> IG & FB & YT & X & TT
+    IG & FB & YT & X & TT --> MON
+    MON -.new interactions.-> IA
+    MON -.performance.-> CP
+    </div>
+  </div>
+
+  <h3>Component responsibilities</h3>
+  <table>
+    <thead><tr><th>Layer</th><th>Stack</th><th>Owns</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Intake</strong></td><td>Brief templates + media uploads</td><td>Client brand voice, calendar, creative assets</td></tr>
+      <tr><td><strong>Venturi Throat</strong></td><td>Openclaw + Claude (Sonnet 4.6) with prompt caching</td><td>All generative work: captions, replies, compliance pre-check, calendar suggestions</td></tr>
+      <tr><td><strong>Content Queue</strong></td><td>PostgreSQL</td><td>State machine from draft → published</td></tr>
+      <tr><td><strong>Portal</strong></td><td>Next.js + NestJS + Tailwind + JWT + Drizzle</td><td>GDA team UX: approval, media library, calendar, inbox, mission control</td></tr>
+      <tr><td><strong>Publisher</strong></td><td>OpenClaw + 5 platform adapters</td><td>Standardized publish interface → platform-specific API calls</td></tr>
+      <tr><td><strong>Monitoring</strong></td><td>Telegram + Web dashboard</td><td>Performance, error retries, audit log</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Core data tables</h3>
+  <div class="chip-row">
+    <span class="chip">clients</span><span class="chip">content_items</span>
+    <span class="chip">media_assets</span><span class="chip">platform_accounts</span>
+    <span class="chip">interactions</span><span class="chip">reply_drafts</span>
+    <span class="chip">publish_log</span><span class="chip">analytics_snapshots</span>
+  </div>
+
+  <div class="prev-next">
+    <a href="#part-c">← Part C · Overview</a>
+    <a href="#part-d">Part D · POC →</a>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════
+     PAGE 7 · PART D · OVERVIEW — SAMPLE POC (Blossom + Brian)
+     ══════════════════════════════════════════════════════════════ -->
+<section class="section" id="part-d">
+  <div class="section-tools"><a href="#top">↑ Top</a></div>
+  <h2><span class="part-tag">PART D · 1/2</span>Sample POC — Blossom School Catering + Brian</h2>
+  <p class="section-desc">
+    Proof-of-concept showing Openclaw running a <em>full-working service</em>, not just assisting. <strong>Brian</strong> (repo <code>openclaw_bsc</code>) is the public-facing WhatsApp AI operator; <strong>Orders</strong> is the internal execution agent that talks to the Schoolcatering API. Families register, order meals, cancel, and get reminders — all through WhatsApp.
+  </p>
+
+  <blockquote>
+    <strong>Live runtime:</strong> WhatsApp → Brian (<code>openclaw_bsc</code>, gateway :18789 on <code>gda-ai01</code>) → Orders → BSC API <code>https://schoolcatering.gaiada1.online/api/v1</code>. Public URL: <code>bsc.gaiada0.online</code>.
+  </blockquote>
+
+  <h3>Components</h3>
+  <div class="chip-row">
+    <span class="chip orange">Brian — public WhatsApp agent</span>
+    <span class="chip orange">Orders — internal exec agent</span>
+    <span class="chip blue">Blossom School Catering (Next + NestJS)</span>
+    <span class="chip blue">PostgreSQL</span>
+    <span class="chip ink">PM2 · Nginx · GCS</span>
+    <span class="chip teal">Anthropic Claude</span>
+  </div>
+
+  <h3>Brian's skills (workspace-bsc)</h3>
+  <div class="chip-row">
+    <span class="chip">AUTHENTICATE</span><span class="chip">REGISTER (3-turn)</span>
+    <span class="chip">REGISTER-STATE</span><span class="chip">ACTIVE-MENU</span>
+    <span class="chip">ORDER</span><span class="chip">DELETE-ORDER</span>
+    <span class="chip">LOOKUP-PROTOCOL</span><span class="chip">ORDER-RECOMMENDATION</span>
+    <span class="chip">NOTIFICATION-CONTROL</span>
+  </div>
+
+  <h3>Roles &amp; sessions</h3>
+  <div class="chip-row">
+    <span class="chip blue">PARENT</span><span class="chip blue">YOUNGSTER</span>
+    <span class="chip blue">ADMIN</span><span class="chip blue">KITCHEN</span>
+    <span class="chip blue">DELIVERY</span>
+    <span class="chip">LUNCH</span><span class="chip">SNACK</span><span class="chip">BREAKFAST</span>
+  </div>
+
+  <h3>Outcomes validated</h3>
+  <div class="metrics">
+    <div class="metric"><span class="v">End-to-end</span><span class="l">agent runs a real service</span></div>
+    <div class="metric"><span class="v">WhatsApp</span><span class="l">zero-UI ordering</span></div>
+    <div class="metric"><span class="v">3-turn</span><span class="l">family onboarding</span></div>
+    <div class="metric"><span class="v">Server-side</span><span class="l">family_id auth</span></div>
+  </div>
+
+  <p class="section-desc" style="margin-top:10px;">
+    Repos:
+    <a class="ref-link" href="https://github.com/Gaia-Digital-Agency/openclaw_bsc" target="_blank" rel="noopener">openclaw_bsc</a>
+    &nbsp;·&nbsp;
+    <a class="ref-link" href="https://github.com/Gaia-Digital-Agency/blossom_schoolcatering" target="_blank" rel="noopener">blossom_schoolcatering</a>
+  </p>
+
+  <div class="prev-next">
+    <a href="#part-c-arch">← Part C · Architecture</a>
+    <a href="#part-d-arch">Part D · Architecture →</a>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════
+     PAGE 8 · PART D · FULL SYSTEM ARCHITECTURE
+     ══════════════════════════════════════════════════════════════ -->
+<section class="section arch" id="part-d-arch">
+  <div class="section-tools"><a href="#top">↑ Top</a></div>
+  <h2><span class="part-tag">PART D · 2/2</span>Sample POC — Full System Architecture</h2>
+  <p class="section-desc">
+    WhatsApp is the only user channel. Brian authenticates the sender against the Schoolcatering API, delegates BSC work to Orders via <code>sessions_spawn</code>, and returns one composed WhatsApp message per turn.
+  </p>
+
+  <div class="diagram-wrap">
+    <div class="mermaid">
+%%{init: {"flowchart": {"subGraphTitleMargin": {"top": 20, "bottom": 10}}}}%%
+flowchart LR
+    classDef user fill:#F472B6,stroke:#9D174D,color:#fff,stroke-width:2px
+    classDef gate fill:#E8B830,stroke:#B6871C,color:#070201,stroke-width:2px,font-weight:bold
+    classDef agent fill:#D97706,stroke:#7C2D12,color:#fff,stroke-width:2px
+    classDef app fill:#0B5394,stroke:#052E5C,color:#fff,stroke-width:2px
+    classDef db fill:#7C3AED,stroke:#4C1D95,color:#fff,stroke-width:2px
+    classDef infra fill:#059669,stroke:#064E3B,color:#fff,stroke-width:2px
+
+    USR["Parent / Youngster<br/>WhatsApp"]:::user --> WAG["WhatsApp Gateway<br/>bsc.gaiada0.online"]:::gate
+    WAG --> BRI["Brian (main)<br/>openclaw-bsc :18789<br/>identity · memory · skills"]:::agent
+    BRI -->|sessions_spawn| ORD["Orders<br/>internal exec agent<br/>workspace-bsc"]:::agent
+    ORD --> API["BSC API<br/>schoolcatering.gaiada1.online/api/v1<br/>(NestJS)"]:::app
+    API --> DB[("PostgreSQL<br/>families · children · orders<br/>menus · schools")]:::db
+
+    API --> WEB["BSC Web (Next.js)<br/>blossomcatering.online<br/>admin · kitchen · delivery"]:::app
+
+    subgraph RUNTIME["Runtime — gda-ai01 + gda-ce01 (GCP)"]
+        PM2["PM2 processes<br/>schoolcatering-web · schoolcatering-api"]:::infra
+        NGX["Nginx reverse proxy"]:::infra
+        GCS["GCS media storage"]:::infra
+    end
+
+    API --- PM2
+    WEB --- PM2
+    PM2 --- NGX
+    API --- GCS
+
+    ORD -.registration state.-> MEM[("/opt/.openclaw-bsc/memory<br/>registration_PHONE.json")]:::db
+    ORD -.audit.-> TASK[("task_runs.sqlite")]:::db
+    </div>
+  </div>
+
+  <h3>Component responsibilities</h3>
+  <table>
+    <thead><tr><th>Component</th><th>Tech</th><th>Owns</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Brian (main)</strong></td><td><code>openclaw_bsc/workspace-main</code></td><td>Public WhatsApp responder. One message per turn. NEVER calls API directly.</td></tr>
+      <tr><td><strong>Orders</strong></td><td><code>openclaw_bsc/workspace-bsc</code></td><td>Executes every BSC op via the API. Calls <code>SKILL-BSC-AUTHENTICATE</code> first.</td></tr>
+      <tr><td><strong>BSC API</strong></td><td>NestJS on gda-ce01</td><td><code>/auth/register/youngsters</code>, <code>/auth/register/schools</code>, <code>/admin/family-context</code>, <code>/admin/family-orders</code>, orders CRUD</td></tr>
+      <tr><td><strong>BSC Web</strong></td><td>Next.js on gda-ce01</td><td>Role-based admin / kitchen / delivery / parent screens</td></tr>
+      <tr><td><strong>PostgreSQL</strong></td><td>gda-ce01</td><td>Family membership via <code>family_id</code>, not surname</td></tr>
+      <tr><td><strong>Runtime</strong></td><td>PM2 · Nginx · GCS</td><td><code>schoolcatering-web</code> + <code>schoolcatering-api</code> via pm2 + Nginx; GCS for media</td></tr>
+      <tr><td><strong>State files</strong></td><td><code>/opt/.openclaw-bsc/memory/</code></td><td>Per-phone registration state (JSON). Bash access only.</td></tr>
+    </tbody>
+  </table>
+
+  <p class="section-desc">
+    <strong>Brian's loop:</strong> Intake (WhatsApp) → Authenticate (phone → family via API) → Plan (pick skill) → Delegate to Orders via <code>sessions_spawn</code> → Verify → Relay as single WhatsApp message → Escalate on errors.
+  </p>
+
+  <h3>POC-only vs. generalizable</h3>
+  <table>
+    <thead><tr><th>Area</th><th>POC-only today</th><th>Ready to reuse</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Channel</strong></td><td>WhatsApp via gateway</td><td>Agent-to-API delegation works for any channel adapter</td></tr>
+      <tr><td><strong>Skills</strong></td><td>BSC-specific</td><td>Skill-file pattern (read per-request) works for any vertical</td></tr>
+      <tr><td><strong>State</strong></td><td>Flat JSON in <code>/memory/</code></td><td>Promote to shared KV / table once multi-client</td></tr>
+      <tr><td><strong>Auth</strong></td><td>Phone → family_id</td><td>Pattern reapplies to any identity source</td></tr>
+      <tr><td><strong>Approval</strong></td><td>Superuser bypass</td><td>Replace with SOMA-style role-based HITL gates</td></tr>
+    </tbody>
+  </table>
+
+  <div class="prev-next">
+    <a href="#part-d">← Part D · Overview</a>
+    <a href="#appendix">Appendix →</a>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════
+     PAGE 9 · APPENDIX — Change Mgmt + Timeline + Principles + Refs
+     Preserves: Dual-Track Transformation + Integrated Timeline
+     ══════════════════════════════════════════════════════════════ -->
+<section class="section appendix-card" id="appendix">
+  <div class="section-tools"><a href="#top">↑ Top</a></div>
+  <h2><span class="part-tag" style="background:var(--gda-teal);color:#fff;">APPENDIX</span>Change Management · Timeline · Principles · References</h2>
+
+  <h3>Dual-Track Transformation</h3>
+  <p class="section-desc">People + IT tracks moving from today's labor-heavy state to the Venturi target, gated by 3 build-to-operate checkpoints.</p>
+  <div class="diagram-wrap">
+    <div class="mermaid">
 %%{init: {"flowchart": {"subGraphTitleMargin": {"top": 20, "bottom": 10}}}}%%
 flowchart LR
     classDef today fill:#FEE2E2,stroke:#991B1B,color:#7F1D1D,stroke-width:2px
@@ -386,76 +1016,33 @@ flowchart LR
     classDef tech fill:#0B5394,stroke:#052E5C,color:#fff,stroke-width:2px
     classDef gate fill:#DC2626,stroke:#7F1D1D,color:#fff,stroke-width:2px
 
-    TODAY["TODAY<br/>30 producers<br/>Labor-heavy<br/>Billable hours"]:::today
+    TODAY["TODAY<br/>30 producers · Billable hours"]:::today
 
-    subgraph PEOPLE["PEOPLE TRACK — Producer → Orchestrator"]
-        direction TB
-        P1["Awareness<br/>&amp; Vision"]:::people
-        P2["AI Academy<br/>+ Certification"]:::people
-        P3["Role Transition<br/>Shadow → Lead"]:::people
-        P4["New KPIs<br/>+ Rewards"]:::people
-        P1 --> P2 --> P3 --> P4
+    subgraph PEOPLE["PEOPLE — Producer → Orchestrator"]
+        P1["Awareness"]:::people --> P2["AI Academy"]:::people --> P3["Role Transition"]:::people --> P4["New KPIs"]:::people
     end
 
-    subgraph TECH["IT TRACK — Fragmented → Venturi Stack"]
-        direction TB
-        T1["GCP + IAM<br/>Foundation"]:::tech
-        T2["Multi-LLM<br/>+ MCP"]:::tech
-        T3["Dual Build Tracks<br/>Branding + SaaS"]:::tech
-        T4["Observability<br/>+ Legacy Sunset"]:::tech
-        T1 --> T2 --> T3 --> T4
+    subgraph TECH["IT — Fragmented → Venturi Stack"]
+        T1["GCP + IAM"]:::tech --> T2["Multi-LLM + MCP"]:::tech --> T3["Dual Build Tracks"]:::tech --> T4["Observability + Sunset"]:::tech
     end
 
-    G1{{"Gate 1<br/>Launch Ready"}}:::gate
-    G2{{"Gate 2<br/>Pilots Validated"}}:::gate
-    G3{{"Gate 3<br/>Scale Ready"}}:::gate
+    G1{{"Gate 1 · Launch Ready"}}:::gate
+    G2{{"Gate 2 · Pilots Validated"}}:::gate
+    G3{{"Gate 3 · Scale Ready"}}:::gate
 
-    FUTURE["VENTURI STATE<br/>25 AI Orchestrators<br/>GCP + Multi-LLM Core<br/>RM 1M by Month 18<br/>20% IRR"]:::future
+    FUTURE["VENTURI STATE<br/>25 Orchestrators · RM 1M · 20% IRR"]:::future
 
-    TODAY --> PEOPLE &amp; TECH
+    TODAY --> PEOPLE & TECH
     PEOPLE --> G1
     TECH --> G1
     G1 --> G2 --> G3 --> FUTURE
-      </div>
     </div>
-
-    <h3>Role Evolution at a Glance</h3>
-    <table>
-      <thead>
-        <tr><th>From (Producer)</th><th>To (Orchestrator)</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>Content Writer</td><td>Content Orchestrator + Brand Guardian</td></tr>
-        <tr><td>Web Developer</td><td>AI-Assisted Engineer + Solution Architect</td></tr>
-        <tr><td>SEO Specialist</td><td>SEO Strategist + QA Reviewer</td></tr>
-        <tr><td>Designer</td><td>Creative Director + Prompt Curator</td></tr>
-        <tr><td>Account Manager</td><td>Client Success + Managed-Service Lead</td></tr>
-        <tr><td>Social Media Exec</td><td>Community Strategist + Agent Supervisor</td></tr>
-      </tbody>
-    </table>
-
-    <h3>Current → Target IT State</h3>
-    <table>
-      <thead>
-        <tr><th>Layer</th><th>Today</th><th>Venturi Target</th></tr>
-      </thead>
-      <tbody>
-        <tr><td><strong>AI</strong></td><td>Ad-hoc ChatGPT + Gemini</td><td>Claude (primary) + OpenAI + Gemini + DeepSeek</td></tr>
-        <tr><td><strong>Infra</strong></td><td>Mixed hosting</td><td>GCP-led hybrid</td></tr>
-        <tr><td><strong>Build</strong></td><td>Per-project tooling</td><td>Branding track (React/Vite) + SaaS track (Next/Nest)</td></tr>
-        <tr><td><strong>QA</strong></td><td>Manual spreadsheets</td><td>Python engine + 7 web tools</td></tr>
-        <tr><td><strong>Knowledge</strong></td><td>Scattered</td><td>Central KB + Vector DB + MCP</td></tr>
-        <tr><td><strong>Analytics</strong></td><td>Reports on request</td><td>BigQuery + Looker dashboards</td></tr>
-      </tbody>
-    </table>
   </div>
 
-  <!-- ── 4. Integrated Timeline ─────────────────── -->
-  <div class="section">
-    <h2>5. Integrated Timeline — People + IT + Gates (Phased)</h2>
-    <div class="diagram-wrap diagram-wrap-xl">
-      <div class="mermaid">
-%%{init: {"flowchart": {"subGraphTitleMargin": {"top": 20, "bottom": 10}, "nodeSpacing": 50, "rankSpacing": 60, "padding": 20}}}%%
+  <h3>Integrated Timeline — People + IT + Gates (phased)</h3>
+  <div class="diagram-wrap">
+    <div class="mermaid">
+%%{init: {"flowchart": {"subGraphTitleMargin": {"top": 20, "bottom": 10}, "nodeSpacing": 40, "rankSpacing": 50, "padding": 16}}}%%
 flowchart TB
     classDef phase fill:#FEF3C7,stroke:#92400E,color:#78350F,stroke-width:2px,font-weight:bold
     classDef people fill:#059669,stroke:#064E3B,color:#fff,stroke-width:2px
@@ -466,120 +1053,147 @@ flowchart TB
 
     subgraph ROW1[" "]
         direction LR
-        subgraph PH1["PHASE 1 · Foundation"]
+        subgraph PH1["PH1 · Foundation"]
             direction LR
-            F1["Change Lead appointed<br/>Awareness campaign"]:::people
-            F2["GCP + IAM setup<br/>Multi-LLM + MCP rollout"]:::tech
+            F1["Change Lead<br/>Awareness"]:::people
+            F2["GCP + IAM<br/>Multi-LLM + MCP"]:::tech
         end
         G1{{"Gate 1<br/>Launch Ready"}}:::gate
-        subgraph PH2["PHASE 2 · Service Build"]
+        subgraph PH2["PH2 · Service Build"]
             direction LR
-            S1["AI Academy<br/>Role mapping &amp; redeployment"]:::people
-            S2["Dual build tracks<br/>Knowledge Base + Vector DB"]:::tech
+            S1["AI Academy<br/>Role mapping"]:::people
+            S2["Dual build tracks<br/>KB + Vector DB"]:::tech
         end
-        subgraph PH3["PHASE 3 · Pilot Launch"]
+        subgraph PH3["PH3 · Pilot Launch"]
             direction LR
             L1["Orchestrator certification"]:::people
-            L2["Python QA engine (7 tools)"]:::tech
-            L3["Bali pilots · Hospitality + F&amp;B"]:::commercial
+            L2["Python QA (7 tools)"]:::tech
+            L3["Bali pilots — Hosp + F&amp;B"]:::commercial
         end
         PH1 --> G1 --> PH2 --> PH3
     end
 
-    G2{{"Gate 2 — Pilots Validated"}}:::gate
+    G2{{"Gate 2 · Pilots Validated"}}:::gate
 
     subgraph ROW2[" "]
         direction LR
-        subgraph PH4["PHASE 4 · Market Broadening"]
+        subgraph PH4["PH4 · Market Broadening"]
             direction LR
-            B1["New KPIs + reward alignment"]:::people
+            B1["New KPIs + rewards"]:::people
             B2["Looker dashboards"]:::tech
-            B3["Web Dev + SEO live<br/>Managed services + white-label"]:::commercial
+            B3["Web Dev + SEO live"]:::commercial
         end
-        G3{{"Gate 3<br/>Scale Ready"}}:::gate
-        subgraph PH5["PHASE 5 · Scale Economics"]
+        G3{{"Gate 3 · Scale Ready"}}:::gate
+        subgraph PH5["PH5 · Scale Economics"]
             direction LR
-            SC1["Legacy decommission waves"]:::tech
+            SC1["Legacy decommission"]:::tech
             SC2["Regional expansion<br/>Indonesia + Australia"]:::commercial
         end
         PH4 --> G3 --> PH5
     end
 
-    RESULT["RM 1M Revenue · 25 Orchestrators · 20% IRR"]:::outcome
+    RESULT["RM 1M · 25 Orchestrators · 20% IRR"]:::outcome
 
     ROW1 --> G2 --> ROW2 --> RESULT
 
     class PH1,PH2,PH3,PH4,PH5 phase
     style ROW1 fill:transparent,stroke:#d1d5db,stroke-dasharray:4
     style ROW2 fill:transparent,stroke:#d1d5db,stroke-dasharray:4
-      </div>
     </div>
   </div>
 
-  <!-- ── 5. Governing Principles ────────────────── -->
-  <div class="section">
-    <h2>6. Governing Principles (One-Page Summary)</h2>
-    <table class="principles-table">
-      <thead>
-        <tr><th>Principle</th><th>What It Means</th><th>How It Shows Up</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>Venturi Compression</strong></td>
-          <td>Broad demand → narrow AI throat → high-velocity output</td>
-          <td>25-person team delivers work of 75 via Claude + Openclaw</td>
-        </tr>
-        <tr>
-          <td><strong>No-Manpower-Growth</strong></td>
-          <td>Scale revenue without scaling headcount</td>
-          <td>Redeploy, don't replace; capability via system expansion</td>
-        </tr>
-<tr>
-          <td><strong>Revenue Quality &gt; Volume</strong></td>
-          <td>Recurring + managed beats one-off billable</td>
-          <td>Track recurring-revenue share as a lead KPI</td>
-        </tr>
-        <tr>
-          <td><strong>Coexist Before Cutover</strong></td>
-          <td>Protect live client work during IT migration</td>
-          <td>Pilots on new stack; legacy continues until Gate 2</td>
-        </tr>
-        <tr>
-          <td><strong>Single Source of Truth</strong></td>
-          <td>One brain for the agency, shared across all work</td>
-          <td>Knowledge Base + prompt library treated as a product</td>
-        </tr>
-        <tr>
-          <td><strong>Human Judgment at the Edges</strong></td>
-          <td>AI in the middle, humans at intake + approval</td>
-          <td>HITL gates on every client-facing deliverable</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <h3>Role Evolution · People Track</h3>
+  <table>
+    <thead><tr><th>From (Producer)</th><th>To (Orchestrator)</th></tr></thead>
+    <tbody>
+      <tr><td>Content Writer</td><td>Content Orchestrator + Brand Guardian</td></tr>
+      <tr><td>Web Developer</td><td>AI-Assisted Engineer + Solution Architect</td></tr>
+      <tr><td>SEO Specialist</td><td>SEO Strategist + QA Reviewer</td></tr>
+      <tr><td>Designer</td><td>Creative Director + Prompt Curator</td></tr>
+      <tr><td>Account Manager</td><td>Client Success + Managed-Service Lead</td></tr>
+      <tr><td>Social Media Exec</td><td>Community Strategist + Agent Supervisor</td></tr>
+    </tbody>
+  </table>
 
-  <!-- ── 7. Reference Documents ─────────────────── -->
-  <div class="section">
-    <h2>7. Reference Documents</h2>
+  <h3>Current → Target IT State</h3>
+  <table>
+    <thead><tr><th>Layer</th><th>Today</th><th>Venturi Target</th></tr></thead>
+    <tbody>
+      <tr><td><strong>AI</strong></td><td>Ad-hoc ChatGPT + Gemini</td><td>Claude (primary) + OpenAI + Gemini + DeepSeek</td></tr>
+      <tr><td><strong>Infra</strong></td><td>Mixed hosting</td><td>GCP-led hybrid</td></tr>
+      <tr><td><strong>Build</strong></td><td>Per-project tooling</td><td>Branding (Vite SSR + React 19 + Tailwind) + SaaS (Next / NestJS)</td></tr>
+      <tr><td><strong>QA</strong></td><td>Manual spreadsheets</td><td>Python engine + 7 web tools</td></tr>
+      <tr><td><strong>Knowledge</strong></td><td>Scattered</td><td>Central KB + Vector DB + MCP</td></tr>
+      <tr><td><strong>Analytics</strong></td><td>Reports on request</td><td>BigQuery + Looker dashboards</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Governing Principles</h3>
+  <table class="principles-table">
+    <thead><tr><th>Principle</th><th>What It Means</th><th>How It Shows Up</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Venturi Compression</strong></td><td>Broad demand → narrow AI throat → high-velocity output</td><td>25 people deliver work of 75 via Claude + Openclaw</td></tr>
+      <tr><td><strong>No-Manpower-Growth</strong></td><td>Scale revenue without scaling headcount</td><td>Redeploy, don't replace</td></tr>
+      <tr><td><strong>Revenue Quality &gt; Volume</strong></td><td>Recurring + managed beats one-off billable</td><td>Recurring-revenue share as lead KPI</td></tr>
+      <tr><td><strong>Coexist Before Cutover</strong></td><td>Protect live client work during migration</td><td>Pilots on new stack; legacy runs until Gate 2</td></tr>
+      <tr><td><strong>Single Source of Truth</strong></td><td>One brain for the agency</td><td>KB + prompt library treated as a product</td></tr>
+      <tr><td><strong>Human Judgment at the Edges</strong></td><td>AI middle, humans at intake + approval</td><td>HITL gates on every client-facing deliverable</td></tr>
+    </tbody>
+  </table>
+
+  <div id="references" style="margin-top:16px;padding-top:12px;border-top:2px solid var(--gda-gold);">
+    <h3 style="margin-top:0;">Reference Documents</h3>
+    <p class="section-desc">Click a chip to open in the in-page viewer.</p>
     <ul class="ref-list">
       <li><a class="ref-link" href="docs/ai_business_plan.html" data-doc="docs/ai_business_plan.html">docs/ai_business_plan.html</a></li>
       <li><a class="ref-link" href="docs/ai_business_plan_appendix.html" data-doc="docs/ai_business_plan_appendix.html">docs/ai_business_plan_appendix.html</a></li>
-      <li><a class="ref-link" href="docs/qa_automation.html" data-doc="docs/qa_automation.html">docs/qa_automation.html</a></li>
       <li><a class="ref-link" href="docs/figma_to_site_automation.html" data-doc="docs/figma_to_site_automation.html">docs/figma_to_site_automation.html</a></li>
+      <li><a class="ref-link" href="docs/qa_automation.html" data-doc="docs/qa_automation.html">docs/qa_automation.html</a></li>
+      <li><a class="ref-link" href="docs/socmed_plan_01.md" data-doc="docs/socmed_plan_01.md">docs/socmed_plan_01.md</a></li>
+      <li><a class="ref-link" href="docs/gaia_plans.md" data-doc="docs/gaia_plans.md">docs/gaia_plans.md</a></li>
+      <li><a class="ref-link" href="docs/venturi_02.png" data-doc="docs/venturi_02.png">docs/venturi_02.png</a></li>
+      <li><a class="ref-link" href="https://github.com/Gaia-Digital-Agency/gaia_plans" target="_blank" rel="noopener">GitHub · gaia_plans</a></li>
+      <li><a class="ref-link" href="https://github.com/Gaia-Digital-Agency/web_templatebase" target="_blank" rel="noopener">GitHub · web_templatebase</a></li>
+      <li><a class="ref-link" href="https://github.com/Gaia-Digital-Agency/openclaw_var" target="_blank" rel="noopener">GitHub · openclaw_var (Victor)</a></li>
+      <li><a class="ref-link" href="https://github.com/Gaia-Digital-Agency/openclaw_bsc" target="_blank" rel="noopener">GitHub · openclaw_bsc (Brian)</a></li>
+      <li><a class="ref-link" href="https://github.com/Gaia-Digital-Agency/blossom_schoolcatering" target="_blank" rel="noopener">GitHub · blossom_schoolcatering</a></li>
     </ul>
   </div>
 
-  <div class="doc-footer">
-    Gaia Digital Agency · Gaia AI Operating Model &amp; Change Reference · www.gaiada.com
+  <div class="prev-next">
+    <a href="#part-d-arch">← Part D · Architecture</a>
+    <a href="#top">↑ Back to top</a>
   </div>
+</section>
 
-</div>
+</main>
 
+<!-- ══════ Bottom mirror nav ══════ -->
+<nav class="bottom-nav" aria-label="Secondary">
+  <a href="#top" class="nav-brand">
+    <img src="assets/gda-logo-nav.png" alt="GDA" />
+    <span>Gaia AI ↑</span>
+  </a>
+  <a href="#part-a">Business Plan</a>
+  <a href="#part-b">Figma→Site</a>
+  <a href="#part-c">Socmed</a>
+  <a href="#part-d">POC</a>
+  <a href="#appendix">Appendix</a>
+  <a href="#references">Refs</a>
+</nav>
+
+<footer class="doc-footer">
+  <strong>Gaia Digital Agency</strong> · <a href="https://www.gaiada.com" target="_blank" rel="noopener">www.gaiada.com</a>
+  · Gaia AI Operating Model &amp; System Blueprints
+  · Repo: <a href="https://github.com/Gaia-Digital-Agency/gaia_plans" target="_blank" rel="noopener">Gaia-Digital-Agency/gaia_plans</a>
+</footer>
+
+<!-- Reference doc modal viewer -->
 <div class="doc-modal" id="doc-modal" aria-hidden="true">
   <div class="doc-modal-content" role="dialog" aria-modal="true" aria-labelledby="doc-modal-title">
     <div class="doc-modal-header">
       <div class="doc-modal-title" id="doc-modal-title">Document Viewer</div>
-      <button class="doc-modal-close" id="doc-modal-close" type="button" aria-label="Close document viewer">&times;</button>
+      <button class="doc-modal-close" id="doc-modal-close" type="button" aria-label="Close">&times;</button>
     </div>
     <iframe class="doc-viewer" id="doc-viewer" title="Reference document viewer"></iframe>
   </div>
@@ -593,15 +1207,16 @@ flowchart TB
       subGraphTitleMargin: { top: 20, bottom: 10 },
       useMaxWidth: false,
       htmlLabels: true,
-      diagramPadding: 20
+      diagramPadding: 16
     }
   });
 
+  /* Reference-doc modal viewer — iframes docs/* */
   const docModal = document.getElementById('doc-modal');
   const docViewer = document.getElementById('doc-viewer');
   const docModalTitle = document.getElementById('doc-modal-title');
   const docModalClose = document.getElementById('doc-modal-close');
-  const docLinks = document.querySelectorAll('.ref-link');
+  const docLinks = document.querySelectorAll('.ref-link[data-doc]');
 
   function closeDocModal() {
     docModal.classList.remove('is-open');
@@ -621,16 +1236,27 @@ flowchart TB
   });
 
   docModalClose.addEventListener('click', closeDocModal);
-
   docModal.addEventListener('click', (event) => {
-    if (event.target === docModal) {
-      closeDocModal();
-    }
+    if (event.target === docModal) closeDocModal();
   });
 
+  /* Keyboard shortcuts: 1–5 Parts / Appendix, 0 Top, Esc close modal */
+  const keyMap = { '1':'part-a', '2':'part-b', '3':'part-c', '4':'part-d', '5':'appendix', '0':'top' };
   document.addEventListener('keydown', (event) => {
+    const tag = document.activeElement && document.activeElement.tagName;
+    if (tag === 'INPUT' || tag === 'TEXTAREA' || event.ctrlKey || event.metaKey || event.altKey) return;
     if (event.key === 'Escape' && docModal.classList.contains('is-open')) {
       closeDocModal();
+      return;
+    }
+    const id = keyMap[event.key];
+    if (id) {
+      const el = document.getElementById(id);
+      if (el) {
+        event.preventDefault();
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        history.replaceState(null, '', '#' + id);
+      }
     }
   });
 </script>

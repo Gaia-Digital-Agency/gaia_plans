@@ -1,0 +1,14 @@
+{
+  "name": "Gaia AI — Unified Operating Model & System Blueprints",
+  "short_name": "Gaia AI Blueprints",
+  "description": "Gaia Digital Agency — Venturi AI Operating Model, Figma→Site Automation, Social Media Automation, and Sample POC.",
+  "icons": [
+    { "src": "favicon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "favicon-512.png", "sizes": "512x512", "type": "image/png" }
+  ],
+  "theme_color": "#E8B830",
+  "background_color": "#E8B830",
+  "display": "standalone",
+  "start_url": "../index.html",
+  "scope": "../"
+}
