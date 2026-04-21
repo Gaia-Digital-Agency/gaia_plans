@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gaia AI — Operating Model &amp; Change Reference</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+      color: #1f2937;
+      background: #f8fafc;
+    }
+
+    .page {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 48px 40px 80px;
+    }
+
+    /* ── Header ── */
+    .doc-header {
+      border-bottom: 3px solid #0B5394;
+      padding-bottom: 24px;
+      margin-bottom: 40px;
+    }
+    .doc-header h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #0B5394;
+      margin-bottom: 10px;
+    }
+    .doc-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 24px;
+      font-size: 13px;
+      color: #6b7280;
+    }
+    .doc-meta span strong { color: #374151; }
+
+    /* ── Sections ── */
+    .section {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 32px 36px;
+      margin-bottom: 32px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    }
+
+    h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #0B5394;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #e5e7eb;
+    }
+    h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #374151;
+      margin: 24px 0 10px;
+    }
+
+    .section-desc {
+      font-size: 14px;
+      color: #4b5563;
+      margin-bottom: 20px;
+    }
+    .section-desc strong { color: #111827; }
+
+    /* ── Diagrams ── */
+    .diagram-wrap {
+      background: #fafafa;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 32px 24px;
+      overflow-x: auto;
+    }
+    .diagram-wrap .mermaid {
+      display: block;
+      width: 100%;
+    }
+    .diagram-wrap .mermaid svg {
+      width: 100% !important;
+      height: auto !important;
+      min-height: 400px;
+    }
+
+    /* ── Tables ── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      margin-top: 12px;
+    }
+    thead tr {
+      background: #0B5394;
+      color: #fff;
+    }
+    thead th {
+      padding: 10px 14px;
+      text-align: left;
+      font-weight: 600;
+    }
+    tbody tr:nth-child(odd)  { background: #f9fafb; }
+    tbody tr:nth-child(even) { background: #fff; }
+    tbody td {
+      padding: 9px 14px;
+      border-bottom: 1px solid #e5e7eb;
+      vertical-align: top;
+    }
+    tbody td strong { color: #0B5394; }
+
+    /* ── Principles grid ── */
+    .principles-table thead tr { background: #065F46; }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 4px solid #0B5394;
+      background: #eff6ff;
+      padding: 14px 18px;
+      border-radius: 0 8px 8px 0;
+      font-size: 15px;
+      color: #1e40af;
+      margin: 16px 0;
+    }
+
+    /* ── Footer ── */
+    .doc-footer {
+      text-align: center;
+      font-size: 12px;
+      color: #9ca3af;
+      margin-top: 48px;
+      padding-top: 20px;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    /* ── Reference list ── */
+    .ref-list {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .ref-list li {
+      list-style: none;
+    }
+    .ref-link {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 6px;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: #1d4ed8;
+      font-family: monospace;
+      text-decoration: none;
+      display: inline-block;
+      cursor: pointer;
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+    .ref-link:hover {
+      background: #dbeafe;
+      border-color: #93c5fd;
+    }
+
+    .doc-modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: rgba(15, 23, 42, 0.55);
+      z-index: 1000;
+    }
+    .doc-modal.is-open {
+      display: flex;
+    }
+    .doc-modal-content {
+      width: min(1100px, 100%);
+      height: min(85vh, 900px);
+      background: #fff;
+      border-radius: 16px;
+      border: 1px solid #cbd5e1;
+      box-shadow: 0 24px 60px rgba(15, 23, 42, 0.22);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .doc-modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 18px;
+      border-bottom: 1px solid #e5e7eb;
+      background: #f8fafc;
+    }
+    .doc-modal-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #0f172a;
+      word-break: break-all;
+    }
+    .doc-modal-close {
+      border: 0;
+      background: #e2e8f0;
+      color: #0f172a;
+      font-size: 22px;
+      line-height: 1;
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      cursor: pointer;
+    }
+    .doc-modal-close:hover {
+      background: #cbd5e1;
+    }
+    .doc-viewer {
+      width: 100%;
+      flex: 1;
+      border: 0;
+      background: #fff;
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ── Header ─────────────────────────────────── -->
+  <div class="doc-header">
+    <h1>Gaia AI — Operating Model &amp; Change Reference</h1>
+    <div class="doc-meta">
+      <span><strong>Organization:</strong> Gaia Digital Agency (www.gaiada.com)</span>
+      <span><strong>Model:</strong> Venturi-based, Claude-centric AI Operating Architecture</span>
+      <span><strong>Companion to:</strong> Gaia AI Business Plan</span>
+    </div>
+  </div>
+
+  <!-- ── 1. One-Line Positioning ───────────────────── -->
+  <div class="section">
+    <h2>1. One-Line Positioning</h2>
+    <blockquote>
+      <strong>Gaia AI</strong> — <em>The service-enabled tech platform where AI labour, GCP scales, and humans give it thinking soul.</em>
+    </blockquote>
+    <p style="font-size:13px;color:#6b7280;margin-top:12px;">
+      Single reference document · merges operating architecture + change management · renders in any Mermaid-compatible viewer (GitHub, Notion, Obsidian, VS Code).
+    </p>
+  </div>
+
+  <!-- ── 2. Core Operating Model ────────────────── -->
+  <div class="section">
+    <h2>2. Core Operating Model — The Concentric Architecture</h2>
+    <p class="section-desc">
+      Reads inside-out: <strong>GCP ecosystem + Claude AI core → Claude tools → Operations layer (QA + Openclaw) → 7 client service verticals</strong>,
+      with Knowledge Base, MCP, Governance, and Feedback as supporting layers.
+    </p>
+    <div class="diagram-wrap">
+      <div class="mermaid">
+%%{init: {"flowchart": {"subGraphTitleMargin": {"top": 20, "bottom": 10}}}}%%
+flowchart TB
+    classDef core fill:#0B5394,stroke:#052E5C,stroke-width:3px,color:#fff,font-weight:bold
+    classDef engine fill:#D97706,stroke:#7C2D12,stroke-width:3px,color:#fff,font-weight:bold
+    classDef tools fill:#F59E0B,stroke:#92400E,stroke-width:2px,color:#1F2937
+    classDef ops fill:#059669,stroke:#064E3B,stroke-width:2px,color:#fff
+    classDef services fill:#7C3AED,stroke:#4C1D95,stroke-width:2px,color:#fff
+    classDef support fill:#6B7280,stroke:#1F2937,stroke-width:1px,color:#fff
+    classDef governance fill:#DC2626,stroke:#7F1D1D,stroke-width:2px,color:#fff
+
+    subgraph CORE["CORE — Ecosystem + Engine"]
+        GCP["Google Cloud Platform<br/>Infrastructure · BigQuery · Looker"]
+        CLAUDE["Claude AI<br/>Central Intelligence Engine"]
+        GCP --- CLAUDE
+    end
+
+    subgraph RING1["Ring 1 — Claude Product Suite"]
+        CC["Claude Code"]
+        CW["Cowork"]
+        CD["Claude Design"]
+        CH["Claude Chat"]
+    end
+
+    subgraph RING2["Ring 2 — Operations Layer"]
+        QA["Python QA Engine<br/>7 Web Tools → Simplified to Claude"]
+        OC["Openclaw<br/>Multi-agent Orchestration"]
+    end
+
+    subgraph RING3["Ring 3 — Service Verticals"]
+        HOSP["Hospitality"]
+        FB["F&amp;B"]
+        WEB["Web Dev"]
+        SEO["SEO"]
+        BRAND["Branding"]
+        ADS["Ads"]
+        SMM["Social Media"]
+    end
+
+    subgraph SUPPORT["Support &amp; Governance"]
+        KB["Knowledge Base<br/>(Brand · SOPs · Context)"]
+        MCP["MCP Connectors<br/>(Workspace · CRM · Drive)"]
+        HITL["Human-in-the-Loop<br/>Review Gates"]
+        LOOP["Feedback Loop<br/>→ KB improvement"]
+    end
+
+    CLAUDE --> CC & CW & CD & CH
+    CC & CW & CD & CH --> QA & OC
+    OC --> HOSP & FB & WEB & SEO & BRAND & ADS & SMM
+    KB -.feeds.-> CLAUDE
+    MCP -.connects.-> CLAUDE
+    HITL -.reviews.-> OC
+    RING3 -.outcomes.-> LOOP
+    LOOP -.-> KB
+
+    class GCP core
+    class CLAUDE engine
+    class CC,CW,CD,CH tools
+    class QA,OC ops
+    class HOSP,FB,WEB,SEO,BRAND,ADS,SMM services
+    class KB,MCP,LOOP support
+    class HITL governance
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 2. Delivery Pipelines ───────────────────── -->
+  <div class="section">
+    <h2>3. Delivery Pipelines — Three Signature Flows</h2>
+    <p class="section-desc">
+      Three service pipelines share one orchestration core: <strong>Web Dev</strong> (Figma→Code→GCP),
+      <strong>Social Media</strong> (platforms ↔ Openclaw ↔ Claude), and the <strong>QA engine</strong> (7 tools → Python → Claude actions).
+    </p>
+    <div class="diagram-wrap">
+      <div class="mermaid">
+%%{init: {"flowchart": {"subGraphTitleMargin": {"top": 20, "bottom": 10}}}}%%
+flowchart LR
+    classDef input fill:#F472B6,stroke:#9D174D,color:#fff,stroke-width:2px
+    classDef ai fill:#D97706,stroke:#7C2D12,color:#fff,stroke-width:2px
+    classDef cloud fill:#0B5394,stroke:#052E5C,color:#fff,stroke-width:2px
+    classDef check fill:#059669,stroke:#064E3B,color:#fff,stroke-width:2px
+    classDef human fill:#DC2626,stroke:#7F1D1D,color:#fff,stroke-width:2px
+
+    subgraph WEBDEV["Web Dev Pipeline"]
+        direction LR
+        W1["Figma<br/>Design"]:::input --> W2["Claude Code<br/>Build"]:::ai --> W3["Python QA<br/>Scan"]:::check --> W4["GCP<br/>Host"]:::cloud
+        W3 -.fail.-> W2
+    end
+
+    subgraph SOCIAL["Social Media Pipeline"]
+        direction LR
+        S1["Platforms<br/>IG · TikTok · LinkedIn<br/>FB · X · YouTube"]:::input -->|"listen"| S2["Openclaw<br/>Agents"]:::check
+        S2 <--> S3["Claude AI<br/>Strategy · Copy"]:::ai
+        S2 --> S4["Human<br/>Approval"]:::human -->|"publish"| S1
+    end
+
+    subgraph QAENGINE["QA Engine — 7 Web Tools"]
+        direction LR
+        Q1["Lighthouse · axe-core<br/>SEMrush · OWASP ZAP<br/>Screaming Frog<br/>BrowserStack · GA4"]:::input --> Q2["Python<br/>Orchestrator"]:::check --> Q3["Claude<br/>Action items"]:::ai
+    end
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 3. Change Management ────────────────────── -->
+  <div class="section">
+    <h2>4. Change Management — Dual-Track Transformation</h2>
+    <p class="section-desc">
+      Two parallel tracks (<strong>People + IT</strong>) running from Today's labor-heavy state to the Venturi target state,
+      gated by the 90-day build-to-operate checkpoints.
+    </p>
+    <div class="diagram-wrap">
+      <div class="mermaid">
+%%{init: {"flowchart": {"subGraphTitleMargin": {"top": 20, "bottom": 10}}}}%%
+flowchart LR
+    classDef today fill:#FEE2E2,stroke:#991B1B,color:#7F1D1D,stroke-width:2px
+    classDef future fill:#D1FAE5,stroke:#065F46,color:#064E3B,stroke-width:3px,font-weight:bold
+    classDef people fill:#059669,stroke:#064E3B,color:#fff,stroke-width:2px
+    classDef tech fill:#0B5394,stroke:#052E5C,color:#fff,stroke-width:2px
+    classDef gate fill:#DC2626,stroke:#7F1D1D,color:#fff,stroke-width:2px
+
+    TODAY["TODAY<br/>30 producers<br/>Labor-heavy<br/>Billable hours"]:::today
+
+    subgraph PEOPLE["PEOPLE TRACK — Producer → Orchestrator"]
+        direction TB
+        P1["Awareness<br/>&amp; Vision"]:::people
+        P2["AI Academy<br/>+ Certification"]:::people
+        P3["Role Transition<br/>Shadow → Lead"]:::people
+        P4["New KPIs<br/>+ Rewards"]:::people
+        P1 --> P2 --> P3 --> P4
+    end
+
+    subgraph TECH["IT TRACK — Fragmented → Venturi Stack"]
+        direction TB
+        T1["GCP + IAM<br/>Foundation"]:::tech
+        T2["Multi-LLM<br/>+ MCP"]:::tech
+        T3["Dual Build Tracks<br/>Branding + SaaS"]:::tech
+        T4["Observability<br/>+ Legacy Sunset"]:::tech
+        T1 --> T2 --> T3 --> T4
+    end
+
+    G1{{"Gate 1<br/>Launch Ready"}}:::gate
+    G2{{"Gate 2<br/>Pilots Validated"}}:::gate
+    G3{{"Gate 3<br/>Scale Ready"}}:::gate
+
+    FUTURE["VENTURI STATE<br/>25 AI Orchestrators<br/>GCP + Multi-LLM Core<br/>RM 1M by Month 18<br/>20% IRR"]:::future
+
+    TODAY --> PEOPLE &amp; TECH
+    PEOPLE --> G1
+    TECH --> G1
+    G1 --> G2 --> G3 --> FUTURE
+      </div>
+    </div>
+
+    <h3>Role Evolution at a Glance</h3>
+    <table>
+      <thead>
+        <tr><th>From (Producer)</th><th>To (Orchestrator)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Content Writer</td><td>Content Orchestrator + Brand Guardian</td></tr>
+        <tr><td>Web Developer</td><td>AI-Assisted Engineer + Solution Architect</td></tr>
+        <tr><td>SEO Specialist</td><td>SEO Strategist + QA Reviewer</td></tr>
+        <tr><td>Designer</td><td>Creative Director + Prompt Curator</td></tr>
+        <tr><td>Account Manager</td><td>Client Success + Managed-Service Lead</td></tr>
+        <tr><td>Social Media Exec</td><td>Community Strategist + Agent Supervisor</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Current → Target IT State</h3>
+    <table>
+      <thead>
+        <tr><th>Layer</th><th>Today</th><th>Venturi Target</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>AI</strong></td><td>Ad-hoc ChatGPT + Gemini</td><td>Claude (primary) + OpenAI + Gemini + DeepSeek</td></tr>
+        <tr><td><strong>Infra</strong></td><td>Mixed hosting</td><td>GCP-led hybrid</td></tr>
+        <tr><td><strong>Build</strong></td><td>Per-project tooling</td><td>Branding track (React/Vite) + SaaS track (Next/Nest)</td></tr>
+        <tr><td><strong>QA</strong></td><td>Manual spreadsheets</td><td>Python engine + 7 web tools</td></tr>
+        <tr><td><strong>Knowledge</strong></td><td>Scattered</td><td>Central KB + Vector DB + MCP</td></tr>
+        <tr><td><strong>Analytics</strong></td><td>Reports on request</td><td>BigQuery + Looker dashboards</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ── 4. Integrated Timeline ─────────────────── -->
+  <div class="section">
+    <h2>5. Integrated Timeline — People + IT + Gates (Phased)</h2>
+    <div class="diagram-wrap diagram-wrap-xl">
+      <div class="mermaid">
+%%{init: {"flowchart": {"subGraphTitleMargin": {"top": 20, "bottom": 10}, "nodeSpacing": 50, "rankSpacing": 60, "padding": 20}}}%%
+flowchart TB
+    classDef phase fill:#FEF3C7,stroke:#92400E,color:#78350F,stroke-width:2px,font-weight:bold
+    classDef people fill:#059669,stroke:#064E3B,color:#fff,stroke-width:2px
+    classDef tech fill:#0B5394,stroke:#052E5C,color:#fff,stroke-width:2px
+    classDef commercial fill:#7C3AED,stroke:#4C1D95,color:#fff,stroke-width:2px
+    classDef gate fill:#DC2626,stroke:#7F1D1D,color:#fff,stroke-width:2px,font-weight:bold
+    classDef outcome fill:#D1FAE5,stroke:#065F46,color:#064E3B,stroke-width:3px,font-weight:bold
+
+    subgraph ROW1[" "]
+        direction LR
+        subgraph PH1["PHASE 1 · Foundation"]
+            direction LR
+            F1["Change Lead appointed<br/>Awareness campaign"]:::people
+            F2["GCP + IAM setup<br/>Multi-LLM + MCP rollout"]:::tech
+        end
+        G1{{"Gate 1<br/>Launch Ready"}}:::gate
+        subgraph PH2["PHASE 2 · Service Build"]
+            direction LR
+            S1["AI Academy<br/>Role mapping &amp; redeployment"]:::people
+            S2["Dual build tracks<br/>Knowledge Base + Vector DB"]:::tech
+        end
+        subgraph PH3["PHASE 3 · Pilot Launch"]
+            direction LR
+            L1["Orchestrator certification"]:::people
+            L2["Python QA engine (7 tools)"]:::tech
+            L3["Bali pilots · Hospitality + F&amp;B"]:::commercial
+        end
+        PH1 --> G1 --> PH2 --> PH3
+    end
+
+    G2{{"Gate 2 — Pilots Validated"}}:::gate
+
+    subgraph ROW2[" "]
+        direction LR
+        subgraph PH4["PHASE 4 · Market Broadening"]
+            direction LR
+            B1["New KPIs + reward alignment"]:::people
+            B2["Looker dashboards"]:::tech
+            B3["Web Dev + SEO live<br/>Managed services + white-label"]:::commercial
+        end
+        G3{{"Gate 3<br/>Scale Ready"}}:::gate
+        subgraph PH5["PHASE 5 · Scale Economics"]
+            direction LR
+            SC1["Legacy decommission waves"]:::tech
+            SC2["Regional expansion<br/>Indonesia + Australia"]:::commercial
+        end
+        PH4 --> G3 --> PH5
+    end
+
+    RESULT["RM 1M Revenue · 25 Orchestrators · 20% IRR"]:::outcome
+
+    ROW1 --> G2 --> ROW2 --> RESULT
+
+    class PH1,PH2,PH3,PH4,PH5 phase
+    style ROW1 fill:transparent,stroke:#d1d5db,stroke-dasharray:4
+    style ROW2 fill:transparent,stroke:#d1d5db,stroke-dasharray:4
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 5. Governing Principles ────────────────── -->
+  <div class="section">
+    <h2>6. Governing Principles (One-Page Summary)</h2>
+    <table class="principles-table">
+      <thead>
+        <tr><th>Principle</th><th>What It Means</th><th>How It Shows Up</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Venturi Compression</strong></td>
+          <td>Broad demand → narrow AI throat → high-velocity output</td>
+          <td>25-person team delivers work of 75 via Claude + Openclaw</td>
+        </tr>
+        <tr>
+          <td><strong>No-Manpower-Growth</strong></td>
+          <td>Scale revenue without scaling headcount</td>
+          <td>Redeploy, don't replace; capability via system expansion</td>
+        </tr>
+<tr>
+          <td><strong>Revenue Quality &gt; Volume</strong></td>
+          <td>Recurring + managed beats one-off billable</td>
+          <td>Track recurring-revenue share as a lead KPI</td>
+        </tr>
+        <tr>
+          <td><strong>Coexist Before Cutover</strong></td>
+          <td>Protect live client work during IT migration</td>
+          <td>Pilots on new stack; legacy continues until Gate 2</td>
+        </tr>
+        <tr>
+          <td><strong>Single Source of Truth</strong></td>
+          <td>One brain for the agency, shared across all work</td>
+          <td>Knowledge Base + prompt library treated as a product</td>
+        </tr>
+        <tr>
+          <td><strong>Human Judgment at the Edges</strong></td>
+          <td>AI in the middle, humans at intake + approval</td>
+          <td>HITL gates on every client-facing deliverable</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ── 7. Reference Documents ─────────────────── -->
+  <div class="section">
+    <h2>7. Reference Documents</h2>
+    <ul class="ref-list">
+      <li><a class="ref-link" href="docs/ai_business_plan.html" data-doc="docs/ai_business_plan.html">docs/ai_business_plan.html</a></li>
+      <li><a class="ref-link" href="docs/ai_business_plan_appendix.html" data-doc="docs/ai_business_plan_appendix.html">docs/ai_business_plan_appendix.html</a></li>
+      <li><a class="ref-link" href="docs/qa_automation.html" data-doc="docs/qa_automation.html">docs/qa_automation.html</a></li>
+      <li><a class="ref-link" href="docs/figma_to_site_automation.html" data-doc="docs/figma_to_site_automation.html">docs/figma_to_site_automation.html</a></li>
+    </ul>
+  </div>
+
+  <div class="doc-footer">
+    Gaia Digital Agency · Gaia AI Operating Model &amp; Change Reference · www.gaiada.com
+  </div>
+
+</div>
+
+<div class="doc-modal" id="doc-modal" aria-hidden="true">
+  <div class="doc-modal-content" role="dialog" aria-modal="true" aria-labelledby="doc-modal-title">
+    <div class="doc-modal-header">
+      <div class="doc-modal-title" id="doc-modal-title">Document Viewer</div>
+      <button class="doc-modal-close" id="doc-modal-close" type="button" aria-label="Close document viewer">&times;</button>
+    </div>
+    <iframe class="doc-viewer" id="doc-viewer" title="Reference document viewer"></iframe>
+  </div>
+</div>
+
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'default',
+    flowchart: {
+      subGraphTitleMargin: { top: 20, bottom: 10 },
+      useMaxWidth: false,
+      htmlLabels: true,
+      diagramPadding: 20
+    }
+  });
+
+  const docModal = document.getElementById('doc-modal');
+  const docViewer = document.getElementById('doc-viewer');
+  const docModalTitle = document.getElementById('doc-modal-title');
+  const docModalClose = document.getElementById('doc-modal-close');
+  const docLinks = document.querySelectorAll('.ref-link');
+
+  function closeDocModal() {
+    docModal.classList.remove('is-open');
+    docModal.setAttribute('aria-hidden', 'true');
+    docViewer.removeAttribute('src');
+  }
+
+  docLinks.forEach((link) => {
+    link.addEventListener('click', (event) => {
+      event.preventDefault();
+      const docPath = link.dataset.doc || link.getAttribute('href');
+      docModalTitle.textContent = docPath;
+      docViewer.src = docPath;
+      docModal.classList.add('is-open');
+      docModal.setAttribute('aria-hidden', 'false');
+    });
+  });
+
+  docModalClose.addEventListener('click', closeDocModal);
+
+  docModal.addEventListener('click', (event) => {
+    if (event.target === docModal) {
+      closeDocModal();
+    }
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && docModal.classList.contains('is-open')) {
+      closeDocModal();
+    }
+  });
+</script>
+</body>
+</html>
