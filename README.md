@@ -2,6 +2,8 @@
 
 This repository contains the Gaia Digital Agency operating model presentation and its supporting reference documents.
 
+> GitHub Pages: https://gaia-digital-agency.github.io/gaia_plans/
+
 ## Contents
 
 - `index.html`: Main presentation page with embedded document popup viewer.
