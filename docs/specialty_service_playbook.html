@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>specialty_service_playbook</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">specialty_service_playbook</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#specialty-service-playbook-brian--blossom-school-catering">Specialty Service Playbook (Brian × Blossom School Catering)</a>
+<ul>
+<li><a href="#table-of-contents">Table of contents</a></li>
+<li><a href="#1-what-makes-this-specialty">1. What makes this "specialty"</a></li>
+<li><a href="#2-the-two-box-topology">2. The two-box topology</a></li>
+<li><a href="#3-prerequisites">3. Prerequisites</a></li>
+<li><a href="#4-phase-1--the-bsc-product">4. Phase 1 — The BSC product</a></li>
+<li><a href="#5-phase-2--brian--orders">5. Phase 2 — Brian + Orders</a></li>
+<li><a href="#6-phase-3--openclawjson-for-a-specialty-tenant">6. Phase 3 — <code>openclaw.json</code> for a specialty tenant</a></li>
+<li><a href="#7-phase-4--the-skill-catalog">7. Phase 4 — The skill catalog</a></li>
+<li><a href="#8-phase-5--identity--family-context">8. Phase 5 — Identity + family-context</a></li>
+<li><a href="#9-phase-6--multi-turn-registration">9. Phase 6 — Multi-turn registration</a></li>
+<li><a href="#10-phase-7--the-whatsappapi-loop">10. Phase 7 — The WhatsApp↔︎API loop</a></li>
+<li><a href="#11-daily-operations-cookbook">11. Daily operations cookbook</a></li>
+<li><a href="#12-onboarding-a-new-specialty-agent">12. Onboarding a new specialty agent</a></li>
+<li><a href="#13-gotchas-we-hit">13. Gotchas we hit</a></li>
+<li><a href="#14-credentials--secrets-map">14. Credentials + secrets map</a></li>
+<li><a href="#15-file-map">15. File map</a></li>
+<li><a href="#16-appendix-a--decisions-log">16. Appendix A — Decisions log</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="specialty-service-playbook-brian--blossom-school-catering">Specialty Service Playbook (Brian × Blossom School Catering)</h1>
+<p>End-to-end reference for how an <strong>Openclaw specialty agent</strong> operates a vertical business app. Using <strong>Brian</strong> — the WhatsApp ordering assistant for <strong>Blossom School Catering</strong> (BSC) — as the canonical live example.</p>
+<p>This is the pattern to copy when you need to stand up a new conversational agent that drives a specific product: not a generic site-wide web-manager (see <code>openclaw_website_playbook.md</code>) but a <strong>domain specialist</strong> with fixed skills, a fixed API, and a fixed user population.</p>
+<blockquote>
+<p><strong>Companion docs</strong></p>
+<ul>
+<li><a href="./openclaw_website_playbook.md"><code>openclaw_website_playbook.md</code></a> — the generic <code>/api/web-manager/*</code> pattern (Victor × templategen).</li>
+<li><a href="../rhproperties_react/docs/figma_to_site_playbook.md"><code>figma_to_site_playbook.md</code></a> — building a VRTPN site from a Figma design.</li>
+</ul>
+</blockquote>
+<hr />
+<h2 id="table-of-contents">Table of contents</h2>
+<ol>
+<li><a href="#1-what-makes-this-specialty">What makes this "specialty"</a></li>
+<li><a href="#2-the-two-box-topology">The two-box topology</a></li>
+<li><a href="#3-prerequisites">Prerequisites</a></li>
+<li><a href="#4-phase-1--the-bsc-product">Phase 1 — The Blossom School Catering product</a></li>
+<li><a href="#5-phase-2--brian--orders">Phase 2 — Brian + Orders (the two-agent split)</a></li>
+<li><a href="#6-phase-3--openclawjson">Phase 3 — <code>openclaw.json</code> for a specialty tenant</a></li>
+<li><a href="#7-phase-4--the-skill-catalog">Phase 4 — The skill catalog (SKILL-BSC-*)</a></li>
+<li><a href="#8-phase-5--identity--family-context">Phase 5 — The identity + family-context protocol</a></li>
+<li><a href="#9-phase-6--multi-turn-registration">Phase 6 — The multi-turn registration flow</a></li>
+<li><a href="#10-phase-7--the-whatsapp-api-loop">Phase 7 — The WhatsApp↔︎API message loop</a></li>
+<li><a href="#11-daily-operations-cookbook">Daily operations cookbook</a></li>
+<li><a href="#12-onboarding-a-new-specialty-agent">Onboarding a new specialty agent</a></li>
+<li><a href="#13-gotchas-we-hit">Gotchas we hit</a></li>
+<li><a href="#14-credentials--secrets-map">Credentials + secrets map</a></li>
+<li><a href="#15-file-map">File map</a></li>
+<li><a href="#16-appendix-a--decisions-log">Appendix A — Decisions log</a></li>
+</ol>
+<hr />
+<h2 id="1-what-makes-this-specialty">1. What makes this "specialty"</h2>
+<p>A <strong>generic</strong> agent (Victor, templategen) takes a sentence and picks a path. A <strong>specialty</strong> agent (Brian, BSC) takes a sentence and picks a <strong>skill</strong> from a tight, closed list — because the product only supports a tight, closed list of verbs.</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>Generic agent (Victor)</th>
+<th>Specialty agent (Brian)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Channel</td>
+<td>Telegram + web control UI</td>
+<td>WhatsApp only</td>
+</tr>
+<tr class="even">
+<td>Subagents</td>
+<td>6 (booking, writer, web-manager, copywriter, drive, analyst)</td>
+<td><strong>1</strong> (orders)</td>
+</tr>
+<tr class="odd">
+<td>Skills</td>
+<td>Discover / route freely</td>
+<td>8 hand-written SKILL-BSC-*.md files, one per product verb</td>
+</tr>
+<tr class="even">
+<td>Target</td>
+<td>Any site exposing <code>/api/web-manager/*</code></td>
+<td><strong>One</strong> NestJS API at <code>schoolcatering.gaiada1.online</code></td>
+</tr>
+<tr class="odd">
+<td>User population</td>
+<td>Anyone who messages the bot</td>
+<td>Registered parents + youngsters at 2 schools</td>
+</tr>
+<tr class="even">
+<td>Auth model</td>
+<td>Bearer secret per site manifest</td>
+<td>Admin JWT + sender phone → <code>family_id</code> lookup</td>
+</tr>
+<tr class="odd">
+<td>State</td>
+<td>Stateless between turns</td>
+<td>Stateless <strong>except</strong> registration (file-backed state in <code>memory/</code>)</td>
+</tr>
+</tbody>
+</table>
+<p>The design principle: <strong>a specialty agent is thin at the top and opinionated at the bottom.</strong> Brian himself does nothing except delegate; Orders has one skill per product verb, and each skill is step-numbered. The specialization lives in the skills, not in the agent brain.</p>
+<hr />
+<h2 id="2-the-two-box-topology">2. The two-box topology</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Box</th>
+<th>Purpose</th>
+<th>Path</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>gda-ai01</code> (34.143.206.68)</td>
+<td>Openclaw runtime — Brian (main) + Orders (sub) + WhatsApp channel</td>
+<td><code>/opt/.openclaw-bsc/</code></td>
+</tr>
+<tr class="even">
+<td><code>gda-ce01</code> (34.158.47.112)</td>
+<td>Production app — Next.js web + NestJS API + Postgres</td>
+<td><code>/var/www/schoolcatering/</code></td>
+</tr>
+<tr class="odd">
+<td>GitHub</td>
+<td>Source of truth</td>
+<td><code>git@github.com-net1io:Gaia-Digital-Agency/blossom_schoolcatering.git</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Live URLs:</strong></p>
+<ul>
+<li>Website — <a href="https://blossomcatering.online/">https://blossomcatering.online/</a> (→ <code>https://schoolcatering.gaiada1.online</code>)</li>
+<li>API base — <a href="https://schoolcatering.gaiada1.online/api/v1">https://schoolcatering.gaiada1.online/api/v1</a></li>
+<li>Openclaw control UI — <a href="https://bsc.gaiada0.online">https://bsc.gaiada0.online</a></li>
+<li>WhatsApp sender — <strong>Brian</strong> (the <code>main</code> agent's account)</li>
+</ul>
+<p><strong>Runtime ports:</strong></p>
+<ul>
+<li><code>gda-ai01</code> — Openclaw gateway on <code>18789</code> (loopback, token <code>bsc123abc</code>)</li>
+<li><code>gda-ce01</code> — <code>schoolcatering-api</code> on <code>3000</code>, <code>schoolcatering-web</code> on <code>4173</code></li>
+</ul>
+<p><strong>Flow (one WhatsApp "order lunch for Elizabeth tomorrow"):</strong></p>
+<pre><code>Parent (WhatsApp)
+  → Brian (id: main)                  [routing only — no skill execution]
+  → sessions_spawn → Orders (id: orders)
+    → SKILL-BSC-AUTHENTICATE          [phone → sender + family_id]
+    → SKILL-BSC-ORDER                 [parses, picks childUsername, POSTs]
+      → POST /auth/login              [admin JWT]
+      → POST /order/quick             [the actual order]
+  → Orders returns text to Brian
+  → Brian sends ONE WhatsApp message back to the parent
+</code></pre>
+<p><strong>Rule:</strong> every arrow that crosses a box is a <code>curl</code>. Everything in Openclaw is plain HTTP to the NestJS API — there's no shared DB, no message queue, no webhooks going the other direction.</p>
+<hr />
+<h2 id="3-prerequisites">3. Prerequisites</h2>
+<h3 id="to-read--operate-this-system">To read / operate this system</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="fu">ssh</span> gda-ai01   # Brian<span class="st">&#39;s runtime box</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a><span class="st">ssh gda-ce01   # BSC app box</span></span></code></pre></div>
+<p>Both should work without a password via <code>~/.ssh/config</code>.</p>
+<h3 id="on-gda-ai01-already-provisioned">On <code>gda-ai01</code> (already provisioned)</h3>
+<ul>
+<li>Node 22+, Python 3.11+, systemd user services</li>
+<li>The Openclaw runtime, tenant <code>bsc</code> at <code>/opt/.openclaw-bsc/</code></li>
+<li><code>openclaw-bsc-gateway</code> user service listening on <code>127.0.0.1:18789</code></li>
+<li>WhatsApp session state in <code>/opt/.openclaw-bsc/delivery-queue/</code></li>
+<li>DeepSeek + Gemini + Anthropic credentials in <code>credentials/</code></li>
+</ul>
+<h3 id="on-gda-ce01-already-provisioned">On <code>gda-ce01</code> (already provisioned)</h3>
+<ul>
+<li>Node 20+, pnpm, PM2, Postgres, nginx</li>
+<li>Repo at <code>/var/www/schoolcatering/</code></li>
+<li>PM2 apps: <code>schoolcatering-api</code> (:3000) and <code>schoolcatering-web</code> (:4173)</li>
+<li>GCS buckets + Vertex AI (for the product's own AI features — separate from Brian)</li>
+</ul>
+<hr />
+<h2 id="4-phase-1--the-bsc-product">4. Phase 1 — The BSC product</h2>
+<p>Blossom School Catering is a role-based meal-ordering platform for Bali international schools.</p>
+<h3 id="41-stack">4.1 Stack</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Layer</th>
+<th>Tech</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Frontend</td>
+<td>Next.js (runs on port 4173)</td>
+</tr>
+<tr class="even">
+<td>Backend</td>
+<td>NestJS (port 3000, all paths under <code>/api/v1</code>)</td>
+</tr>
+<tr class="odd">
+<td>DB</td>
+<td>PostgreSQL</td>
+</tr>
+<tr class="even">
+<td>Process manager</td>
+<td>PM2 (<code>ecosystem.config.cjs</code>)</td>
+</tr>
+<tr class="odd">
+<td>Media</td>
+<td>Google Cloud Storage bucket</td>
+</tr>
+<tr class="even">
+<td>In-app AI</td>
+<td>Vertex AI Gemini 2.5 Flash (<code>asia-southeast1</code>), rate-limited to 100 requests/day per product config — unrelated to Brian</td>
+</tr>
+</tbody>
+</table>
+<h3 id="42-domain-model-the-parts-brian-reaches-for">4.2 Domain model (the parts Brian reaches for)</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Concept</th>
+<th>Shape</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Roles</strong></td>
+<td><code>PARENT</code>, <code>YOUNGSTER</code>, <code>ADMIN</code>, <code>KITCHEN</code>, <code>DELIVERY</code></td>
+</tr>
+<tr class="even">
+<td><strong>Sessions</strong></td>
+<td><code>BREAKFAST</code>, <code>LUNCH</code>, <code>SNACK</code></td>
+</tr>
+<tr class="odd">
+<td><strong>Family</strong></td>
+<td>Canonical key: <code>family_id</code> (UUID). <code>parents[]</code> + <code>children[]</code> both carry <code>family_id</code>. <strong>Never</strong> infer membership from surname.</td>
+</tr>
+<tr class="even">
+<td><strong>Student username</strong></td>
+<td><code>lastname_firstname</code> (e.g. <code>syrowatka_elizabeth</code>) — always look up, never guess</td>
+</tr>
+<tr class="odd">
+<td><strong>Schools (active)</strong></td>
+<td><code>Bali Island School</code>, <code>Sanur Independent School</code> — fetched live, not hardcoded</td>
+</tr>
+<tr class="even">
+<td><strong>Service calendar</strong></td>
+<td>No service Saturday/Sunday. No service on school blackout dates.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="43-api-surface-brian-uses">4.3 API surface Brian uses</h3>
+<pre><code>POST   /auth/login                           admin token
+GET    /public/lookup-name?phone=PHONE       sender identity (no auth)
+GET    /public/menu?session=LUNCH|SNACK|BREAKFAST   active menu (no auth)
+GET    /admin/family-context?phone=PHONE     family roster by phone (admin)
+GET    /admin/family-orders?phone=&amp;date=     family&#39;s orders on a date (admin)
+GET    /admin/orders                         all orders (admin, for favourites)
+POST   /order/quick                          place an order (admin)
+DELETE /orders/:orderId                      cancel an order (admin)
+POST   /auth/register/youngsters             register a family (public)
+GET    /auth/register/schools                live school list (public)
+POST   /admin/families/merge                 fix split families (admin, rare)
+POST   /auth/dev/test-registration           dev-only, admin role
+DELETE /auth/dev/test-registration           dev-only cleanup
+</code></pre>
+<p>The "everything uses admin JWT" pattern is deliberate: the agent impersonates the <code>admin</code> user for every write, and authorizes the <strong>requester</strong> itself using the phone → family_id lookup. The API is not expected to authenticate the parent directly.</p>
+<h3 id="44-pm2-config-deployed">4.4 PM2 config (deployed)</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a>module<span class="op">.</span><span class="at">exports</span> <span class="op">=</span> {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a>  <span class="dt">apps</span><span class="op">:</span> [</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a>    { <span class="dt">name</span><span class="op">:</span> <span class="st">&#39;schoolcatering-api&#39;</span><span class="op">,</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a>      <span class="dt">script</span><span class="op">:</span> <span class="st">&#39;npm&#39;</span><span class="op">,</span> <span class="dt">args</span><span class="op">:</span> <span class="st">&#39;--prefix apps/api run start:prod&#39;</span><span class="op">,</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a>      <span class="dt">cwd</span><span class="op">:</span> <span class="st">&#39;/var/www/schoolcatering&#39;</span><span class="op">,</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a>      <span class="dt">env</span><span class="op">:</span> { <span class="dt">PORT</span><span class="op">:</span> <span class="dv">3000</span><span class="op">,</span> <span class="dt">NODE_ENV</span><span class="op">:</span> <span class="st">&#39;production&#39;</span><span class="op">,</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a>             <span class="dt">GCP_PROJECT_ID</span><span class="op">:</span> <span class="st">&#39;gda-viceroy&#39;</span><span class="op">,</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true"></a>             <span class="dt">GCP_VERTEX_LOCATION</span><span class="op">:</span> <span class="st">&#39;asia-southeast1&#39;</span><span class="op">,</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true"></a>             <span class="dt">GCP_VERTEX_MODEL</span><span class="op">:</span> <span class="st">&#39;gemini-2.5-flash&#39;</span><span class="op">,</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true"></a>             <span class="dt">AI_FUTURE_MAX_PROMPT_CHARS</span><span class="op">:</span> <span class="st">&#39;2000&#39;</span><span class="op">,</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true"></a>             <span class="dt">AI_FUTURE_MAX_REQUESTS_PER_DAY</span><span class="op">:</span> <span class="st">&#39;100&#39;</span> }<span class="op">,</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true"></a>      <span class="dt">max_memory_restart</span><span class="op">:</span> <span class="st">&#39;600M&#39;</span> }<span class="op">,</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true"></a>    { <span class="dt">name</span><span class="op">:</span> <span class="st">&#39;schoolcatering-web&#39;</span><span class="op">,</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true"></a>      <span class="dt">script</span><span class="op">:</span> <span class="st">&#39;npm&#39;</span><span class="op">,</span> <span class="dt">args</span><span class="op">:</span> <span class="st">&#39;--prefix apps/web run start&#39;</span><span class="op">,</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true"></a>      <span class="dt">cwd</span><span class="op">:</span> <span class="st">&#39;/var/www/schoolcatering&#39;</span><span class="op">,</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true"></a>      <span class="dt">env</span><span class="op">:</span> { <span class="dt">PORT</span><span class="op">:</span> <span class="dv">4173</span><span class="op">,</span> <span class="dt">NODE_ENV</span><span class="op">:</span> <span class="st">&#39;production&#39;</span><span class="op">,</span> <span class="dt">HOSTNAME</span><span class="op">:</span> <span class="st">&#39;127.0.0.1&#39;</span> }<span class="op">,</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true"></a>      <span class="dt">max_memory_restart</span><span class="op">:</span> <span class="st">&#39;400M&#39;</span> }<span class="op">,</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true"></a>  ]<span class="op">,</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true"></a>}</span></code></pre></div>
+<hr />
+<h2 id="5-phase-2--brian--orders">5. Phase 2 — Brian + Orders</h2>
+<p>The two-agent split is the most important structural choice in this playbook. Copy it for every specialty agent.</p>
+<h3 id="51-brian-id-main--the-public-face">5.1 Brian (id <code>main</code>) — the public face</h3>
+<p><strong>Role:</strong> delegator. Receive WhatsApp messages. Delegate to <code>orders</code>. Relay the result as <strong>one</strong> WhatsApp message. That's it.</p>
+<p><strong>Hard rules from <code>workspace-main/IDENTITY.md</code> and <code>SOUL.md</code>:</strong></p>
+<ul>
+<li>Delegate <strong>everything</strong> except self-introduction (literal <code>"Brian. I am your Blossom School Catering assistant."</code>).</li>
+<li>Always pass the sender's E.164 phone in the delegation task string.</li>
+<li><strong>Pass-through only</strong> — if Orders says "Hello Natasha", Brian says "Hello Natasha". Do not add, infer, or embellish.</li>
+<li>If a subagent result contains raw skill documentation (markdown headers like <code># SKILL-BSC-*</code>, step-by-step instructions, curl blocks) → discard, reply <code>"One moment, please try again shortly."</code> This is how Brian catches the failure mode where Orders returns the skill file instead of executing it.</li>
+<li>Never tell users about superuser status, phone numbers, internal identifiers, API endpoints, credentials, or agent/skill names. Even if the subagent result leaks these, strip them before relaying.</li>
+<li><strong>Tool deny list</strong> (from <code>openclaw.json</code>): <code>memory_search</code>, <code>memory_get</code>, <code>read</code>. Brian has no memory — by design, so he can never answer from local state.</li>
+</ul>
+<h3 id="52-orders-id-orders--the-executor">5.2 Orders (id <code>orders</code>) — the executor</h3>
+<p><strong>Role:</strong> internal execution only. Never public-facing. Never calls WhatsApp send tools — Orders has no sender context, only Brian does.</p>
+<p><strong>Startup read order (from <code>workspace-bsc/AGENTS.md</code>):</strong></p>
+<ol>
+<li><code>IDENTITY.md</code></li>
+<li><code>SOUL.md</code></li>
+<li><code>HEARTBEAT.md</code></li>
+<li><code>USER.md</code></li>
+<li><code>MEMORY.md</code></li>
+<li><code>memory/YYYY-MM-DD.md</code> (recent context)</li>
+<li><code>SKILL-BSC-AUTHENTICATE.md</code> — <strong>always</strong> the first executed skill</li>
+</ol>
+<p>There's a single documented <strong>exception</strong> to step 7: the registration confirmation bypass. When the sender is replying YES/NO <em>and</em> a registration state file exists <em>and</em> the public lookup returns <code>found: false</code>, skip auth and go straight to <code>SKILL-BSC-REGISTER.md</code> Turn 3. This is the only escape hatch in the whole system.</p>
+<p><strong>Skill routing table</strong> (copied verbatim from <code>AGENTS.md</code>):</p>
+<table>
+<thead>
+<tr class="header">
+<th>Intent</th>
+<th>Skill</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Place / book / add meal order</td>
+<td><code>SKILL-BSC-ORDER.md</code></td>
+</tr>
+<tr class="even">
+<td>Delete / cancel order</td>
+<td><code>SKILL-BSC-DELETE-ORDER.md</code></td>
+</tr>
+<tr class="odd">
+<td>Name / student / grade / daily order lookup</td>
+<td><code>SKILL-BSC-LOOKUP-PROTOCOL.md</code></td>
+</tr>
+<tr class="even">
+<td>View active menu</td>
+<td><code>SKILL-BSC-ACTIVE-MENU.md</code></td>
+</tr>
+<tr class="odd">
+<td>Recommendations / favourites</td>
+<td><code>SKILL-BSC-ORDER-RECOMMENDATION.md</code></td>
+</tr>
+<tr class="even">
+<td>Notification control (pause/resume morning reminder)</td>
+<td><code>SKILL-BSC-NOTIFICATION-CONTROL.md</code></td>
+</tr>
+<tr class="odd">
+<td>Register new family via WhatsApp</td>
+<td><code>SKILL-BSC-REGISTER.md</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tool deny list:</strong> <code>memory_search</code>, <code>read</code>. Orders can write but not read memory — prevents "answer from memory" antipatterns.</p>
+<h3 id="53-why-split-into-two-agents">5.3 Why split into two agents</h3>
+<ol>
+<li><strong>Context size.</strong> Brian stays tiny — he never loads skill files. Orders loads only the one skill it's routing to.</li>
+<li><strong>Clean voice.</strong> Brian's <code>SOUL.md</code> forbids internal commentary and structured reports; Orders often returns structured scratchpads (<code>SENDER_PHONE: +62...</code> blocks). Brian's pass-through filter means the user never sees Orders' raw scratchpad.</li>
+<li><strong>Channel isolation.</strong> Brian owns the WhatsApp session. Orders has no tool to send messages at all — so no skill can accidentally double-send.</li>
+<li><strong>Rate limiting.</strong> The WhatsApp channel has <code>debounceMs: 1500</code> (config). Orders may do 3–5 HTTP calls per turn, but only one WhatsApp message ever goes out.</li>
+</ol>
+<hr />
+<h2 id="6-phase-3--openclawjson-for-a-specialty-tenant">6. Phase 3 — <code>openclaw.json</code> for a specialty tenant</h2>
+<p>Compare to Victor's <code>openclaw.json</code> (<code>/opt/.openclaw-var</code>) — the specialty version is much narrower.</p>
+<pre class="jsonc"><code>{
+  &quot;acp&quot;: { &quot;defaultAgent&quot;: &quot;main&quot; },
+  &quot;agents&quot;: {
+    &quot;defaults&quot;: {
+      &quot;model&quot;: { &quot;primary&quot;: &quot;deepseek/deepseek-chat&quot;,
+                 &quot;fallbacks&quot;: [&quot;google/gemini-2.5-flash&quot;] },
+      &quot;workspace&quot;: &quot;/opt/.openclaw-bsc/workspace-main&quot;,
+      &quot;memorySearch&quot;: { &quot;enabled&quot;: true,
+                        &quot;store&quot;: { &quot;path&quot;: &quot;.../memory/{agentId}.sqlite&quot; } },
+      &quot;compaction&quot;: { &quot;mode&quot;: &quot;safeguard&quot; },
+      &quot;maxConcurrent&quot;: 4,
+      &quot;subagents&quot;: { &quot;maxConcurrent&quot;: 8 }
+    },
+    &quot;list&quot;: [
+      { &quot;id&quot;: &quot;main&quot;,
+        &quot;workspace&quot;: &quot;/opt/.openclaw-bsc/workspace-main&quot;,
+        &quot;identity&quot;: { &quot;name&quot;: &quot;Brian&quot; },
+        &quot;subagents&quot;: { &quot;allowAgents&quot;: [&quot;orders&quot;] },         // ← only one sub
+        &quot;groupChat&quot;: { &quot;mentionPatterns&quot;:
+          [&quot;Brian&quot;,&quot;@Brian&quot;,&quot;brian&quot;,&quot;Gaiada AI Team&quot;] },
+        &quot;tools&quot;: { &quot;deny&quot;: [&quot;memory_search&quot;,&quot;memory_get&quot;,&quot;read&quot;] } },
+      { &quot;id&quot;: &quot;orders&quot;,
+        &quot;workspace&quot;: &quot;/opt/.openclaw-bsc/workspace-bsc&quot;,
+        &quot;identity&quot;: { &quot;name&quot;: &quot;Orders&quot; },
+        &quot;groupChat&quot;: { &quot;mentionPatterns&quot;: [&quot;Orders&quot;,&quot;@Orders&quot;,&quot;orders&quot;] },
+        &quot;tools&quot;: { &quot;deny&quot;: [&quot;memory_search&quot;,&quot;read&quot;] } }
+    ]
+  },
+
+  &quot;broadcast&quot;: {
+    &quot;*&quot;: [&quot;main&quot;],
+    &quot;+6281138210188&quot;: [&quot;main&quot;]           // superuser is also routed to main
+  },
+
+  &quot;channels&quot;: {
+    &quot;whatsapp&quot;: {
+      &quot;enabled&quot;: true,
+      &quot;accounts&quot;: { &quot;main&quot;: {
+        &quot;name&quot;: &quot;Brian&quot;, &quot;dmPolicy&quot;: &quot;open&quot;,
+        &quot;allowFrom&quot;: [&quot;*&quot;], &quot;groupPolicy&quot;: &quot;open&quot;,
+        &quot;debounceMs&quot;: 1500 } },
+      &quot;mediaMaxMb&quot;: 50
+    }
+  },
+
+  &quot;gateway&quot;: {
+    &quot;mode&quot;: &quot;local&quot;,
+    &quot;auth&quot;: { &quot;mode&quot;: &quot;token&quot;, &quot;token&quot;: &quot;bsc123abc&quot; },
+    &quot;controlUi&quot;: { &quot;allowedOrigins&quot;: [&quot;https://bsc.gaiada0.online&quot;] },
+    &quot;trustedProxies&quot;: [&quot;127.0.0.1&quot;,&quot;::1&quot;]
+  },
+
+  &quot;plugins&quot;: {
+    &quot;load&quot;: { &quot;paths&quot;: [
+      &quot;/opt/.openclaw-bsc/plugins/mcp-tools&quot;,
+      &quot;/opt/.openclaw-bsc/workspace-main&quot;,
+      &quot;/opt/.openclaw-bsc/workspace-bsc&quot; ] },
+    &quot;entries&quot;: {
+      &quot;acpx&quot;: { &quot;enabled&quot;: true }, &quot;browser&quot;: { &quot;enabled&quot;: true },
+      &quot;google&quot;: { &quot;enabled&quot;: true }, &quot;anthropic&quot;: { &quot;enabled&quot;: true },
+      &quot;deepseek&quot;: { &quot;enabled&quot;: true } }
+  }
+}
+</code></pre>
+<p><strong>Notable differences vs. Victor:</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>Victor (<code>.openclaw-var</code>)</th>
+<th>Brian (<code>.openclaw-bsc</code>)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>agents.list</code></td>
+<td>7 agents</td>
+<td><strong>2</strong> (main + one sub)</td>
+</tr>
+<tr class="even">
+<td><code>channels</code></td>
+<td>Telegram</td>
+<td><strong>WhatsApp</strong></td>
+</tr>
+<tr class="odd">
+<td>Gateway port</td>
+<td>19289</td>
+<td><strong>18789</strong></td>
+</tr>
+<tr class="even">
+<td>Gateway token</td>
+<td><code>var123abc</code></td>
+<td><strong><code>bsc123abc</code></strong></td>
+</tr>
+<tr class="odd">
+<td><code>plugins.load.paths</code></td>
+<td>(default)</td>
+<td><strong>explicitly loads the two workspaces</strong> so skills files are discoverable at runtime</td>
+</tr>
+<tr class="even">
+<td><code>broadcast</code></td>
+<td><code>"*": ["main"]</code></td>
+<td><code>"*": ["main"]</code> <strong>plus</strong> <code>"+6281138210188": ["main"]</code> (superuser re-broadcast)</td>
+</tr>
+<tr class="odd">
+<td>Brian's tool <code>deny</code></td>
+<td>—</td>
+<td><code>memory_search</code>, <code>memory_get</code>, <code>read</code> (enforces pass-through)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="7-phase-4--the-skill-catalog">7. Phase 4 — The skill catalog</h2>
+<p>Eight files in <code>/opt/.openclaw-bsc/workspace-bsc/</code>. Each corresponds to a product verb. Each starts with an authenticate step (except notification control, which is superuser-only).</p>
+<table>
+<thead>
+<tr class="header">
+<th>Skill</th>
+<th>Verb</th>
+<th>Auth path</th>
+<th>API calls</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>SKILL-BSC-AUTHENTICATE.md</code></td>
+<td>Resolve sender</td>
+<td>public + admin</td>
+<td><code>/public/lookup-name</code> + <code>/auth/login</code> + <code>/admin/family-context</code></td>
+</tr>
+<tr class="even">
+<td><code>SKILL-BSC-ORDER.md</code></td>
+<td>Place order(s)</td>
+<td>admin</td>
+<td><code>/auth/login</code> + <code>/admin/family-context</code> + <code>/order/quick</code></td>
+</tr>
+<tr class="odd">
+<td><code>SKILL-BSC-DELETE-ORDER.md</code></td>
+<td>Cancel order</td>
+<td>admin + YES confirm</td>
+<td><code>/auth/login</code> + <code>DELETE /orders/:id</code></td>
+</tr>
+<tr class="even">
+<td><code>SKILL-BSC-LOOKUP-PROTOCOL.md</code></td>
+<td>Name / kids / grades / daily order</td>
+<td>admin</td>
+<td><code>/admin/family-context</code> + <code>/admin/family-orders</code></td>
+</tr>
+<tr class="odd">
+<td><code>SKILL-BSC-ACTIVE-MENU.md</code></td>
+<td>What's for &lt;session&gt;</td>
+<td><strong>none</strong></td>
+<td><code>/public/menu?session=...</code></td>
+</tr>
+<tr class="even">
+<td><code>SKILL-BSC-ORDER-RECOMMENDATION.md</code></td>
+<td>Top dishes</td>
+<td>admin</td>
+<td><code>/admin/family-context</code> + <code>/admin/orders</code> (client-side filter + tally)</td>
+</tr>
+<tr class="odd">
+<td><code>SKILL-BSC-NOTIFICATION-CONTROL.md</code></td>
+<td>Pause / resume morning notif</td>
+<td>file-only</td>
+<td>writes <code>daily_notification_control.json</code></td>
+</tr>
+<tr class="even">
+<td><code>SKILL-BSC-REGISTER.md</code></td>
+<td>Multi-turn WA registration</td>
+<td>public + file state</td>
+<td><code>/auth/register/schools</code> + <code>/auth/register/youngsters</code> + state file I/O</td>
+</tr>
+<tr class="odd">
+<td><code>SKILL-BSC-REGISTER-STATE.md</code></td>
+<td>State schema for registration</td>
+<td>—</td>
+<td>file I/O only (protocol, not a verb)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="71-the-shape-every-skill-file-uses">7.1 The shape every skill file uses</h3>
+<ol>
+<li><strong>Trigger phrases</strong> — natural-language clues that pick this skill.</li>
+<li><strong>Step 0 — Authenticate</strong> — call <code>SKILL-BSC-AUTHENTICATE.md</code> first, or document the exception.</li>
+<li><strong>Numbered execution steps</strong> — literal <code>curl</code> commands. No pseudocode.</li>
+<li><strong>Reply format</strong> — exact text templates for success / error / timeout.</li>
+<li><strong>Rules</strong> — privacy, retries, fallbacks, "never do X".</li>
+</ol>
+<p>This is deliberately prescriptive. The skill file is the spec; Orders follows it literally. Anywhere a skill says "retry once" means retry exactly once — not a loop, not an exponential backoff.</p>
+<h3 id="72-order-placement--three-step-fallback">7.2 Order placement — three-step fallback</h3>
+<p><code>SKILL-BSC-ORDER.md</code> ships three attempt shapes because <code>/order/quick</code> has drifted across versions:</p>
+<pre><code>Attempt A — with both fields
+POST /order/quick
+{ &quot;childUsername&quot;:&quot;…&quot;,&quot;senderPhone&quot;:&quot;…&quot;,&quot;date&quot;:&quot;YYYY-MM-DD&quot;,
+  &quot;session&quot;:&quot;LUNCH&quot;,&quot;dishes&quot;:[&quot;…&quot;] }
+
+Attempt B — childUsername only (if A fails w/ senderPhone validation error)
+POST /order/quick
+{ &quot;childUsername&quot;:&quot;…&quot;,&quot;date&quot;:&quot;…&quot;,&quot;session&quot;:&quot;…&quot;,&quot;dishes&quot;:[&quot;…&quot;] }
+
+Attempt C — senderPhone only (if B also fails)
+POST /order/quick
+{ &quot;senderPhone&quot;:&quot;…&quot;,&quot;date&quot;:&quot;…&quot;,&quot;session&quot;:&quot;…&quot;,&quot;dishes&quot;:[&quot;…&quot;] }
+</code></pre>
+<p><strong>Banned payload keys</strong> (drift from early versions): <code>orderDate</code>, <code>studentUsername</code>, any nested object for <code>date</code>. <code>date</code> must be a plain <code>YYYY-MM-DD</code> string in Asia/Makassar local date.</p>
+<p><strong>401 handling:</strong> re-login once, retry once. Never a second retry.</p>
+<p><strong>Multi-date orders</strong> ("order for April"): login <strong>once</strong>, loop through dates, skip Sat/Sun client-side, collect per-date result, report one aggregate summary.</p>
+<h3 id="73-delete-has-a-human-in-the-loop">7.3 Delete has a human-in-the-loop</h3>
+<p><code>SKILL-BSC-DELETE-ORDER.md</code> is the only destructive verb. Protocol:</p>
+<ol>
+<li>Ask for <code>yes</code> confirmation with a templated prompt.</li>
+<li>Wait ≤ 60 seconds.</li>
+<li>If <code>yes</code> arrives → <code>DELETE /orders/:id</code> with admin token.</li>
+<li>If anything else arrives, or 60s elapse → abort with fixed reply <code>"Order Deletion aborted due to mo confirmation"</code> <em>(yes, the typo is in the canonical text — don't "fix" it)</em>.</li>
+</ol>
+<h3 id="74-scoping-replies-to-the-named-student">7.4 Scoping replies to the named student</h3>
+<p>Lookups and recommendations must <strong>scope to the student the user named</strong> — not list siblings. From <code>SKILL-BSC-LOOKUP-PROTOCOL.md</code>:</p>
+<ul>
+<li>"what's <strong>Natasha's</strong> order today" → show <strong>only</strong> Natasha's order.</li>
+<li>"what are <strong>my orders</strong> today" → show the whole family.</li>
+<li>Ambiguous ("what's my order") + multiple children → ask which.</li>
+</ul>
+<p>Don't leak siblings. Privacy trumps completeness.</p>
+<hr />
+<h2 id="8-phase-5--identity--family-context">8. Phase 5 — Identity + family-context</h2>
+<p>This is the one protocol every non-public skill shares. Get it right once and every other skill works.</p>
+<h3 id="81-the-four-steps">8.1 The four steps</h3>
+<pre><code>Step 1  Extract SENDER_PHONE from sender metadata (E.164, e.g. +628…)
+Step 2  If SENDER_PHONE == +6281138210188 → IS_SUPERUSER = true
+Step 3  GET /public/lookup-name?phone=SENDER_PHONE
+        → SENDER_NAME, SENDER_USERNAME, SENDER_ROLE, SENDER_FIRST_NAME
+Step 4  POST /auth/login (admin/Teameditor@123) → TOKEN
+        GET /admin/family-context?phone=SENDER_PHONE  [Bearer TOKEN]
+        → FAMILY_ID, LINKED_STUDENTS[], LINKED_PARENTS[]
+</code></pre>
+<p>Output block (Orders returns this to itself, not to the user):</p>
+<pre class="text"><code>SENDER_PHONE: +62...
+SENDER_NAME: Anthony Syrowatka
+SENDER_FIRST_NAME: Anthony
+SENDER_USERNAME: syrowatka_dewi
+SENDER_ROLE: PARENT | YOUNGSTER
+IS_SUPERUSER: true | false
+FAMILY_ID: &lt;uuid&gt;
+LINKED_STUDENTS_COUNT: n
+LINKED_STUDENTS: [{name, firstName, username, phone}, ...]
+LINKED_PARENTS:  [{name, phone, username}, ...]
+</code></pre>
+<h3 id="82-the-forbidden-shortcuts">8.2 The forbidden shortcuts</h3>
+<ul>
+<li><strong>Never</strong> infer family membership from surnames.</li>
+<li><strong>Never</strong> use <code>/orders/daily</code> to figure out who's related — it only shows dated orders. Use <code>/admin/family-context</code>.</li>
+<li><strong>Never</strong> pull a name from the phone's contact label. Use the API <code>SENDER_NAME</code>. Otherwise the bot ends up greeting someone by the name their spouse saved them under.</li>
+<li><strong>Never</strong> tell the user they are a superuser. It's an internal flag.</li>
+</ul>
+<h3 id="83-three-roles-three-authorization-rules">8.3 Three roles, three authorization rules</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Sender role</th>
+<th>Can order for</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>PARENT</code> (Parent#1 or Parent#2)</td>
+<td>Any child in <code>family.children[]</code></td>
+<td>Family resolved by <code>family_id</code>, not surname. Parent#2 is identified by their phone being on <code>parent2_*</code> — treat as first-class.</td>
+</tr>
+<tr class="even">
+<td><code>YOUNGSTER</code></td>
+<td>Only themselves — <code>SENDER_USERNAME</code> is the <code>childUsername</code></td>
+<td>Youngster's own phone on their user record</td>
+</tr>
+<tr class="odd">
+<td><code>IS_SUPERUSER</code> (<code>+6281138210188</code>)</td>
+<td><strong>Any</strong> student, any order</td>
+<td>Still do the lookup for greeting, but skip authorization checks</td>
+</tr>
+</tbody>
+</table>
+<h3 id="84-failure-path">8.4 Failure path</h3>
+<ul>
+<li><code>lookup-name</code> returns <code>found: false</code> <strong>and</strong> not superuser → <code>"I could not find your identity in the BSC system."</code></li>
+<li><code>family-context</code> returns <code>found: false</code> → don't invent family. Use whatever identity was resolved and proceed best-effort.</li>
+</ul>
+<hr />
+<h2 id="9-phase-6--multi-turn-registration">9. Phase 6 — Multi-turn registration</h2>
+<p>The one stateful flow. Blossom supports full WhatsApp onboarding without the web UI — it's a three-turn conversation with a file-backed state bridge.</p>
+<h3 id="91-turns">9.1 Turns</h3>
+<pre><code>Turn 1 — intent detected (&quot;register&quot;, &quot;daftar&quot;, …)
+  • Check /public/lookup-name — if already registered, reply with
+    a &quot;you already have an account&quot; message and stop
+  • Else reply with the combined welcome + form template
+    (the exact markdown in SKILL-BSC-REGISTER.md)
+
+Turn 2 — filled template received
+  • Parse fields (Family name, Parent first, Email, Password, Parent Phone,
+    1..n Students with name/gender/DOB/school/grade/phone/allergies)
+  • GET /auth/register/schools — fetch live list (never hardcode UUIDs)
+  • Fuzzy-match typed school name to school id
+  • Validate email, password strength (≥6 chars, upper+lower+digit+symbol),
+    phone E.164, DOB, gender (M/F→MALE/FEMALE)
+  • Write state file registration_{PHONE_DIGITS}.json with 15-min TTL
+  • Reply with a confirmation summary (password shown as &quot;set ✓&quot;)
+    and ask YES/NO
+
+Turn 3 — YES / NO received
+  • Bypass SKILL-BSC-AUTHENTICATE (the one documented exception)
+  • Read state file. If expired → reply &quot;your registration expired,
+    please start again&quot;
+  • On YES: POST /auth/register/youngsters with the payload; on success
+    delete state file, reply with success + username
+  • On NO: delete state file, reply &quot;registration cancelled&quot;
+</code></pre>
+<h3 id="92-state-file">9.2 State file</h3>
+<p>Location (gitignored, not served by MCP filesystem):</p>
+<pre><code>/opt/.openclaw-bsc/memory/registration_{PHONE_DIGITS}.json
+</code></pre>
+<p><code>PHONE_DIGITS</code> is the E.164 with the leading <code>+</code> stripped (<code>+6281…</code> → <code>6281…</code>).</p>
+<p>Schema (from <code>SKILL-BSC-REGISTER-STATE.md</code>):</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true"></a><span class="fu">{</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true"></a>  <span class="dt">&quot;step&quot;</span><span class="fu">:</span> <span class="st">&quot;awaiting_confirmation&quot;</span><span class="fu">,</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true"></a>  <span class="dt">&quot;created_at&quot;</span><span class="fu">:</span> <span class="st">&quot;2026-04-21T10:00:00.000Z&quot;</span><span class="fu">,</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true"></a>  <span class="dt">&quot;expires_at&quot;</span><span class="fu">:</span> <span class="st">&quot;2026-04-21T10:30:00.000Z&quot;</span><span class="fu">,</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true"></a>  <span class="dt">&quot;sender_phone&quot;</span><span class="fu">:</span> <span class="st">&quot;+628123456789&quot;</span><span class="fu">,</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true"></a>  <span class="dt">&quot;payload&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true"></a>    <span class="dt">&quot;registrantType&quot;</span><span class="fu">:</span> <span class="st">&quot;PARENT&quot;</span><span class="fu">,</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true"></a>    <span class="dt">&quot;parentFirstName&quot;</span><span class="fu">:</span> <span class="st">&quot;...&quot;</span><span class="fu">,</span> <span class="dt">&quot;parentLastName&quot;</span><span class="fu">:</span> <span class="st">&quot;...&quot;</span><span class="fu">,</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true"></a>    <span class="dt">&quot;parentMobileNumber&quot;</span><span class="fu">:</span> <span class="st">&quot;+628...&quot;</span><span class="fu">,</span> <span class="dt">&quot;parentEmail&quot;</span><span class="fu">:</span> <span class="st">&quot;...&quot;</span><span class="fu">,</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true"></a>    <span class="dt">&quot;password&quot;</span><span class="fu">:</span> <span class="st">&quot;&lt;actual-value-never-echoed&gt;&quot;</span><span class="fu">,</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true"></a>    <span class="dt">&quot;students&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="fu">{</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true"></a>      <span class="dt">&quot;youngsterFirstName&quot;</span><span class="fu">:</span> <span class="st">&quot;...&quot;</span><span class="fu">,</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true"></a>      <span class="dt">&quot;youngsterGender&quot;</span><span class="fu">:</span> <span class="st">&quot;MALE&quot;</span><span class="fu">,</span>             <span class="er">//</span> <span class="er">normalised</span> <span class="er">from</span> <span class="er">M</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true"></a>      <span class="dt">&quot;youngsterDateOfBirth&quot;</span><span class="fu">:</span> <span class="st">&quot;YYYY-MM-DD&quot;</span><span class="fu">,</span>  <span class="er">//</span> <span class="er">normalised</span> <span class="er">from</span> <span class="er">DD/MM/YYYY</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true"></a>      <span class="dt">&quot;youngsterSchoolId&quot;</span><span class="fu">:</span> <span class="st">&quot;&lt;uuid&gt;&quot;</span><span class="fu">,</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true"></a>      <span class="dt">&quot;youngsterGrade&quot;</span><span class="fu">:</span> <span class="st">&quot;G9&quot;</span><span class="fu">,</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true"></a>      <span class="dt">&quot;youngsterPhone&quot;</span><span class="fu">:</span> <span class="st">&quot;&quot;</span><span class="fu">,</span>                  <span class="er">//</span> <span class="er">omit</span> <span class="er">if</span> <span class="er">blank</span> <span class="er">→</span> <span class="er">API</span> <span class="er">falls</span> <span class="er">back</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true"></a>      <span class="dt">&quot;youngsterAllergies&quot;</span><span class="fu">:</span> <span class="st">&quot;none&quot;</span></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true"></a>    <span class="fu">}</span><span class="ot">]</span></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true"></a>  <span class="fu">}</span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true"></a><span class="fu">}</span></span></code></pre></div>
+<p><strong>TTL:</strong> exactly 15 minutes. Past <code>expires_at</code> → purge on next turn.</p>
+<p><strong>File I/O rule:</strong> use bash / <code>python3 -c</code> to read/write. <strong>Do not</strong> use MCP filesystem — that path isn't served by it. The docs flag this explicitly because it's a common wrong turn.</p>
+<h3 id="93-why-file-backed-state-and-not-agent-memory">9.3 Why file-backed state and not agent memory</h3>
+<ol>
+<li>Brian has <strong>no</strong> memory (tool deny <code>memory_*</code>). If state lived in memory, only Orders could see it — and registration reply Turn 3 hits Brian first.</li>
+<li>The bypass rule ("skip auth if state file exists and sender is not registered") is easier to gate on a filesystem check than a memory query — <code>ls</code> is cheap and deterministic.</li>
+<li>The file IS the audit trail. <code>ls memory/registration_*.json</code> tells you exactly who has an abandoned registration in flight.</li>
+</ol>
+<h3 id="94-school-resolution-is-live">9.4 School resolution is live</h3>
+<p>Never commit a school UUID into skill files. Fetch at Turn 2:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a><span class="ex">curl</span> -s https://schoolcatering.gaiada1.online/api/v1/auth/register/schools</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true"></a><span class="co"># → [{&quot;id&quot;:&quot;&lt;uuid&gt;&quot;,&quot;name&quot;:&quot;Bali Island School&quot;,&quot;city&quot;:&quot;Denpasar&quot;}, ...]</span></span></code></pre></div>
+<p>Fuzzy match rules (in <code>SKILL-BSC-REGISTER.md</code>):</p>
+<ul>
+<li>Case-insensitive, partial match OK</li>
+<li>"BIS" / "bali island" / "bali" → Bali Island School</li>
+<li>"SIS" / "sanur independent" / "sanur" → Sanur Independent School</li>
+<li>Any new school the platform adds matches automatically — no agent update required</li>
+</ul>
+<hr />
+<h2 id="10-phase-7--the-whatsappapi-loop">10. Phase 7 — The WhatsApp↔︎API loop</h2>
+<p>A literal end-to-end trace for "place lunch for Elizabeth on April 24: beef rice bowl".</p>
+<h3 id="step-1--whatsapp-inbound--brian">Step 1 — WhatsApp inbound → Brian</h3>
+<p>Brian's WhatsApp account receives the message. <code>openclaw.json</code> <code>channels.whatsapp.accounts.main</code> is the single account; sender context includes the E.164 phone.</p>
+<h3 id="step-2--brian--orders-silent-delegation">Step 2 — Brian → Orders (silent delegation)</h3>
+<p>Brian calls <code>sessions_spawn</code> with:</p>
+<pre><code>agentId: &quot;orders&quot;
+task:    &quot;place lunch for Elizabeth on April 24: beef rice bowl. Sender phone number: +628123456789&quot;
+</code></pre>
+<p>Brian's text output is empty (SOUL.md forbids delegation chatter).</p>
+<h3 id="step-3--orders-boots">Step 3 — Orders boots</h3>
+<p>Reads IDENTITY → SOUL → HEARTBEAT → USER → MEMORY → today's memory file → SKILL-BSC-AUTHENTICATE.</p>
+<h3 id="step-4--authenticate">Step 4 — Authenticate</h3>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true"></a><span class="co"># Step 3 — public lookup</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true"></a><span class="ex">curl</span> https://schoolcatering.gaiada1.online/api/v1/public/lookup-name?phone=%2B628123456789</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true"></a><span class="co"># → { &quot;found&quot;: true, &quot;name&quot;: &quot;Anthony Syrowatka&quot;,</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true"></a><span class="co">#     &quot;firstName&quot;: &quot;Anthony&quot;, &quot;username&quot;: &quot;syrowatka_dewi&quot;,</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true"></a><span class="co">#     &quot;role&quot;: &quot;PARENT&quot; }</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true"></a><span class="co"># Step 4 — login + family context</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true"></a><span class="ex">curl</span> -sX POST .../auth/login <span class="kw">\</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true"></a>  <span class="ex">-d</span> <span class="st">&#39;{&quot;username&quot;:&quot;admin&quot;,&quot;password&quot;:&quot;Teameditor@123&quot;}&#39;</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true"></a><span class="co"># → { &quot;accessToken&quot;: &quot;eyJ...&quot; }</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true"></a></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true"></a><span class="ex">curl</span> https://schoolcatering.gaiada1.online/api/v1/admin/family-context?phone=%2B628123456789 <span class="kw">\</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true"></a>  <span class="ex">-H</span> <span class="st">&quot;Authorization: Bearer eyJ...&quot;</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true"></a><span class="co"># → { &quot;found&quot;: true, &quot;family&quot;: { &quot;id&quot;: &quot;...&quot;,</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true"></a><span class="co">#     &quot;children&quot;: [ {&quot;first_name&quot;:&quot;Elizabeth&quot;,&quot;username&quot;:&quot;syrowatka_elizabeth&quot;,&quot;school_grade&quot;:&quot;G9&quot;,...}, ... ] } }</span></span></code></pre></div>
+<h3 id="step-5--route-to-skill-bsc-order">Step 5 — Route to SKILL-BSC-ORDER</h3>
+<p>Intent: place order. Parse:</p>
+<ul>
+<li>Child name given = "Elizabeth" → match <code>family.children[].first_name</code> → <code>childUsername = syrowatka_elizabeth</code></li>
+<li>Date = <code>"April 24"</code> → Asia/Makassar local → <code>2026-04-24</code></li>
+<li>Session = <code>LUNCH</code></li>
+<li>Dishes = <code>["Beef Rice Bowl"]</code></li>
+</ul>
+<h3 id="step-6--place-order-attempt-a">Step 6 — Place order (Attempt A)</h3>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true"></a><span class="ex">curl</span> -sX POST .../order/quick <span class="kw">\</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true"></a>  <span class="ex">-H</span> <span class="st">&quot;Content-Type: application/json&quot;</span> -H <span class="st">&quot;Authorization: Bearer eyJ...&quot;</span> <span class="kw">\</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true"></a>  <span class="ex">-d</span> <span class="st">&#39;{&quot;childUsername&quot;:&quot;syrowatka_elizabeth&quot;,&quot;senderPhone&quot;:&quot;+628123456789&quot;,</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true"></a><span class="st">       &quot;date&quot;:&quot;2026-04-24&quot;,&quot;session&quot;:&quot;LUNCH&quot;,&quot;dishes&quot;:[&quot;Beef Rice Bowl&quot;]}&#39;</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true"></a><span class="co"># → 201 { &quot;order&quot;: { &quot;id&quot;: &quot;9986F34E-...&quot;, ... } }</span></span></code></pre></div>
+<h3 id="step-7--orders-returns-plain-text">Step 7 — Orders returns plain text</h3>
+<pre><code>Order placed for Elizabeth on 24 April (Lunch): Beef Rice Bowl
+Order #9986F34E
+</code></pre>
+<h3 id="step-8--brian-relays">Step 8 — Brian relays</h3>
+<p>Brian runs the subagent-result validator (rejects markdown headers, curl blocks, superuser mentions, agent/skill names) — output passes — sends one WhatsApp message back to <code>+628123456789</code>.</p>
+<h3 id="step-9--done">Step 9 — Done</h3>
+<p>Total wall time: typically 1.5–3 s, dominated by two <code>curl</code>s + one <code>/admin/family-context</code> call. <code>debounceMs: 1500</code> on the channel prevents accidental double-sends.</p>
+<hr />
+<h2 id="11-daily-operations-cookbook">11. Daily operations cookbook</h2>
+<h3 id="111-watch-the-gateway-live">11.1 Watch the gateway live</h3>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true"></a><span class="fu">ssh</span> gda-ai01 <span class="st">&quot;journalctl --user -u openclaw-bsc-gateway --since &#39;5 min ago&#39; --no-pager&quot;</span></span></code></pre></div>
+<h3 id="112-gateway-health">11.2 Gateway health</h3>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true"></a><span class="fu">ssh</span> gda-ai01 <span class="st">&quot;curl -s http://127.0.0.1:18789/__openclaw__/health&quot;</span></span></code></pre></div>
+<h3 id="113-recent-task-runs-per-subagent-execution-history">11.3 Recent task runs (per-subagent execution history)</h3>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true"></a><span class="fu">ssh</span> gda-ai01 <span class="st">&#39;python3 -c &quot;</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true"></a><span class="st">import sqlite3</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true"></a><span class="st">c = sqlite3.connect(\&quot;/opt/.openclaw-bsc/tasks/runs.sqlite\&quot;)</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true"></a><span class="st">for r in c.execute(\&quot;SELECT task_id,status,substr(progress_summary,1,200) FROM task_runs ORDER BY created_at DESC LIMIT 10\&quot;):</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true"></a><span class="st">    print(r)</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true"></a><span class="st">&quot;&#39;</span></span></code></pre></div>
+<h3 id="114-inspect-an-in-flight-registration">11.4 Inspect an in-flight registration</h3>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true"></a><span class="fu">ssh</span> gda-ai01 <span class="st">&quot;ls /opt/.openclaw-bsc/memory/registration_*.json &amp;&amp; \</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true"></a><span class="st">  cat /opt/.openclaw-bsc/memory/registration_628123456789.json | jq .&quot;</span></span></code></pre></div>
+<h3 id="115-force-cancel-a-stuck-registration">11.5 Force-cancel a stuck registration</h3>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true"></a><span class="fu">ssh</span> gda-ai01 <span class="st">&quot;rm /opt/.openclaw-bsc/memory/registration_628123456789.json&quot;</span></span></code></pre></div>
+<p>Next message from that phone will start the flow over.</p>
+<h3 id="116-pause--resume-the-morning-notification-superuser-only">11.6 Pause / resume the morning notification (superuser only)</h3>
+<p>Send Brian via WhatsApp (from <code>+6281138210188</code>):</p>
+<pre><code>pause daily notification
+# or
+resume daily notification
+# or
+daily notification status
+</code></pre>
+<p>This writes <code>/home/azlan/.openclaw/workspace-bsc/daily_notification_control.json</code> with <code>dailyOrderNotifications: "PAUSED" | "ACTIVE"</code>.</p>
+<h3 id="117-deploy-skill-file-changes-zero-downtime">11.7 Deploy skill-file changes (zero downtime)</h3>
+<div class="sourceCode" id="cb23"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true"></a><span class="fu">ssh</span> gda-ai01</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true"></a><span class="bu">cd</span> /opt/.openclaw-bsc</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true"></a><span class="fu">git</span> pull --ff-only origin main</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true"></a><span class="co"># that&#39;s it — skills are read per-request, no restart needed</span></span></code></pre></div>
+<h3 id="118-deploy-app-side-api-changes">11.8 Deploy app-side API changes</h3>
+<div class="sourceCode" id="cb24"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true"></a><span class="fu">ssh</span> gda-ce01</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true"></a><span class="bu">cd</span> /var/www/schoolcatering</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true"></a><span class="fu">git</span> pull --ff-only origin main</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true"></a><span class="ex">npm</span> -C apps/api run build</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true"></a><span class="ex">pm2</span> restart schoolcatering-api</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true"></a><span class="co"># (add apps/web build + pm2 restart schoolcatering-web if web changed)</span></span></code></pre></div>
+<h3 id="119-create-a-synthetic-test-registration-clean">11.9 Create a synthetic test registration (clean)</h3>
+<p>Admin-only dev endpoints exist for CI / rehearsal:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true"></a><span class="co"># create</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true"></a><span class="ex">curl</span> -sX POST .../auth/dev/test-registration <span class="kw">\</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true"></a>  <span class="ex">-H</span> <span class="st">&quot;Authorization: Bearer &lt;admin-jwt&gt;&quot;</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true"></a><span class="co"># → creates fake family with phone +620000099991, email regtest@blossom.invalid</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true"></a></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true"></a><span class="co"># tear down</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true"></a><span class="ex">curl</span> -sX DELETE .../auth/dev/test-registration <span class="kw">\</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true"></a>  <span class="ex">-H</span> <span class="st">&quot;Authorization: Bearer &lt;admin-jwt&gt;&quot;</span></span></code></pre></div>
+<p>Use these in place of real phone numbers when smoke-testing the registration flow end-to-end.</p>
+<hr />
+<h2 id="12-onboarding-a-new-specialty-agent">12. Onboarding a new specialty agent</h2>
+<p>To clone this pattern for another vertical (e.g. a hotel booking specialist, a clinic appointment specialist):</p>
+<h3 id="121-stand-up-the-tenant-on-gda-ai01">12.1 Stand up the tenant on <code>gda-ai01</code></h3>
+<div class="sourceCode" id="cb26"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true"></a><span class="fu">sudo</span> install -d -o azlan -g azlan /opt/.openclaw-<span class="op">&lt;</span>tenant<span class="op">&gt;</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true"></a><span class="bu">cd</span> /opt/.openclaw-<span class="op">&lt;</span>tenant<span class="op">&gt;</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true"></a><span class="fu">git</span> init</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true"></a><span class="co"># Copy and adapt openclaw.json from /opt/.openclaw-bsc/openclaw.json</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true"></a><span class="co">#  — change agent names, WhatsApp account, gateway port, token</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true"></a><span class="fu">mkdir</span> workspace-main workspace-<span class="op">&lt;</span>tenant<span class="op">&gt;</span> memory tasks credentials plugins</span></code></pre></div>
+<p>Set gateway as a systemd user unit (<code>openclaw-&lt;tenant&gt;-gateway</code>), pick a fresh loopback port, generate a fresh token.</p>
+<h3 id="122-write-the-three-file-core-of-each-workspace">12.2 Write the three-file core of each workspace</h3>
+<p>For each workspace, minimum files:</p>
+<ul>
+<li><code>IDENTITY.md</code> — name + role + standard self-introduction</li>
+<li><code>SOUL.md</code> — output rules (pass-through for the public agent, silent for the internal executor)</li>
+<li><code>AGENTS.md</code> — startup read order + skill routing table</li>
+</ul>
+<h3 id="123-write-the-skills">12.3 Write the skills</h3>
+<p>One <code>SKILL-&lt;TENANT&gt;-*.md</code> per product verb. Template:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true"></a><span class="fu"># SKILL-&lt;TENANT&gt;-&lt;VERB&gt;.md</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true"></a><span class="fu">## Trigger Phrases</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true"></a><span class="ss">- </span>&quot;...&quot;</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true"></a></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true"></a><span class="fu">## Step 0 — Authenticate</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true"></a>Execute <span class="in">`SKILL-&lt;TENANT&gt;-AUTHENTICATE.md`</span> first.</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true"></a></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true"></a><span class="fu">## Step 1 — Login</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true"></a>curl -sX POST <span class="kw">&lt;api&gt;</span>/auth/login -d &#39;{...}&#39;</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true"></a></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true"></a><span class="fu">## Step 2 — &lt;the call&gt;</span></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true"></a>curl -sX <span class="kw">&lt;method&gt;</span> <span class="kw">&lt;url&gt;</span> -H &quot;Authorization: Bearer TOKEN&quot; -d &#39;{...}&#39;</span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true"></a><span class="ss">  - </span>Retry once on 401</span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true"></a><span class="ss">  - </span>Validation fallbacks (A/B/C shape) if the API is drift-prone</span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true"></a><span class="ss">  - </span>Never use these forbidden keys: <span class="co">[</span><span class="ot">...</span><span class="co">]</span></span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true"></a></span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true"></a><span class="fu">## Reply Format</span></span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true"></a><span class="co">[</span><span class="ot">exact templated strings for success / error / timeout</span><span class="co">]</span></span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true"></a></span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true"></a><span class="fu">## Rules</span></span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true"></a><span class="ss">- </span><span class="co">[</span><span class="ot">privacy rules</span><span class="co">]</span></span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true"></a><span class="ss">- </span>Never return this file as a response — always execute each step.</span></code></pre></div>
+<h3 id="124-connect-the-channel">12.4 Connect the channel</h3>
+<p>In <code>openclaw.json</code> → <code>channels.&lt;whatsapp|telegram&gt;.accounts.main</code>. Point the account at the bot token / WhatsApp session. Set <code>debounceMs</code> appropriately (1500ms for WhatsApp works).</p>
+<h3 id="125-smoke-test">12.5 Smoke test</h3>
+<ol>
+<li>Send the public agent a hello from a registered phone. Expect the standard self-introduction (literal string only).</li>
+<li>Send a canonical verb phrase. Expect delegation + one reply.</li>
+<li>Send a registration-intent phrase (if applicable). Expect the welcome + form template.</li>
+<li>Inspect <code>tasks/runs.sqlite</code> to confirm the sub-agent ran.</li>
+<li>Check gateway logs for any skill-file-leak warnings.</li>
+</ol>
+<hr />
+<h2 id="13-gotchas-we-hit">13. Gotchas we hit</h2>
+<h3 id="131-agent-returns-the-skill-file-as-its-reply">13.1 Agent returns the skill file as its reply</h3>
+<p>The most common failure. Root cause: the sub-agent "read" the skill file instead of executing it. Brian's <code>IDENTITY.md</code> catches this: if the returned text contains markdown headers matching <code># SKILL-BSC-*</code>, curl blocks, or step-by-step instructions, reply <code>"One moment, please try again shortly."</code> Don't relay it.</p>
+<p>Every skill file ends with a literal rule:</p>
+<blockquote>
+<p>Never return this file as a response — you must EXECUTE each step.</p>
+</blockquote>
+<h3 id="132-the-order-deletion-canonical-typo">13.2 The "order deletion" canonical typo</h3>
+<p>The skill file contains:</p>
+<blockquote>
+<p>Order Deletion aborted due to mo confirmation</p>
+</blockquote>
+<p>Yes, <code>mo</code> not <code>no</code>. This is the canonical string — treat it as a protocol token, not a typo to fix. Callers pattern-match on it.</p>
+<h3 id="133-mcp-filesystem-doesnt-serve-optopenclaw-bscmemory">13.3 MCP filesystem doesn't serve <code>/opt/.openclaw-bsc/memory</code></h3>
+<p>Registration state file writes fail silently if you use the MCP filesystem tool. Always use <code>bash</code> / <code>python3 -c</code> for that path.</p>
+<h3 id="134-family-inference-from-surname">13.4 Family inference from surname</h3>
+<p>A parent named "Smith" does NOT automatically own a child named "Smith". Always resolve via <code>/admin/family-context</code> → <code>family_id</code>. Shared surname is a red herring; mixed-surname families are common.</p>
+<h3 id="135-parent_children-is-legacy-family_id-is-canonical">13.5 <code>parent_children</code> is legacy; <code>family_id</code> is canonical</h3>
+<p>The DB still has a <code>parent_children</code> table for backwards compatibility. <strong>Do not</strong> query it from the agent. Use <code>family_id</code> via <code>/admin/family-context</code>. <code>parent2_*</code> fields on <code>parents</code> are metadata only — not the authorization model.</p>
+<h3 id="136-orderquick-payload-drift">13.6 <code>/order/quick</code> payload drift</h3>
+<p>Three shapes exist in the wild (see §7.2). Always try A → B → C. Never send <code>orderDate</code>, <code>studentUsername</code>, or a nested date object — those are dead shapes that return 400.</p>
+<h3 id="137-natural-language-dates">13.7 Natural-language dates</h3>
+<p><code>SKILL-BSC-ORDER.md</code> forbids sending natural-language dates to the API. Always convert to <code>YYYY-MM-DD</code> client-side. If ambiguous ("next Tuesday" on Tuesday), ask one short clarification question — don't guess.</p>
+<h3 id="138-weekend--blackout-orders-silently-accepted-by-some-endpoints">13.8 Weekend / blackout orders silently accepted by some endpoints</h3>
+<p>The service policy in <code>SOUL.md</code> is: <strong>no meal service on Sat/Sun, no service on blackout dates.</strong> Filter these client-side — skip with <code>"weekend, skipped"</code> note in bulk replies. Don't send them to the API even though they may not always 400.</p>
+<h3 id="139-superuser-leakage">13.9 Superuser leakage</h3>
+<p>If a skill result accidentally contains <code>"superuser"</code> or the literal phone <code>+6281138210188</code>, Brian's validator strips it. But the skill should never produce that text in the first place — <code>SENDER_NAME</code> for greeting, <code>you/your</code> for address. Phone numbers never appear in user-facing text.</p>
+<h3 id="1310-one-whatsapp-message-per-turn">13.10 One WhatsApp message per turn</h3>
+<p>The platform sends exactly one WhatsApp message per agent turn. If you need to send a multi-part reply (welcome guide + form), compose it as <strong>one</strong> message with visual dividers (<code>━━━━━━━━━━━━━━━</code>). Two <code>message_send</code> calls in a turn → the first one gets dropped.</p>
+<h3 id="1311-orders-has-no-message_send-tool">13.11 Orders has no <code>message_send</code> tool</h3>
+<p>By design. Orders' output is returned to Brian as plain text; Brian wraps it in the WhatsApp send. If a future skill adds a <code>message_send</code> call from Orders, WhatsApp will receive zero messages (Orders has no sender binding). Diagnose: check <code>tasks/runs.sqlite</code> — if the run succeeded but the user saw nothing, this is why.</p>
+<h3 id="1312-skill-changes-reload-per-request">13.12 Skill changes reload per-request</h3>
+<p>No PM2 restart, no gateway reload. <code>git pull</code> is the deploy. Keep this in mind when editing — a half-written skill file breaks production the moment it hits disk.</p>
+<h3 id="1313-egress-ip-for-the-api-allowlist">13.13 Egress IP for the API allowlist</h3>
+<p>Brian's egress IP is <strong><code>34.143.206.68</code></strong> (same VM as Victor). If the BSC API ever gets an IP allowlist, it must include this. Today it doesn't — the API trusts the admin JWT instead.</p>
+<hr />
+<h2 id="14-credentials--secrets-map">14. Credentials + secrets map</h2>
+<h3 id="141-app-side-schoolcatering-gda-ce01">14.1 App side (<code>schoolcatering</code>, <code>gda-ce01</code>)</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Thing</th>
+<th>Where</th>
+<th>Value (demo)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Admin user</td>
+<td>BSC API <code>users</code> table</td>
+<td><code>admin</code> / <code>Teameditor@123</code> — <strong>the agent's identity</strong></td>
+</tr>
+<tr class="even">
+<td>Superuser phone</td>
+<td>Hard-coded in skills</td>
+<td><code>+6281138210188</code></td>
+</tr>
+<tr class="odd">
+<td>Synthetic test phone</td>
+<td>Dev endpoint</td>
+<td><code>+620000099991</code></td>
+</tr>
+<tr class="even">
+<td>Synthetic test email</td>
+<td>Dev endpoint</td>
+<td><code>regtest@blossom.invalid</code></td>
+</tr>
+<tr class="odd">
+<td>JWT secrets</td>
+<td><code>/var/www/schoolcatering/.env</code></td>
+<td><code>AUTH_JWT_SECRET</code>, <code>AUTH_JWT_REFRESH_SECRET</code></td>
+</tr>
+<tr class="even">
+<td>Google OAuth</td>
+<td><code>.env</code></td>
+<td><code>GOOGLE_CLIENT_ID</code>, <code>NEXT_PUBLIC_GOOGLE_CLIENT_ID</code></td>
+</tr>
+<tr class="odd">
+<td>GCS</td>
+<td><code>.env</code></td>
+<td><code>GCS_BUCKET</code>, folder vars, service-account creds</td>
+</tr>
+<tr class="even">
+<td>Vertex AI (product-side)</td>
+<td><code>ecosystem.config.cjs</code></td>
+<td><code>GCP_PROJECT_ID=gda-viceroy</code>, <code>GCP_VERTEX_MODEL=gemini-2.5-flash</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="142-agent-side-gda-ai01optopenclaw-bsc">14.2 Agent side (<code>gda-ai01:/opt/.openclaw-bsc</code>)</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Thing</th>
+<th>Where</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Gateway token</td>
+<td><code>openclaw.json</code> → <code>gateway.auth.token</code></td>
+<td><code>bsc123abc</code> — loopback only</td>
+</tr>
+<tr class="even">
+<td>Control-UI origin allowlist</td>
+<td><code>openclaw.json</code> → <code>gateway.controlUi.allowedOrigins</code></td>
+<td><code>https://bsc.gaiada0.online</code></td>
+</tr>
+<tr class="odd">
+<td>WhatsApp session</td>
+<td><code>/opt/.openclaw-bsc/delivery-queue/</code>, <code>devices/</code></td>
+<td>Binary session state</td>
+</tr>
+<tr class="even">
+<td>Model keys (DeepSeek / Google / Anthropic)</td>
+<td><code>credentials/</code></td>
+<td>Referenced by <code>plugins.entries</code></td>
+</tr>
+<tr class="odd">
+<td>Admin creds duplicated</td>
+<td><code>workspace-bsc/TOOLS.md</code> + <code>SKILL-BSC-*.md</code></td>
+<td><code>admin</code> / <code>Teameditor@123</code> — keep in sync on rotation</td>
+</tr>
+<tr class="even">
+<td>Superuser</td>
+<td><code>workspace-main/AGENTS.md</code> + all skills</td>
+<td><code>+6281138210188</code> — change in <strong>every</strong> file on reassignment</td>
+</tr>
+<tr class="odd">
+<td>Registration state files</td>
+<td><code>/opt/.openclaw-bsc/memory/registration_*.json</code></td>
+<td>15-min TTL, stripped on completion / YES / NO</td>
+</tr>
+<tr class="even">
+<td>Task run history</td>
+<td><code>/opt/.openclaw-bsc/tasks/runs.sqlite</code></td>
+<td>Observability</td>
+</tr>
+<tr class="odd">
+<td>Media symlink</td>
+<td><code>/opt/.openclaw-bsc/media → /mnt/support_disk/openclaw-media</code></td>
+<td>Shared with other tenants</td>
+</tr>
+</tbody>
+</table>
+<h3 id="143-rotation-rules">14.3 Rotation rules</h3>
+<ul>
+<li><strong>Admin password</strong> — rotate in the BSC API first, then in <code>workspace-bsc/TOOLS.md</code> and in every <code>SKILL-BSC-*.md</code> that contains a <code>-d '{"username":"admin","password":"..."}'</code> literal. Grep the workspace before you commit:
+<div class="sourceCode" id="cb28"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true"></a><span class="fu">grep</span> -r <span class="st">&#39;Teameditor&#39;</span> /opt/.openclaw-bsc/workspace-bsc/</span></code></pre></div></li>
+<li><strong>Superuser phone</strong> — rotate in <code>workspace-main/AGENTS.md</code>, <code>workspace-main/IDENTITY.md</code>, <code>workspace-bsc/IDENTITY.md</code>, every skill that hardcodes it, <strong>and</strong> in <code>openclaw.json</code> <code>broadcast</code>.</li>
+<li><strong>Gateway token</strong> — rotate on the gateway systemd unit + anywhere operators use it for health checks.</li>
+</ul>
+<hr />
+<h2 id="15-file-map">15. File map</h2>
+<pre><code># ─── gda-ai01 ────────────────────────────────────────────────────────
+/opt/.openclaw-bsc/
+├── openclaw.json                         Root — Brian + Orders + WhatsApp channel
+├── README.md                             Tenant overview
+├── .openclaw/                            Tenant-local Claude config
+├── .git/                                 The workspace IS a git repo
+├── workspace-main/                       Brian (public WhatsApp face)
+│   ├── IDENTITY.md                       Self-introduction + pass-through rules
+│   ├── SOUL.md                           Output rules (no chatter, no tags)
+│   ├── AGENTS.md                         &quot;delegate to orders, nothing else&quot;
+│   ├── USER.md   TOOLS.md   HEARTBEAT.md   MEMORY.md
+│   ├── memory/                           Per-agent SQLite (deny-listed anyway)
+│   └── state/                            Ephemeral runtime state
+├── workspace-bsc/                        Orders (internal executor)
+│   ├── IDENTITY.md   SOUL.md   AGENTS.md
+│   ├── TOOLS.md                          BSC API reference (endpoints + admin creds)
+│   ├── USER.md   MEMORY.md   HEARTBEAT.md
+│   ├── SKILL-BSC-AUTHENTICATE.md         ← always executed first
+│   ├── SKILL-BSC-ORDER.md                /order/quick with A/B/C fallback
+│   ├── SKILL-BSC-DELETE-ORDER.md         DELETE /orders/:id with yes-confirm
+│   ├── SKILL-BSC-LOOKUP-PROTOCOL.md      /admin/family-context + /admin/family-orders
+│   ├── SKILL-BSC-ACTIVE-MENU.md          /public/menu (no auth)
+│   ├── SKILL-BSC-ORDER-RECOMMENDATION.md /admin/orders + client-side tally
+│   ├── SKILL-BSC-NOTIFICATION-CONTROL.md file-only: daily_notification_control.json
+│   ├── SKILL-BSC-REGISTER.md             3-turn WhatsApp registration
+│   ├── SKILL-BSC-REGISTER-STATE.md       state schema + read/write/expire
+│   ├── BSC-TEST-SUMMARY-2026-04-09.md    Live-server smoke-test log
+│   ├── daily_notification_control.json   Morning-notif gate (ACTIVE | PAUSED)
+│   ├── avatars/                          Orders avatar image
+│   └── memory/
+├── memory/                               Cross-agent memory + registration_*.json
+├── tasks/                                runs.sqlite + task lifecycle
+├── delivery-queue/                       Outbound WhatsApp queue
+├── devices/                              WhatsApp device registration
+├── subagents/                            Subagent session state
+├── agents/                               Per-agent skill packs
+├── credentials/                          API keys (DeepSeek, Google, Anthropic)
+├── identity/                             Identity material
+├── canvas/   browser/   completions/   flows/   logs/   plugins/   venv/
+├── media → /mnt/support_disk/openclaw-media
+├── exec-approvals.json                   Approval gate config
+└── schema.json                           Openclaw schema snapshot
+
+# ─── gda-ce01 ────────────────────────────────────────────────────────
+/var/www/schoolcatering/
+├── ecosystem.config.cjs                  PM2: -api :3000, -web :4173
+├── README.md                             Product overview + deploy flow
+├── apps/
+│   ├── api/                              NestJS (all paths under /api/v1)
+│   │   └── src/
+│   │       ├── main.ts   app.module.ts
+│   │       ├── auth/                     /auth/login, /auth/register/*, /public/*
+│   │       ├── core/                     orders, menus, admin/family-*, admin/orders
+│   │       └── shared/
+│   └── web/                              Next.js frontend
+├── packages/
+│   ├── types/                            Shared TS types
+│   └── config/
+├── docs/
+│   ├── short_guide.md                    User-facing welcome (the one Brian quotes)
+│   ├── brian/                            Agent-facing runbooks
+│   │   └── brian_whatsapp_notification_runbook.md
+│   ├── brian_order_notificatio_brief_scope.md
+│   ├── features/                         feature_matrix, button_api, links_api, ...
+│   ├── db/                               SQL migrations (baseline, views, perf)
+│   ├── specifications/   guides/   ops/   security/   release/   testting/
+├── menu/                                 Menu assets
+├── multiorders/                          Bulk-order tooling
+├── scripts/                              Ops scripts
+├── secure/                               Secret material (not committed)
+└── database_backup/
+</code></pre>
+<hr />
+<h2 id="16-appendix-a--decisions-log">16. Appendix A — Decisions log</h2>
+<ul>
+<li><strong>2026-02-24</strong> — BSC project kicks off. Roles fixed: <code>PARENT</code>, <code>YOUNGSTER</code>, <code>ADMIN</code>, <code>KITCHEN</code>, <code>DELIVERY</code>. Sessions fixed: <code>BREAKFAST</code>, <code>LUNCH</code>, <code>SNACK</code>.</li>
+<li><strong>2026-03-24</strong> — Tenant <code>bsc</code> stands up at <code>/opt/.openclaw-bsc</code> on <code>gda-ai01</code>. Gateway on <code>18789</code> with token <code>bsc123abc</code>.</li>
+<li><strong>2026-04-06</strong> — Two-agent split finalised: Brian (public) + Orders (internal). Brian's tool deny list (<code>memory_search</code>/<code>memory_get</code>/<code>read</code>) enforces pure pass-through.</li>
+<li><strong>2026-04-08</strong> — <code>family_id</code> becomes canonical family key; surname inference and <code>parent_children</code>-based resolution are banned. <code>/admin/family-context?phone=...</code> is the one true lookup.</li>
+<li><strong>2026-04-09</strong> — <code>/order/quick</code> drift documented with A/B/C fallback shapes. Banned payload keys (<code>orderDate</code>, <code>studentUsername</code>, nested <code>date</code>) frozen. 401 → re-login once, retry once, no loops.</li>
+<li><strong>2026-04-11</strong> — WhatsApp registration flow (3 turns + 15-min TTL state file) goes live. School UUIDs are fetched live, never hardcoded. Live schools: Bali Island School, Sanur Independent School.</li>
+<li><strong>2026-04-11</strong> — Dev-only <code>/auth/dev/test-registration</code> endpoints added (phone <code>+620000099991</code>) for rehearsal without real user data.</li>
+<li><strong>2026-04-14</strong> — Registration confirmation bypass codified as the single documented exception to "authenticate first". Triggered only when: message is YES/NO <em>and</em> state file exists <em>and</em> sender is not registered.</li>
+<li><strong>2026-04-16</strong> — <code>openclaw.json</code> last touched; no schema changes since, only metadata bumps.</li>
+<li><strong>2026-04-21</strong> — Skill file reloads confirmed zero-downtime (<code>git pull</code> suffices, no gateway restart). WhatsApp debounce standardised at 1500ms per account.</li>
+<li><strong>2026-04-22</strong> — Canonical string <code>"Order Deletion aborted due to mo confirmation"</code> (mo, not no) ratified as a protocol token — do not "fix" the typo.</li>
+</ul>
+</body>
+</html>

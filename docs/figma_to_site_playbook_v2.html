@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>figma_to_site_playbook__v2</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">figma_to_site_playbook__v2</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#figma--site-playbook-rh-properties">Figma → Site Playbook (RH Properties)</a>
+<ul>
+<li><a href="#table-of-contents">Table of contents</a></li>
+<li><a href="#1-the-stack-topology-and-urls">1. The stack, topology, and URLs</a></li>
+<li><a href="#2-prerequisites--what-to-install">2. Prerequisites — what to install</a></li>
+<li><a href="#3-phase-1--scaffold-from-templatebase">3. Phase 1 — Scaffold from <code>templatebase</code></a></li>
+<li><a href="#4-phase-2--rebrand--isolate">4. Phase 2 — Rebrand &amp; isolate</a></li>
+<li><a href="#5-phase-3--go-live">5. Phase 3 — Go live</a></li>
+<li><a href="#6-phase-35--seed-strategy">6. Phase 3.5 — Seed strategy</a></li>
+<li><a href="#7-phase-36--handoff-to-the-laptop">7. Phase 3.6 — Handoff to the laptop</a></li>
+<li><a href="#8-phase-4--figma-mcp-setup">8. Phase 4 — Figma MCP setup</a></li>
+<li><a href="#9-phase-41--tokens-first">9. Phase 4.1 — Tokens-first</a></li>
+<li><a href="#10-phase-42--delete-templatebase-leftovers">10. Phase 4.2 — Delete templatebase leftovers</a></li>
+<li><a href="#11-phase-43--ia-rework">11. Phase 4.3 — IA rework</a></li>
+<li><a href="#12-phase-44--home-sections-as-payload-blocks">12. Phase 4.4 — Home sections as Payload blocks</a></li>
+<li><a href="#13-phase-45--header--footer-rebrand">13. Phase 4.5 — Header / Footer rebrand</a></li>
+<li><a href="#14-phase-46--finish-the-rest-of-the-pages">14. Phase 4.6 — Finish the rest of the pages</a></li>
+<li><a href="#15-phase-47--polish">15. Phase 4.7 — Polish</a></li>
+<li><a href="#16-local-dev-laptop">16. Local dev (laptop)</a></li>
+<li><a href="#17-deploy-flow">17. Deploy flow</a></li>
+<li><a href="#18-gotchas-we-hit">18. Gotchas we hit</a></li>
+<li><a href="#19-payload-cms--the-parts-that-matter">19. Payload CMS — the parts that matter</a></li>
+<li><a href="#20-seo--robotstxt--sitemapxml">20. SEO — robots.txt + sitemap.xml</a></li>
+<li><a href="#21-file-map--where-things-live">21. File map — where things live</a></li>
+<li><a href="#22-next-steps-post-poc">22. Next steps Post POC</a></li>
+<li><a href="#appendix-a--git-history-at-handoff-2026-04-20">Appendix A — Git history at handoff (2026-04-20)</a></li>
+<li><a href="#appendix-b--named-decisions-log">Appendix B — Named decisions log</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="figma--site-playbook-rh-properties">Figma → Site Playbook (RH Properties)</h1>
+<p>End-to-end reference for turning a Figma design into a production real-estate site on the VRTPN stack (<strong>V</strong>ite SSR + <strong>R</strong>eact + <strong>T</strong>ailwind + <strong>P</strong>ayload CMS + <strong>N</strong>ode + Postgres). Everything in this doc is what we actually did on this project, recorded so the next project can copy the steps without re-deriving them.</p>
+<blockquote>
+<p><strong>Companion doc:</strong> <a href="./figma_automation.md"><code>docs/figma_automation.md</code></a> is the chronological work log — the <em>narrative</em> of what happened day by day. This document is the <em>playbook</em> — clean steps, decisions, and references.</p>
+</blockquote>
+<hr />
+<h2 id="table-of-contents">Table of contents</h2>
+<ol>
+<li><a href="#1-the-stack-topology-and-urls">The stack, topology, and URLs</a></li>
+<li><a href="#2-prerequisites--what-to-install">Prerequisites — what to install</a></li>
+<li><a href="#3-phase-1--scaffold-from-templatebase">Phase 1 — Scaffold from <code>templatebase</code></a></li>
+<li><a href="#4-phase-2--rebrand--isolate">Phase 2 — Rebrand &amp; isolate</a></li>
+<li><a href="#5-phase-3--go-live">Phase 3 — Go live (Postgres, PM2, nginx, SSL)</a></li>
+<li><a href="#6-phase-35--seed-strategy">Phase 3.5 — Seed strategy</a></li>
+<li><a href="#7-phase-36--handoff-to-the-laptop">Phase 3.6 — Handoff to the laptop</a></li>
+<li><a href="#8-phase-4--figma-mcp-setup">Phase 4 — Figma MCP setup</a></li>
+<li><a href="#9-phase-41--tokens-first">Phase 4.1 — Tokens-first (palette + font)</a></li>
+<li><a href="#10-phase-42--delete-templatebase-leftovers">Phase 4.2 — Delete templatebase leftovers</a></li>
+<li><a href="#11-phase-43--ia-rework">Phase 4.3 — IA rework (sitemap → Payload schema)</a></li>
+<li><a href="#12-phase-44--home-sections-as-payload-blocks">Phase 4.4 — Home page sections as Payload blocks</a></li>
+<li><a href="#13-phase-45--header--footer-rebrand">Phase 4.5 — Header / Footer rebrand</a></li>
+<li><a href="#14-phase-46--finish-the-rest-of-the-pages">Phase 4.6 — Finish the rest of the pages</a></li>
+<li><a href="#15-phase-47--polish">Phase 4.7 — Polish (images, dropdown, anchors, dark-theme fix)</a></li>
+<li><a href="#16-local-dev-laptop">Local dev (laptop)</a></li>
+<li><a href="#17-deploy-flow">Deploy flow — laptop → GitHub → server</a></li>
+<li><a href="#18-gotchas-we-hit">Gotchas we hit (and the fixes)</a></li>
+<li><a href="#19-payload-cms--the-parts-that-matter">Payload CMS — the parts that matter</a></li>
+<li><a href="#20-seo--robotstxt--sitemapxml">SEO — robots.txt + sitemap.xml</a></li>
+<li><a href="#21-file-map">File map — where things live</a></li>
+<li><a href="#22-next-steps-tomorrows-backlog">Next steps (tomorrow's backlog)</a></li>
+</ol>
+<hr />
+<h2 id="1-the-stack-topology-and-urls">1. The stack, topology, and URLs</h2>
+<table>
+<tbody>
+<tr class="odd">
+<td><strong>Frontend</strong></td>
+<td>Vite 6 SSR + React 19 + React Router 6 + Tailwind v4</td>
+</tr>
+<tr class="even">
+<td><strong>CMS</strong></td>
+<td>Payload 3 (Next.js 16 App Router under the hood)</td>
+</tr>
+<tr class="odd">
+<td><strong>DB</strong></td>
+<td>PostgreSQL 16 (local dev + prod)</td>
+</tr>
+<tr class="even">
+<td><strong>Process manager</strong></td>
+<td>PM2 (<code>ecosystem.config.cjs</code>)</td>
+</tr>
+<tr class="odd">
+<td><strong>Reverse proxy</strong></td>
+<td>nginx + Let's Encrypt SAN cert</td>
+</tr>
+<tr class="even">
+<td><strong>Repo</strong></td>
+<td><code>git@github.com:Gaia-Digital-Agency/rhproperties_react.git</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Three environments, three jobs:</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>Purpose</th>
+<th>Path</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Laptop (macOS)</td>
+<td>Canonical dev — Figma MCP, code edits, commits, pushes</td>
+<td><code>/Users/rogerwoolie/Downloads/rhproperties_react</code></td>
+</tr>
+<tr class="even">
+<td>Server <code>gda-s01</code></td>
+<td>Production deploy target — <code>git pull</code> + build + restart</td>
+<td><code>/var/www/rhproperties</code></td>
+</tr>
+<tr class="odd">
+<td>GitHub</td>
+<td>Source of truth</td>
+<td><code>Gaia-Digital-Agency/rhproperties_react</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Flow:</strong> laptop edit → <code>git push main</code> → ssh server → <code>git pull</code> → build → seed → <code>pm2 restart</code>.</p>
+<p><strong>Live URLs:</strong></p>
+<ul>
+<li>Frontend — <a href="https://rhproperties.gaiada.online/">https://rhproperties.gaiada.online/</a></li>
+<li>Admin — <a href="https://rhproperties.gaiada.online/admin">https://rhproperties.gaiada.online/admin</a> (demo creds below)</li>
+</ul>
+<p><strong>Ports on the VM:</strong></p>
+<ul>
+<li>3007 — <code>rhproperties-web</code> (Vite SSR)</li>
+<li>4007 — <code>rhproperties-cms</code> (Payload admin + API)</li>
+</ul>
+<hr />
+<h2 id="2-prerequisites--what-to-install">2. Prerequisites — what to install</h2>
+<h3 id="on-the-laptop-macos">On the laptop (macOS)</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="co"># node / package manager</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="ex">brew</span> install node@22 pnpm</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a><span class="co"># git</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a><span class="ex">brew</span> install git</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a><span class="co"># postgres for local dev (must match prod major version)</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a><span class="ex">brew</span> install postgresql@16 <span class="kw">&amp;&amp;</span> <span class="ex">brew</span> services start postgresql@16</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a><span class="co"># Figma desktop app (required for the Dev Mode MCP)</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a><span class="co">#   download from https://www.figma.com/downloads/</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a><span class="co"># Claude Code CLI (if you&#39;re automating the work)</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a><span class="co">#   see https://claude.com/claude-code</span></span></code></pre></div>
+<p>Also set up:</p>
+<ul>
+<li><strong>SSH key access to the server</strong> (<code>ssh gda-s01</code> should work without a password — entry in <code>~/.ssh/config</code>).</li>
+<li><strong>GitHub SSH</strong> for the <code>Gaia-Digital-Agency</code> org (the repo's <code>origin</code> is <code>git@github.com-net1io:...</code>, which implies a per-host SSH config entry — mirror that).</li>
+<li>A <strong>writeable Downloads folder</strong> for project assets pulled from Figma.</li>
+</ul>
+<h3 id="on-the-server-one-time-already-done-for-this-project">On the server (one-time, already done for this project)</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="fu">sudo</span> apt install postgresql-16 nginx certbot python3-certbot-nginx</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a><span class="fu">sudo</span> npm i -g pnpm pm2</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a><span class="co"># Postgres role + DB (see §5)</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a><span class="co"># PM2 + ecosystem.config.cjs (already checked into the repo)</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a><span class="co"># nginx vhost + SSL (see §5)</span></span></code></pre></div>
+<hr />
+<h2 id="3-phase-1--scaffold-from-templatebase">3. Phase 1 — Scaffold from <code>templatebase</code></h2>
+<p><code>templatebase</code> is our VRTPN starter at <code>/var/www/templatebase</code>. We copy, not fork, because we want a clean git history and independent deploys.</p>
+<p><strong>On the server:</strong></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="co"># 1) copy files (exclude node_modules, .git, build artefacts)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a><span class="fu">sudo</span> rsync -a <span class="kw">\</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a>  <span class="ex">--exclude</span>=<span class="st">&#39;node_modules&#39;</span> --exclude=<span class="st">&#39;.git&#39;</span> <span class="kw">\</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a>  <span class="ex">--exclude</span>=<span class="st">&#39;dist&#39;</span> --exclude=<span class="st">&#39;.next&#39;</span> <span class="kw">\</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a>  <span class="ex">--exclude</span>=<span class="st">&#39;graphify-out&#39;</span> <span class="kw">\</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true"></a>  <span class="ex">/var/www/templatebase/</span> /var/www/rhproperties/</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true"></a><span class="co"># 2) make it ours</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true"></a><span class="fu">sudo</span> chown -R azlan:azlan /var/www/rhproperties/</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true"></a><span class="bu">cd</span> /var/www/rhproperties</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true"></a><span class="co"># 3) fresh git history</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true"></a><span class="fu">git</span> init -b main</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true"></a><span class="fu">git</span> remote add origin git@github.com-net1io:Gaia-Digital-Agency/rhproperties_react.git</span></code></pre></div>
+<p>Do <strong>not</strong> inherit templatebase's commits — fresh history makes future diffs meaningful.</p>
+<hr />
+<h2 id="4-phase-2--rebrand--isolate">4. Phase 2 — Rebrand &amp; isolate</h2>
+<p>The scaffold is generic; every identifier still says <code>templatebase</code>. Swap <strong>every</strong> occurrence of these before going further:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Area</th>
+<th>templatebase</th>
+<th>rhproperties</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Root <code>package.json</code> <code>name</code></td>
+<td><code>templatebase</code></td>
+<td><code>rhproperties</code></td>
+</tr>
+<tr class="even">
+<td>Workspace package names</td>
+<td><code>@templatebase/cms</code>, <code>@templatebase/web</code></td>
+<td><code>@rhproperties/cms</code>, <code>@rhproperties/web</code></td>
+</tr>
+<tr class="odd">
+<td>PM2 app names</td>
+<td><code>templatebase-cms</code>, <code>templatebase-web</code></td>
+<td><code>rhproperties-cms</code>, <code>rhproperties-web</code></td>
+</tr>
+<tr class="even">
+<td>Web port</td>
+<td><code>3004</code></td>
+<td><strong><code>3007</code></strong> (3005/3006 taken)</td>
+</tr>
+<tr class="odd">
+<td>CMS port</td>
+<td><code>4004</code></td>
+<td><strong><code>4007</code></strong></td>
+</tr>
+<tr class="even">
+<td>DB name / user</td>
+<td><code>template_db</code> / <code>template_user</code></td>
+<td><code>rhproperties_db</code> / <code>rhproperties_user</code></td>
+</tr>
+<tr class="odd">
+<td>Domain</td>
+<td><code>templatebase.gaiada.online</code></td>
+<td><code>rhproperties.gaiada.online</code></td>
+</tr>
+<tr class="even">
+<td>Secrets</td>
+<td>(inherited)</td>
+<td><strong>rotate all</strong> with <code>openssl rand -hex 32</code></td>
+</tr>
+</tbody>
+</table>
+<p>Files to touch in the scaffold: <code>package.json</code>, <code>packages/*/package.json</code>, <code>ecosystem.config.cjs</code>, <code>packages/cms/.env</code>, <code>packages/web/.env</code>, root <code>.env</code>, <code>README.md</code>, <code>CLAUDE.md</code>, <code>docs/TECH_STACK.md</code>, <code>.claude/settings.local.json</code>.</p>
+<blockquote>
+<p><strong>Never copy prod <code>.env</code> files between environments.</strong> Each env generates its own secrets via <code>openssl rand -hex 32</code>. Copying server secrets to your laptop or vice versa is a security bug.</p>
+</blockquote>
+<hr />
+<h2 id="5-phase-3--go-live">5. Phase 3 — Go live</h2>
+<h3 id="51-postgres">5.1 Postgres</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="fu">sudo</span> -u postgres psql <span class="op">&lt;&lt;SQL</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a>CREATE ROLE rhproperties_user WITH LOGIN PASSWORD &#39;&lt;strong-random&gt;&#39;;</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a>CREATE DATABASE rhproperties_db OWNER rhproperties_user;</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a>GRANT ALL PRIVILEGES ON DATABASE rhproperties_db TO rhproperties_user;</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a><span class="op">SQL</span></span></code></pre></div>
+<p>Then in <code>packages/cms/.env</code>:</p>
+<pre><code>DATABASE_URL=postgresql://rhproperties_user:&lt;pw&gt;@127.0.0.1:5432/rhproperties_db
+PAYLOAD_SECRET=&lt;openssl rand -hex 32&gt;
+PAYLOAD_URL=http://localhost:4007
+FRONTEND_URL=http://localhost:3007
+REVALIDATION_SECRET=&lt;openssl rand -hex 32&gt;   # same value in packages/web/.env
+CRON_SECRET=&lt;openssl rand -hex 32&gt;
+WEB_MANAGER_API_SECRET=&lt;openssl rand -hex 32&gt;
+WEB_MANAGER_ALLOWED_IPS=127.0.0.1
+</code></pre>
+<p>Payload's postgres adapter auto-pushes schema on first boot; no manual migrations.</p>
+<h3 id="52-install--build--first-boot">5.2 Install + build + first boot</h3>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="ex">pnpm</span> install                                  # 779 packages, clean</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a><span class="ex">pnpm</span> --filter @rhproperties/cms generate:types</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a><span class="fu">cp</span> packages/cms/src/payload-types.ts packages/web/src/payload-types.ts</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a><span class="ex">pnpm</span> build                                    # CMS + web both green</span></code></pre></div>
+<h3 id="53-pm2">5.3 PM2</h3>
+<p><code>ecosystem.config.cjs</code> must invoke <code>pnpm start</code>, <strong>not</strong> <code>node_modules/.bin/next</code> directly — the <code>.bin/next</code> file is a POSIX shell shim and PM2 will try to run it as JS and fail with <code>SyntaxError: missing ) after argument list</code>.</p>
+<p>Correct form:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a>{</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a>  <span class="dt">name</span><span class="op">:</span> <span class="st">&#39;rhproperties-cms&#39;</span><span class="op">,</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a>  <span class="dt">cwd</span><span class="op">:</span> <span class="st">&#39;/var/www/rhproperties/packages/cms&#39;</span><span class="op">,</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a>  <span class="dt">script</span><span class="op">:</span> <span class="st">&#39;pnpm&#39;</span><span class="op">,</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a>  <span class="dt">args</span><span class="op">:</span> <span class="st">&#39;start&#39;</span><span class="op">,</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true"></a>  <span class="dt">interpreter</span><span class="op">:</span> <span class="st">&#39;none&#39;</span><span class="op">,</span>   <span class="co">// CRITICAL</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true"></a>  <span class="dt">env</span><span class="op">:</span> { <span class="dt">PORT</span><span class="op">:</span> <span class="st">&#39;4007&#39;</span> }<span class="op">,</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true"></a>}<span class="op">,</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true"></a>{</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true"></a>  <span class="dt">name</span><span class="op">:</span> <span class="st">&#39;rhproperties-web&#39;</span><span class="op">,</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true"></a>  <span class="dt">cwd</span><span class="op">:</span> <span class="st">&#39;/var/www/rhproperties/packages/web&#39;</span><span class="op">,</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true"></a>  <span class="dt">script</span><span class="op">:</span> <span class="st">&#39;pnpm&#39;</span><span class="op">,</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true"></a>  <span class="dt">args</span><span class="op">:</span> <span class="st">&#39;start&#39;</span><span class="op">,</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true"></a>  <span class="dt">interpreter</span><span class="op">:</span> <span class="st">&#39;none&#39;</span><span class="op">,</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true"></a>  <span class="dt">env</span><span class="op">:</span> { <span class="dt">PORT</span><span class="op">:</span> <span class="st">&#39;3007&#39;</span> }<span class="op">,</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true"></a>}</span></code></pre></div>
+<p>Then:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="ex">pm2</span> start ecosystem.config.cjs</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a><span class="ex">pm2</span> save                      # persists across reboots</span></code></pre></div>
+<h3 id="54-dns">5.4 DNS</h3>
+<p>A record <code>rhproperties → 34.124.244.233</code> at the domain registrar (GoDaddy in our case). Resolves in minutes.</p>
+<h3 id="55-nginx-vhost">5.5 nginx vhost</h3>
+<p>Our nginx vhost lives at <code>/etc/nginx/sites-available/subdomains.gaiada.online</code> and is <strong>symlinked</strong> into <code>sites-enabled/</code>. Watch out: on this project we found it was a plain file copy, not a symlink, so earlier edits never landed. Replace with a real symlink once; never edit both.</p>
+<p>Server block per app (HTTP → HTTPS redirect + reverse proxy):</p>
+<pre class="nginx"><code>server {
+    listen 80;
+    server_name rhproperties.gaiada.online;
+    return 301 https://$host$request_uri;
+}
+server {
+    listen 443 ssl;
+    server_name rhproperties.gaiada.online;
+    ssl_certificate /etc/letsencrypt/live/templategen.gaiada.online/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/templategen.gaiada.online/privkey.pem;
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+    location /admin { proxy_pass http://127.0.0.1:4007; /* + headers */ }
+    location /api   { proxy_pass http://127.0.0.1:4007; /* + headers */ }
+    location /      { proxy_pass http://127.0.0.1:3007; /* + headers */ }
+}
+</code></pre>
+<p>Full proxy header block is in the actual vhost — copy the pattern from <code>/etc/nginx/sites-available/subdomains.gaiada.online</code>.</p>
+<h3 id="56-ssl">5.6 SSL</h3>
+<p>We use <strong>one</strong> SAN Let's Encrypt certificate at <code>/etc/letsencrypt/live/templategen.gaiada.online/</code> that covers all <code>*.gaiada.online</code> project subdomains. Add a new one with:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a><span class="fu">sudo</span> certbot certonly --nginx --expand <span class="kw">\</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a>  <span class="ex">--cert-name</span> templategen.gaiada.online <span class="kw">\</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true"></a>  <span class="ex">-d</span> domain1 -d domain2 ... -d rhproperties.gaiada.online</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true"></a><span class="fu">sudo</span> nginx -t <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> systemctl reload nginx</span></code></pre></div>
+<hr />
+<h2 id="6-phase-35--seed-strategy">6. Phase 3.5 — Seed strategy</h2>
+<h3 id="why-a-dedicated-seed-runner">Why a dedicated seed runner</h3>
+<p>The templatebase admin has a <code>SeedButton</code> in <code>BeforeDashboard</code> that calls <code>/next/seed</code>, but that endpoint doesn't exist. We added a standalone seed runner so seeding works without a running server.</p>
+<p>Location: <code>packages/cms/scripts/seed.ts</code>. It imports <code>payload</code> + the seed module and executes against the DB directly.</p>
+<p>Script in <code>packages/cms/package.json</code>:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true"></a><span class="er">&quot;seed&quot;:</span> <span class="er">&quot;cross-env</span> <span class="er">NODE_OPTIONS=--no-deprecation</span> <span class="er">tsx</span> <span class="er">scripts/seed.ts&quot;</span></span></code></pre></div>
+<p>Invoke with:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a><span class="ex">pnpm</span> --filter @rhproperties/cms seed</span></code></pre></div>
+<h3 id="what-the-seed-does-current">What the seed does (current)</h3>
+<p><code>packages/cms/src/endpoints/seed/index.ts</code> + <code>rh-seed.ts</code>:</p>
+<ol>
+<li>Wipe globals (header, footer, settings — navItems set to <code>[]</code>).</li>
+<li>Wipe collections in FK-safe order: properties → team-members → posts → pages → forms → form-submissions → categories → media → search.</li>
+<li>Create the admin user if absent (<code>admin@gaiada.com</code> / <code>admin</code>).</li>
+<li>Upload a fallback hero image (<code>image-hero1.webp</code> from the Payload template) to <code>media</code>.</li>
+<li>Call <code>seedRh(...)</code> which:
+<ul>
+<li>Uploads Figma property photos from <code>packages/cms/src/endpoints/seed/assets/</code> into <code>media</code>.</li>
+<li>Creates 6 Properties (3 commercial + 3 residential) linked to those photos.</li>
+<li>Creates 4 Team Members.</li>
+<li>Creates 3 News posts (from the <code>posts</code> collection).</li>
+<li>Creates 5 Pages: Home, Browse Listings, Service, Team, Contact.</li>
+<li>Creates a Contact Form (Payload form-builder plugin).</li>
+<li>Writes Header + Footer + Settings globals with the RH nav.</li>
+</ul></li>
+</ol>
+<blockquote>
+<p><strong>Tables for deleted collections get orphaned.</strong> Payload's postgres adapter auto-creates tables but doesn't drop them. When we removed <code>services</code>, <code>portfolio</code>, etc., the old tables lingered in the DB until manually dropped. Not a correctness issue — just clutter.</p>
+</blockquote>
+<hr />
+<h2 id="7-phase-36--handoff-to-the-laptop">7. Phase 3.6 — Handoff to the laptop</h2>
+<p>Two Claude Code sessions are typical: <strong>one per environment.</strong> The server session does deploys; the laptop session does the real work (Figma MCP, code edits).</p>
+<p>On the laptop:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true"></a><span class="bu">cd</span> /Users/rogerwoolie/Downloads</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true"></a><span class="fu">git</span> clone git@github.com-net1io:Gaia-Digital-Agency/rhproperties_react.git</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true"></a><span class="bu">cd</span> rhproperties_react</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true"></a><span class="ex">pnpm</span> install</span></code></pre></div>
+<p>Then set up local dev (§16).</p>
+<p><strong>Rule:</strong> never edit source files on the server. Anything edited there gets blown away on the next <code>git pull</code>.</p>
+<hr />
+<h2 id="8-phase-4--figma-mcp-setup">8. Phase 4 — Figma MCP setup</h2>
+<p>We used the <strong>official Figma Dev Mode MCP</strong>. Alternatives existed (Framelink's <code>figma-developer-mcp</code> + raw REST API) but Dev Mode gives the highest-fidelity output and is free with any paid Figma seat.</p>
+<h3 id="81-requirements">8.1 Requirements</h3>
+<ul>
+<li><strong>Figma desktop app</strong> (not the web app) installed on the laptop.</li>
+<li><strong>Dev Mode</strong> toggled on in the target Figma file.</li>
+<li>The MCP server is served locally at <code>http://127.0.0.1:3845/mcp</code> whenever the desktop app is running. There's no separate daemon to start.</li>
+</ul>
+<h3 id="82-register-with-claude-code">8.2 Register with Claude Code</h3>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true"></a><span class="ex">claude</span> mcp add figma-dev-mode --transport http http://127.0.0.1:3845/mcp</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true"></a><span class="co"># verify</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true"></a><span class="ex">claude</span> mcp list</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true"></a><span class="co"># expect: figma-dev-mode: http://127.0.0.1:3845/mcp (HTTP) - ✓ Connected</span></span></code></pre></div>
+<p>If it reports <code>No Figma window open</code>, the desktop app isn't running or the file isn't focused.</p>
+<h3 id="83-the-tools-youll-use">8.3 The tools you'll use</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Tool</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>get_metadata(nodeId)</code></td>
+<td>XML tree of nodes under <code>nodeId</code> — names, sizes, positions. Cheap.</td>
+</tr>
+<tr class="even">
+<td><code>get_screenshot(nodeId)</code></td>
+<td>Rendered PNG of a node. Useful for seeing what a frame looks like.</td>
+</tr>
+<tr class="odd">
+<td><code>get_variable_defs(nodeId)</code></td>
+<td>Colour + type + spacing <em>variables</em> as JSON. This is how we pull design tokens.</td>
+</tr>
+<tr class="even">
+<td><code>get_design_context(nodeId)</code></td>
+<td>The big one — returns (a) reference React+Tailwind code, (b) a screenshot, (c) a summary of styles used. Use this for any frame you're about to port to code.</td>
+</tr>
+<tr class="odd">
+<td><code>create_design_system_rules</code></td>
+<td>Prompt helper for generating a per-project design-system rules doc.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="84-node-id-extraction">8.4 Node-ID extraction</h3>
+<p>Every Figma URL looks like <code>https://www.figma.com/design/&lt;fileKey&gt;/&lt;fileName&gt;?node-id=1-2&amp;…</code>. The <code>node-id</code> URL segment uses <code>-</code> but Figma's API wants <code>:</code> — convert <code>1-2</code> → <code>1:2</code>. Page-level frames inside a Figma file have IDs like <code>0:1</code> (the canvas root), <code>9:2</code> (a specific page frame), etc.</p>
+<h3 id="85-when-the-mcp-loses-its-session">8.5 When the MCP loses its session</h3>
+<p><code>mcp-session-id</code> is a short-lived HTTP header. If you get <code>No session found for sessionId</code>, re-initialise:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true"></a><span class="va">SID=$(</span><span class="ex">curl</span> -s -i -X POST http://127.0.0.1:3845/mcp <span class="kw">\</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true"></a>  <span class="ex">-H</span> <span class="st">&quot;Content-Type: application/json&quot;</span> <span class="kw">\</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true"></a>  <span class="ex">-H</span> <span class="st">&quot;Accept: application/json, text/event-stream&quot;</span> <span class="kw">\</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true"></a>  <span class="ex">-d</span> <span class="st">&#39;{&quot;jsonrpc&quot;:&quot;2.0&quot;,&quot;id&quot;:1,&quot;method&quot;:&quot;initialize&quot;,</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true"></a><span class="st">       &quot;params&quot;:{&quot;protocolVersion&quot;:&quot;2024-11-05&quot;,&quot;capabilities&quot;:{},</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true"></a><span class="st">                 &quot;clientInfo&quot;:{&quot;name&quot;:&quot;probe&quot;,&quot;version&quot;:&quot;0.1&quot;}}}&#39;</span> <span class="kw">\</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true"></a>  <span class="kw">|</span> <span class="fu">awk</span> -F<span class="st">&#39;: &#39;</span> <span class="st">&#39;/mcp-session-id/ {print $2}&#39;</span> <span class="kw">|</span> <span class="fu">tr</span> -d <span class="st">&#39;\r\n&#39;</span><span class="va">)</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true"></a></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true"></a><span class="ex">curl</span> -s -X POST http://127.0.0.1:3845/mcp <span class="kw">\</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true"></a>  <span class="ex">-H</span> <span class="st">&quot;Content-Type: application/json&quot;</span> <span class="kw">\</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true"></a>  <span class="ex">-H</span> <span class="st">&quot;Accept: application/json, text/event-stream&quot;</span> <span class="kw">\</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true"></a>  <span class="ex">-H</span> <span class="st">&quot;mcp-session-id: </span><span class="va">$SID</span><span class="st">&quot;</span> <span class="kw">\</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true"></a>  <span class="ex">-d</span> <span class="st">&#39;{&quot;jsonrpc&quot;:&quot;2.0&quot;,&quot;method&quot;:&quot;notifications/initialized&quot;,&quot;params&quot;:{}}&#39;</span></span></code></pre></div>
+<p>Then all subsequent requests include <code>mcp-session-id: $SID</code>.</p>
+<hr />
+<h2 id="9-phase-41--tokens-first">9. Phase 4.1 — Tokens-first</h2>
+<p><strong>Principle:</strong> before porting any UI, pull <strong>colours + type + spacing</strong> variables into the Tailwind theme. Do that in one self-contained commit. The existing templatebase blocks then re-skin to the new brand without any component edits.</p>
+<h3 id="91-pull-the-variables">9.1 Pull the variables</h3>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true"></a><span class="co"># with an active MCP session</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true"></a><span class="ex">curl</span> -s -X POST http://127.0.0.1:3845/mcp <span class="kw">\</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true"></a>  <span class="ex">-H</span> <span class="st">&quot;mcp-session-id: </span><span class="va">$SID</span><span class="st">&quot;</span> <span class="kw">\</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true"></a>  <span class="ex">-d</span> <span class="st">&#39;{&quot;jsonrpc&quot;:&quot;2.0&quot;,&quot;id&quot;:1,&quot;method&quot;:&quot;tools/call&quot;,</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true"></a><span class="st">       &quot;params&quot;:{&quot;name&quot;:&quot;get_variable_defs&quot;,</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true"></a><span class="st">                 &quot;arguments&quot;:{&quot;nodeId&quot;:&quot;0:1&quot;,</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true"></a><span class="st">                              &quot;clientLanguages&quot;:&quot;typescript,css&quot;,</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true"></a><span class="st">                              &quot;clientFrameworks&quot;:&quot;react,tailwind&quot;}}}&#39;</span></span></code></pre></div>
+<p>Response is JSON keyed by variable name:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true"></a><span class="fu">{</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true"></a>  <span class="dt">&quot;Navy Primary&quot;</span><span class="fu">:</span> <span class="st">&quot;#163e69&quot;</span><span class="fu">,</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true"></a>  <span class="dt">&quot;Warm White&quot;</span><span class="fu">:</span> <span class="st">&quot;#f7f5f0&quot;</span><span class="fu">,</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true"></a>  <span class="dt">&quot;Ink&quot;</span><span class="fu">:</span> <span class="st">&quot;#1c1c1a&quot;</span><span class="fu">,</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true"></a>  <span class="er">...</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true"></a>  <span class="dt">&quot;Heading/Heading 1 Bold&quot;</span><span class="fu">:</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true"></a>    <span class="st">&quot;Font(family: </span><span class="ch">\&quot;</span><span class="st">Urbanist</span><span class="ch">\&quot;</span><span class="st">, style: Bold, size: 40, weight: 700, lineHeight: 60, letterSpacing: 0)&quot;</span><span class="fu">,</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true"></a>  <span class="er">...</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true"></a><span class="fu">}</span></span></code></pre></div>
+<h3 id="92-wire-into-tailwind-v4">9.2 Wire into Tailwind v4</h3>
+<p>Tailwind v4 uses <code>@theme</code> in CSS, not a JS config. All of this lives in <a href="../packages/web/src/globals.css"><code>packages/web/src/globals.css</code></a>:</p>
+<ol>
+<li><strong>Font</strong> — swap the Google Fonts link in <a href="../packages/web/index.html"><code>packages/web/index.html</code></a>, then <code>--font-urbanist</code> / <code>--font-sans</code> / <code>--font-heading</code> in the top <code>@theme</code> block.</li>
+<li><strong>Type scale</strong> — <code>--text-h1</code> through <code>--text-caption</code> (size + <code>--line-height</code> pair each).</li>
+<li><strong>Raw palette tokens</strong> — <code>--navy-primary</code>, <code>--warm-white</code>, etc., defined on <code>:root</code> so they're resolvable as <code>var(...)</code> anywhere.</li>
+<li><strong>Semantic mapping</strong> — shadcn-style <code>--background: var(--warm-white)</code>, <code>--primary: var(--navy-primary)</code>, etc.</li>
+<li><strong><code>@theme inline</code> block</strong> — exposes <code>--color-navy-primary</code> etc. so <code>bg-navy-primary</code>, <code>text-ink</code> work as Tailwind utilities.</li>
+<li><strong>Dark theme</strong> — keep the <code>[data-theme='dark']</code> block for future; on this project we later disabled the <code>prefers-color-scheme</code> auto-flip (see §18.3).</li>
+</ol>
+<p>Commit: <code>feat(web): Phase 4 step 1 — RH Properties tokens from Figma</code> (a502531).</p>
+<hr />
+<h2 id="10-phase-42--delete-templatebase-leftovers">10. Phase 4.2 — Delete templatebase leftovers</h2>
+<p>templatebase was written for a digital agency (portfolio, team, departments, agency services). Keep only what your project needs. We removed:</p>
+<ul>
+<li>Collections: <code>services</code> (agency version), <code>portfolio</code>, <code>about-items</code> (values), <code>departments</code>, <code>team</code> (agency team).</li>
+<li>Blocks: <code>AboutBlock</code>, <code>CareerBlock</code>, <code>PortfolioBlock</code>, <code>Services</code> block — and their web renderers.</li>
+<li>Pages: <code>Portfolio</code>, <code>Careers</code>, <code>Blog</code> from the seed.</li>
+<li>Routes: <code>/services/:slug</code> and the matching web page.</li>
+<li>Ancillary: every reference in <code>web-manager.ts</code>, <code>generatePreviewPath.ts</code>, <code>data-loader.ts</code>, <code>server.ts</code>, <code>RenderBlocks.tsx</code>, <code>RowLabel.tsx</code>, and the seed.</li>
+</ul>
+<p>Process:</p>
+<ol>
+<li><code>Grep</code> every name/path/slug to find references.</li>
+<li>Delete the directories.</li>
+<li>Fix the TS errors until build is green.</li>
+<li>Re-seed (the seed clears everything first, so orphan rows are gone).</li>
+<li>Commit once as <code>chore: remove agency/templatebase leftovers</code> (c75b240).</li>
+</ol>
+<hr />
+<h2 id="11-phase-43--ia-rework">11. Phase 4.3 — IA rework</h2>
+<p>Start from the client's <strong>sitemap</strong>, not from the scaffold's page layout.</p>
+<p>Our sitemap had: <code>Home · Browse Listings · Service · Team · News · Contact</code> (+ a "Landing Page" we skipped for now).</p>
+<p>Per-node → Payload mapping:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Sitemap node</th>
+<th>Payload shape</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Home</td>
+<td><code>pages</code> slug <code>home</code>, <code>hero.type = rhLanding</code></td>
+</tr>
+<tr class="even">
+<td>Browse Listings</td>
+<td><code>pages</code> slug <code>browse</code>, two <code>propertyShowcase</code> blocks</td>
+</tr>
+<tr class="odd">
+<td>Browse/Commercial · Browse/Residential</td>
+<td>web route <code>/browse/:type</code> → <code>BrowseListPage.tsx</code> fetches properties where type equals param</td>
+</tr>
+<tr class="even">
+<td>Property Detail</td>
+<td>new <strong><code>properties</code></strong> collection; web route <code>/properties/:slug</code></td>
+</tr>
+<tr class="odd">
+<td>Service</td>
+<td><code>pages</code> slug <code>service</code>, anchored <code>aboutAgency</code> sections (#mini-makeover / #emergency-repair / #other-services)</td>
+</tr>
+<tr class="even">
+<td>Team</td>
+<td><code>pages</code> slug <code>team</code> + new <strong><code>team-members</code></strong> collection; web route <code>/team/:slug</code></td>
+</tr>
+<tr class="odd">
+<td>News</td>
+<td><code>posts</code> collection re-labelled "News" in admin (keep slug = <code>posts</code> internally to avoid DB churn); route renamed <code>/posts/*</code> → <code>/news/*</code></td>
+</tr>
+<tr class="even">
+<td>Contact</td>
+<td><code>pages</code> slug <code>contact</code> with <code>contactDetails</code> + <code>formBlock</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="111-new-collections">11.1 New collections</h3>
+<ul>
+<li><a href="../packages/cms/src/collections/Properties/index.ts"><code>packages/cms/src/collections/Properties/index.ts</code></a> — title, type (commercial/residential), location, sizeSqm, bedrooms/bathrooms/parking (residential-only), pricingType (sale/lease), price, leaseTerms (lease-only), features[], availability, heroImage, gallery[], meta (SEO), slugField, drafts+autosave.</li>
+<li><a href="../packages/cms/src/collections/TeamMembers/index.ts"><code>packages/cms/src/collections/TeamMembers/index.ts</code></a> — name, role, bio, image, email, phone, order, slugField (from <code>name</code>), drafts.</li>
+</ul>
+<h3 id="112-posts--news-url-only">11.2 Posts → News (URL only)</h3>
+<p>Kept the collection slug as <code>posts</code> (renaming triggers an FK cascade in Postgres and loses existing relations). What changed:</p>
+<ul>
+<li><code>Posts.labels = { singular: 'News Article', plural: 'News' }</code> in admin.</li>
+<li><code>collectionPrefixMap.posts = '/news'</code> in <code>generatePreviewPath.ts</code>.</li>
+<li><code>data-loader.ts</code> now matches <code>segments[0] === 'news'</code>.</li>
+<li><code>App.tsx</code> routes: <code>/news</code>, <code>/news/page/:n</code>, <code>/news/:slug</code>.</li>
+<li><code>web-manager.ts</code> builds <code>/news/${slug}</code>.</li>
+</ul>
+<p>Commit: <code>feat: Phase 4 step 2 — IA rework</code> (afe992f).</p>
+<hr />
+<h2 id="12-phase-44--home-sections-as-payload-blocks">12. Phase 4.4 — Home sections as Payload blocks</h2>
+<p>Each section on the Home page is a Payload block — editable in admin, reorderable, and reusable across pages. The ones we built:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Block (Payload slug)</th>
+<th>What it renders</th>
+<th>Data source</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>propertyShowcase</code></td>
+<td>3- or 6-card grid with CTA</td>
+<td>Client-side fetch from <code>/api/properties?where[type]=...</code></td>
+</tr>
+<tr class="even">
+<td><code>aboutAgency</code></td>
+<td>Two-column (image + copy) with optional anchor + up to 2 CTAs</td>
+<td>Static content</td>
+</tr>
+<tr class="odd">
+<td><code>ourServices</code></td>
+<td>3-column icon + title + description grid</td>
+<td>Static content, Lucide icons picked from an allow-list</td>
+</tr>
+<tr class="even">
+<td><code>testimonials</code></td>
+<td>Carousel with prev/next, avatar, author + role</td>
+<td>Static content</td>
+</tr>
+<tr class="odd">
+<td><code>newsInsights</code></td>
+<td>3-card grid of latest News posts</td>
+<td>Client-side fetch from <code>/api/posts</code></td>
+</tr>
+<tr class="even">
+<td><code>ctaBanner</code></td>
+<td>Full-width dark navy banner with headline + button</td>
+<td>Static content</td>
+</tr>
+<tr class="odd">
+<td><code>teamGrid</code></td>
+<td>Grid of Team Members sorted by <code>order</code></td>
+<td>Client-side fetch from <code>/api/team-members</code></td>
+</tr>
+<tr class="even">
+<td><code>contactDetails</code></td>
+<td>4-column icon strip (map-pin / phone / mail / clock)</td>
+<td>Static content</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Each block has two files:</strong></p>
+<ul>
+<li><code>packages/cms/src/blocks/&lt;Name&gt;/config.ts</code> — Payload config (fields).</li>
+<li><code>packages/web/src/blocks/&lt;Name&gt;/Component.tsx</code> — React renderer.</li>
+</ul>
+<p><strong>Wiring:</strong></p>
+<ul>
+<li>Register the Payload config in the Pages collection's <code>layout</code> blocks array.</li>
+<li>Register the web component in <code>packages/web/src/blocks/RenderBlocks.tsx</code>:
+<ul>
+<li>Add to <code>blockComponents</code> map.</li>
+<li>Add slug to <code>fullBleedBlocks</code> set if the block paints its own section chrome.</li>
+</ul></li>
+</ul>
+<p>After adding/removing blocks, always:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true"></a><span class="ex">pnpm</span> --filter @rhproperties/cms generate:types</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true"></a><span class="fu">cp</span> packages/cms/src/payload-types.ts packages/web/src/payload-types.ts</span></code></pre></div>
+<p>to keep <code>payload-types.ts</code> in sync between packages.</p>
+<hr />
+<h2 id="13-phase-45--header--footer-rebrand">13. Phase 4.5 — Header / Footer rebrand</h2>
+<p>Replaced the hardcoded Payload SVG logo with a text wordmark in <a href="../packages/web/src/components/Logo/Logo.tsx"><code>packages/web/src/components/Logo/Logo.tsx</code></a> — drop-in for a real SVG later.</p>
+<p>Nav styling lives in <a href="../packages/web/src/Header/Nav/index.tsx"><code>packages/web/src/Header/Nav/index.tsx</code></a>: uppercase, 12px semi-bold, wide tracking, dropdown panel styled with warm-white bg + parchment hover.</p>
+<p>Footer rewritten in <a href="../packages/web/src/Footer/Component.tsx"><code>packages/web/src/Footer/Component.tsx</code></a>: 4-column layout (brand blurb · nav · contact · social) + thin copyright strip. Removed the templatebase's "Developed by Gaia Digital Agency" credit, visitor count, and theme selector.</p>
+<hr />
+<h2 id="14-phase-46--finish-the-rest-of-the-pages">14. Phase 4.6 — Finish the rest of the pages</h2>
+<ul>
+<li><strong>Team</strong> — AboutAgency intro → <code>teamGrid</code> (pulls from <code>team-members</code>) → CTA banner.</li>
+<li><strong>Contact</strong> — <code>contactDetails</code> (Office · Phone · Email · Hours, each optionally linkable) → <code>formBlock</code> referencing a seeded <strong>Contact Form</strong> (name / email / phone / enquiry-type / message, Payload form-builder plugin).</li>
+<li><strong>Browse</strong> (<code>/browse</code>) — two <code>propertyShowcase</code> blocks, one per type.</li>
+<li><strong>Service</strong> — <code>ourServices</code> (3-card grid) → three anchored <code>aboutAgency</code> sections (<code>#mini-makeover</code>, <code>#emergency-repair</code>, <code>#other-services</code>) → <code>ctaBanner</code>.</li>
+<li><strong>News</strong> (<code>/news</code>) — <code>PostsPage.tsx</code> rewritten with RH typography (eyebrow + h1 + intro + styled card grid).</li>
+</ul>
+<p>Commits: <code>02dd76a</code>, <code>f1d3342</code>.</p>
+<hr />
+<h2 id="15-phase-47--polish">15. Phase 4.7 — Polish</h2>
+<h3 id="151-real-property-photos-from-figma">15.1 Real property photos from Figma</h3>
+<p>For each property card:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true"></a><span class="co"># Inside an active MCP session</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true"></a><span class="ex">curl</span> -s -X POST http://127.0.0.1:3845/mcp <span class="kw">\</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true"></a>  <span class="ex">-H</span> <span class="st">&quot;mcp-session-id: </span><span class="va">$SID</span><span class="st">&quot;</span> <span class="kw">\</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true"></a>  <span class="ex">-d</span> <span class="st">&#39;{&quot;jsonrpc&quot;:&quot;2.0&quot;,&quot;id&quot;:2,&quot;method&quot;:&quot;tools/call&quot;,</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true"></a><span class="st">       &quot;params&quot;:{&quot;name&quot;:&quot;get_screenshot&quot;,</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true"></a><span class="st">                 &quot;arguments&quot;:{&quot;nodeId&quot;:&quot;30:67&quot;}}}&#39;</span>   # <span class="st">&quot;Commercial 1 - Picture&quot;</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true"></a><span class="co"># extract base64 image from response and save to</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true"></a><span class="co"># packages/cms/src/endpoints/seed/assets/&lt;slug&gt;.png</span></span></code></pre></div>
+<p>Then the seed's <code>uploadAsset()</code> helper uploads each one into <code>media</code> and the seeded Property's <code>heroImage</code> references it. On re-seed, real listing photos appear immediately.</p>
+<blockquote>
+<p>The Figma "Picture" frames often contain <strong>both</strong> a Default and a Hover state side-by-side. You'll want to crop to just the Default half with a quick Python/PIL script, or add a crop to the helper.</p>
+</blockquote>
+<blockquote>
+<p>Don't try this on big composite frames (hero, testimonials) — the screenshots include baked-in UI text that ghosts under our React overlay.</p>
+</blockquote>
+<h3 id="152-priority-image-hydration-race">15.2 Priority-image hydration race</h3>
+<p>Our <code>ImageMedia</code> component animated <code>opacity: 0 → 1</code> on <code>onLoad</code>. For priority-loaded images (eager + fetchPriority=high), the image often finished loading before React attached the listener, so opacity stuck at 0. Fix was a ref callback that checks <code>img.complete</code> on mount and flips <code>loaded: true</code> immediately.</p>
+<p>File: <a href="../packages/web/src/components/Media/ImageMedia/index.tsx"><code>packages/web/src/components/Media/ImageMedia/index.tsx</code></a>.</p>
+<h3 id="153-dark-theme-leak">15.3 Dark-theme leak</h3>
+<p>The templatebase ThemeProvider auto-flipped to <code>dark</code> based on the OS <code>prefers-color-scheme</code>, which set <code>data-theme="dark"</code> on <code>&lt;html&gt;</code> and killed text contrast across a palette that has no real dark variant.</p>
+<p>Fix in <a href="../packages/web/src/providers/Theme/InitTheme/index.tsx"><code>packages/web/src/providers/Theme/InitTheme/index.tsx</code></a> and <a href="../packages/web/src/providers/Theme/index.tsx"><code>packages/web/src/providers/Theme/index.tsx</code></a>: honour an explicit <code>localStorage['payload-theme']</code> choice but <strong>do not</strong> auto-detect.</p>
+<h3 id="154-dropdown-nav--service-anchors">15.4 Dropdown nav + Service anchors</h3>
+<ul>
+<li>Dropdown: <code>BROWSE LISTINGS ▾</code> now matches other nav items (uppercase, tracked, warm-white panel on hover).</li>
+<li>Service: <code>aboutAgency</code> block gained an optional <code>anchor</code> field; seed populates <code>mini-makeover</code> / <code>emergency-repair</code> / <code>other-services</code>; the OurServices cards' CTAs scroll-link to them.</li>
+</ul>
+<hr />
+<h2 id="16-local-dev-laptop">16. Local dev (laptop)</h2>
+<h3 id="161-ensure-postgres-is-running">16.1 Ensure Postgres is running</h3>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true"></a><span class="ex">brew</span> services list   # should show postgresql@16 started</span></code></pre></div>
+<p>If two versions are installed, use the pg16 binaries explicitly:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true"></a><span class="bu">export</span> <span class="va">PATH=</span>/opt/homebrew/opt/postgresql@16/bin:<span class="va">$PATH</span></span></code></pre></div>
+<h3 id="162-create-role--db-first-time-only">16.2 Create role + DB (first time only)</h3>
+<div class="sourceCode" id="cb22"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true"></a><span class="ex">createuser</span> rhproperties_user</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true"></a><span class="ex">createdb</span> -O rhproperties_user rhproperties_db</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true"></a><span class="ex">psql</span> -d postgres -c <span class="st">&quot;ALTER USER rhproperties_user WITH PASSWORD &#39;rh_local_dev_only&#39;;&quot;</span></span></code></pre></div>
+<h3 id="163-write-local-env-files-never-copy-from-server">16.3 Write local <code>.env</code> files (never copy from server)</h3>
+<p>Use <code>openssl rand -hex 32</code> for each secret. See the template in §5.1 and the web equivalent in <a href="../packages/web/.env.example"><code>packages/web/.env.example</code></a>. Use ports 3007 / 4007.</p>
+<h3 id="164-first-run">16.4 First run</h3>
+<div class="sourceCode" id="cb23"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true"></a><span class="ex">pnpm</span> --filter @rhproperties/cms generate:types</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true"></a><span class="fu">cp</span> packages/cms/src/payload-types.ts packages/web/src/payload-types.ts</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true"></a><span class="ex">pnpm</span> --filter @rhproperties/cms seed</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true"></a><span class="ex">pnpm</span> dev                    # starts CMS :4007 + web :3007 concurrently</span></code></pre></div>
+<p>Open <a href="http://localhost:3007">http://localhost:3007</a> (frontend) and <a href="http://localhost:4007/admin">http://localhost:4007/admin</a> (admin — <code>admin@gaiada.com</code> / <code>admin</code>).</p>
+<h3 id="165-hmr--cache-reset">16.5 HMR + cache reset</h3>
+<ul>
+<li><strong>Source edits</strong> to <code>packages/web/src/*</code> — Vite HMR picks up client changes immediately; <code>tsx watch server.ts</code> restarts the SSR process on server-side file changes.</li>
+<li><strong>Seed changes</strong> — re-run <code>pnpm --filter @rhproperties/cms seed</code>. To bust the web SSR in-memory cache (10-min TTL), either <strong><code>touch packages/web/src/data-loader.ts</code></strong> to nudge <code>tsx watch</code>, or <strong>restart <code>pnpm dev</code></strong> (most reliable).</li>
+<li><strong>Payload config changes</strong> — Next.js hot-reloads, but regen + sync types after any collection/block change.</li>
+</ul>
+<hr />
+<h2 id="17-deploy-flow">17. Deploy flow</h2>
+<p><strong>Laptop (one terminal):</strong></p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true"></a><span class="fu">git</span> add ...</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true"></a><span class="fu">git</span> commit -m <span class="st">&quot;...&quot;</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true"></a><span class="fu">git</span> push origin main</span></code></pre></div>
+<p><strong>Server, via SSH:</strong></p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true"></a><span class="fu">ssh</span> gda-s01 <span class="st">&quot;cd /var/www/rhproperties &amp;&amp; \</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true"></a><span class="st">  git pull origin main &amp;&amp; \</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true"></a><span class="st">  pnpm install --prefer-offline &amp;&amp; \</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true"></a><span class="st">  pnpm --filter @rhproperties/cms generate:types &amp;&amp; \</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true"></a><span class="st">  cp packages/cms/src/payload-types.ts packages/web/src/payload-types.ts &amp;&amp; \</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true"></a><span class="st">  pnpm build &amp;&amp; \</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true"></a><span class="st">  pnpm --filter @rhproperties/cms seed &amp;&amp; \</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true"></a><span class="st">  pm2 restart rhproperties-cms rhproperties-web&quot;</span></span></code></pre></div>
+<p>Skip the seed if you didn't change the seed — it wipes everything.</p>
+<p><strong>Smoke test:</strong></p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true"></a><span class="kw">for</span> <span class="ex">p</span> in <span class="st">&quot;&quot;</span> browse browse/commercial browse/residential service team news contact<span class="kw">;</span> <span class="kw">do</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true"></a>  <span class="va">st=$(</span><span class="ex">curl</span> -so /dev/null -w <span class="st">&quot;%{http_code}&quot;</span> https://rhproperties.gaiada.online/<span class="va">$p)</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true"></a>  <span class="bu">echo</span> <span class="st">&quot;/</span><span class="va">$p</span><span class="st"> -&gt; </span><span class="va">$st</span><span class="st">&quot;</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true"></a><span class="kw">done</span></span></code></pre></div>
+<hr />
+<h2 id="18-gotchas-we-hit">18. Gotchas we hit</h2>
+<h3 id="181-pm2-invoking-binnext-directly">18.1 PM2 invoking <code>.bin/next</code> directly</h3>
+<p>Error: <code>SyntaxError: missing ) after argument list</code>. The <code>.bin</code> files are shell shims, not JS. Use <code>script: 'pnpm', args: 'start', interpreter: 'none'</code> in <code>ecosystem.config.cjs</code> (see §5.3). Commit: 96e8226.</p>
+<h3 id="182-processenv-in-client-code">18.2 <code>process.env</code> in client code</h3>
+<p>React components that also render in the browser <strong>cannot read</strong> <code>process.env</code> under Vite — it throws <code>ReferenceError: process is not defined</code> during hydration and silently unmounts the whole tree → blank page. Use <code>import.meta.env.VITE_*</code> for client-readable values; guard <code>process.env</code> with <code>typeof process !== 'undefined'</code>.</p>
+<p>File: <a href="../packages/web/src/utilities/getURL.ts"><code>packages/web/src/utilities/getURL.ts</code></a>. Commit: 289d122.</p>
+<h3 id="183-dark-theme-leak">18.3 Dark theme leak</h3>
+<p>See §15.3. Symptom: eyebrows/titles render warm-white-on-warm-white because the OS prefers dark mode and the ThemeProvider auto-applied <code>data-theme="dark"</code> on <code>&lt;html&gt;</code>.</p>
+<h3 id="184-ssr-cache-persistence">18.4 SSR cache persistence</h3>
+<p><code>packages/web/src/lib/cache.ts</code> holds a 10-minute in-memory TTL cache. If you re-seed and the browser still shows old data, the web SSR process has stale cache. Restart <code>pnpm dev</code> or call <code>POST /api/revalidate</code> with the appropriate path + <code>REVALIDATION_SECRET</code>.</p>
+<h3 id="185-nginx-vhost-file-vs-symlink">18.5 nginx vhost file vs. symlink</h3>
+<p>On this project <code>/etc/nginx/sites-enabled/subdomains.gaiada.online</code> was a plain file copy, not a symlink. Every edit to <code>sites-available</code> went nowhere. Replace with a symlink:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true"></a><span class="fu">sudo</span> rm /etc/nginx/sites-enabled/subdomains.gaiada.online</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true"></a><span class="fu">sudo</span> ln -s /etc/nginx/sites-available/subdomains.gaiada.online <span class="kw">\</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true"></a>           <span class="ex">/etc/nginx/sites-enabled/subdomains.gaiada.online</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true"></a><span class="fu">sudo</span> nginx -t <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> systemctl reload nginx</span></code></pre></div>
+<p>Also watch for stray <code>.bak</code> files in <code>sites-enabled/</code> — nginx loads every file in that directory, so a leftover backup with the same <code>server_name</code> throws <code>conflicting server name "..." ignored</code> warnings and one of the blocks silently wins. <code>sudo rm /etc/nginx/sites-enabled/*.bak*</code> them.</p>
+<h3 id="186-admin-renders-a-blank-page-payload--nextjs">18.6 /admin renders a blank page (Payload + Next.js)</h3>
+<p>Symptom: <code>/admin</code> returns 200 HTML but the page is white; DevTools Network shows every <code>/_next/static/chunks/*</code> as 404.</p>
+<p>Cause: the Payload admin is a Next.js app served from port 4007. Its HTML references <code>/_next/static/chunks/*</code> for JS + CSS. If nginx only proxies <code>/admin</code> and <code>/api</code> to 4007 but falls <code>/_next</code> through to the frontend (3007), the frontend doesn't know those files and serves 404.</p>
+<p>Fix: add a <code>/_next</code> location to the <strong>same server block</strong> that proxies <code>/admin</code>:</p>
+<pre class="nginx"><code>location /_next {
+    proxy_pass http://127.0.0.1:4007;
+    proxy_http_version 1.1;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_read_timeout 300s;
+    proxy_connect_timeout 75s;
+}
+</code></pre>
+<p>Verify with a direct asset fetch:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true"></a><span class="va">ASSET=$(</span><span class="ex">curl</span> -s https://<span class="op">&lt;</span>host<span class="op">&gt;</span>/admin <span class="kw">|</span> <span class="fu">grep</span> -oE <span class="st">&#39;href=&quot;/_next/[^&quot;]*\.css&quot;&#39;</span> <span class="kw">|</span> <span class="fu">head</span> -1 <span class="kw">|</span> <span class="fu">sed</span> <span class="st">&#39;s/href=&quot;//;s/&quot;//&#39;</span><span class="va">)</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true"></a><span class="ex">curl</span> -sI <span class="st">&quot;https://&lt;host&gt;</span><span class="va">$ASSET</span><span class="st">&quot;</span> <span class="kw">|</span> <span class="fu">head</span> -1   # expect 200</span></code></pre></div>
+<blockquote>
+<p>This bug affects templatebase and anything scaffolded from it. Mirror the fix in every VRTPN project's vhost.</p>
+</blockquote>
+<h3 id="186-figma-mcp-needs-the-desktop-app">18.6 Figma MCP needs the desktop app</h3>
+<p>Error: <code>No Figma window open</code>. Open the file in the Figma <strong>desktop</strong> app (not the browser), and make sure Dev Mode is on.</p>
+<h3 id="187-figma-exports-with-baked-in-text">18.7 Figma exports with baked-in text</h3>
+<p><code>get_screenshot</code> on a hero frame returns the <strong>composited</strong> render — including overlay text, widgets, gradients. Useless as a background image. Get raw fills via the Picture sub-frames instead, or source from elsewhere.</p>
+<h3 id="188-slugfield-signature">18.8 <code>slugField</code> signature</h3>
+<p>Payload's <code>slugField()</code> returns a single field, not an array. Use <code>slugField()</code> (or <code>slugField({ useAsSlug: 'name' })</code>), <strong>not</strong> <code>...slugField()</code> — the spread throws <code>slugField is not a function or its return value is not iterable</code>.</p>
+<h3 id="189-autosave--draft-create">18.9 Autosave + draft create</h3>
+<p>With <code>versions: { drafts: { autosave: ... } }</code> on a collection, Payload types <code>payload.create(...)</code> as requiring <code>draft: true</code> <strong>and</strong> <code>DraftDataFromCollectionSlug&lt;...&gt;</code>. For a seed that writes <code>_status: 'published'</code> directly, cast <code>data: {...} as any</code> (seeds don't need deep type safety).</p>
+<h3 id="1810-payload-typests-drift">18.10 <code>payload-types.ts</code> drift</h3>
+<p>CMS edits regenerate <code>packages/cms/src/payload-types.ts</code> but not the web package's copy. Always re-sync:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true"></a><span class="fu">cp</span> packages/cms/src/payload-types.ts packages/web/src/payload-types.ts</span></code></pre></div>
+<p>Forgetting this lands TS errors on the web side.</p>
+<hr />
+<h2 id="19-payload-cms--the-parts-that-matter">19. Payload CMS — the parts that matter</h2>
+<p>Payload is doing a lot here. This is the short list of things you'll hit on any project and want a playbook for, not a generic Payload tutorial.</p>
+<h3 id="191-collections-vs-globals-vs-blocks">19.1 Collections vs. globals vs. blocks</h3>
+<ul>
+<li><strong>Collections</strong> hold many documents of one kind (Pages, Posts, Properties, TeamMembers, Users, Media, Categories). Each gets its own admin list + CRUD + REST/GraphQL.</li>
+<li><strong>Globals</strong> hold <em>exactly one</em> document per slug (Header, Footer, Settings). They fit singletons like the site nav.</li>
+<li><strong>Blocks</strong> are reusable field groups that can be placed inside a <code>blocks</code> field on any collection — this is how the Pages collection's <code>layout</code> field holds an ordered, heterogeneous list of <code>propertyShowcase</code>, <code>aboutAgency</code>, <code>testimonials</code>, etc.</li>
+</ul>
+<h3 id="192-anatomy-of-a-rh-block">19.2 Anatomy of a RH block</h3>
+<p>Every custom block has two halves:</p>
+<ol>
+<li><strong>CMS config</strong> — <code>packages/cms/src/blocks/&lt;Name&gt;/config.ts</code>. A <code>Block</code> object with <code>slug</code>, <code>interfaceName</code>, <code>labels</code>, and <code>fields[]</code>. Never change the <code>slug</code> after documents exist — it's how Payload identifies the block type in JSON. Use <code>labels</code> to rename in admin without breaking data.</li>
+<li><strong>Web renderer</strong> — <code>packages/web/src/blocks/&lt;Name&gt;/Component.tsx</code>. A React component typed from the generated <code>payload-types.ts</code> interface. Rendered by <code>RenderBlocks.tsx</code>.</li>
+</ol>
+<p><strong>Registration checklist</strong> — new block won't appear until you do all of these:</p>
+<pre><code>cms/src/blocks/&lt;Name&gt;/config.ts            # define
+cms/src/collections/Pages/index.ts         # import + add to layout.blocks[]
+web/src/blocks/&lt;Name&gt;/Component.tsx        # render
+web/src/blocks/RenderBlocks.tsx            # import + add to blockComponents map
+web/src/blocks/RenderBlocks.tsx            # add to fullBleedBlocks set if it owns its section chrome
+pnpm --filter @rhproperties/cms generate:types
+cp packages/cms/src/payload-types.ts packages/web/src/payload-types.ts
+</code></pre>
+<h3 id="193-payload-typests-is-generated--in-two-places">19.3 <code>payload-types.ts</code> is generated — in two places</h3>
+<p>Running <code>pnpm --filter @rhproperties/cms generate:types</code> writes <code>packages/cms/src/payload-types.ts</code>. The web package has its own copy at <code>packages/web/src/payload-types.ts</code> that must be re-synced after every CMS schema change:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true"></a><span class="fu">cp</span> packages/cms/src/payload-types.ts packages/web/src/payload-types.ts</span></code></pre></div>
+<p>Forgetting this lands TS errors on the web side (missing collection / block interfaces).</p>
+<h3 id="194-renaming-a-collection-slug--db-migration">19.4 Renaming a collection slug = DB migration</h3>
+<p>Changing <code>slug: 'posts'</code> to <code>slug: 'news'</code> creates a new Postgres table, drops relations, and loses data. On this project we <strong>kept</strong> <code>slug: 'posts'</code> but did two softer things that achieved what we wanted:</p>
+<ul>
+<li><code>labels: { singular: 'News Article', plural: 'News' }</code> — admin sidebar says "News".</li>
+<li>URL route renamed in <code>data-loader.ts</code>, <code>App.tsx</code>, <code>server.ts</code>, <code>web-manager.ts</code>, and <code>generatePreviewPath.ts</code> — public URLs are <code>/news/*</code>.</li>
+</ul>
+<p>Rename the slug only if you have <strong>no</strong> production data yet, or you're willing to write a migration.</p>
+<h3 id="195-slugfield--call-it-dont-spread-it">19.5 <code>slugField</code> — call it, don't spread it</h3>
+<p>Payload's <code>slugField()</code> returns <strong>one</strong> field (a <code>RowField</code> that groups a slug text + a "generate from" checkbox). Use it bare:</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode ts"><code class="sourceCode typescript"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true"></a>fields<span class="op">:</span> [</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true"></a>  { name<span class="op">:</span> <span class="st">&#39;title&#39;</span><span class="op">,</span> type<span class="op">:</span> <span class="st">&#39;text&#39;</span><span class="op">,</span> required<span class="op">:</span> true }<span class="op">,</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true"></a>  <span class="co">// ...</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true"></a>  <span class="fu">slugField</span>()<span class="op">,</span>                         <span class="co">// ✓</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true"></a>  <span class="co">// slugField({ useAsSlug: &#39;name&#39; }), // ✓ when title-ish field is called `name`</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true"></a>  <span class="co">// ...slugField(),                   // ✗ throws &quot;slugField is not iterable&quot;</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true"></a>]</span></code></pre></div>
+<h3 id="196-drafts--autosave--the-as-any-escape-hatch-in-seeds">19.6 Drafts + autosave — the <code>as any</code> escape hatch in seeds</h3>
+<p>Any collection with <code>versions: { drafts: { autosave: {...} } }</code> has Payload's <code>payload.create()</code> typed as a discriminated union where the <code>draft: true</code> branch wants <code>DraftDataFromCollectionSlug&lt;...&gt;</code>. Seeds that write <code>_status: 'published'</code> directly (skipping the draft dance) trip the union. Cast and move on:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode ts"><code class="sourceCode typescript"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true"></a>await payload<span class="op">.</span><span class="fu">create</span>({</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true"></a>  collection<span class="op">:</span> <span class="st">&#39;properties&#39;</span><span class="op">,</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true"></a>  data<span class="op">:</span> { title<span class="op">,</span> _status<span class="op">:</span> <span class="st">&#39;published&#39;</span><span class="op">,</span> <span class="co">/* ... */</span> } <span class="im">as</span> <span class="dt">any</span><span class="op">,</span>   <span class="co">// seed-only</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true"></a>})</span></code></pre></div>
+<p>Seeds don't need deep type safety. Don't apply this pattern in runtime code.</p>
+<h3 id="197-seed-idempotency">19.7 Seed idempotency</h3>
+<p>The seed wipes + recreates every time. Order matters for foreign-key safety:</p>
+<ol>
+<li>Clear globals (set <code>navItems: []</code>).</li>
+<li>Delete docs in reverse dependency order: properties → team-members → posts → pages → forms → form-submissions → categories → media → search.</li>
+<li>Upsert the admin user if missing (idempotent by email).</li>
+<li>Re-upload media (reads files from <code>packages/cms/src/endpoints/seed/assets/</code>).</li>
+<li>Create pages / properties / team / posts / forms.</li>
+<li>Write globals last (header/footer/settings nav).</li>
+</ol>
+<p>Re-running <code>pnpm --filter @rhproperties/cms seed</code> at any point is safe. Production should <strong>not</strong> re-seed after real content lands — the admin user skip is the only lingering idempotent step.</p>
+<h3 id="198-live-preview--revalidation">19.8 Live preview + revalidation</h3>
+<p>Two separate pipelines, commonly confused:</p>
+<ul>
+<li><strong>Live preview</strong> — admin's "Preview" button. CMS builds a URL like <code>/next/preview?slug=X&amp;collection=pages&amp;path=/X&amp;previewSecret=...</code>, the web server validates the secret, sets a <code>payload-draft</code> cookie, and redirects to <code>/X</code>. The page's data-loader sees the cookie (via the <code>draft</code> option) and adds <code>?draft=true</code> to Payload API calls to fetch unpublished versions. Collection → path mapping lives in <a href="../packages/cms/src/utilities/generatePreviewPath.ts"><code>packages/cms/src/utilities/generatePreviewPath.ts</code></a>.</li>
+<li><strong>Revalidation</strong> — post-publish, CMS <code>afterChange</code> hooks POST to <code>http://&lt;web&gt;/api/revalidate</code> with <code>{ path | tag }</code> and a <code>Bearer REVALIDATION_SECRET</code> header. The web server drops matching entries from the in-memory SSR cache. Cache impl: <a href="../packages/web/src/lib/cache.ts"><code>packages/web/src/lib/cache.ts</code></a>.</li>
+</ul>
+<h3 id="199-form-builder">19.9 Form builder</h3>
+<p>Payload's <code>@payloadcms/plugin-form-builder</code> ships the <code>Form</code> block and a <code>forms</code> collection. The flow:</p>
+<ol>
+<li>Create a <code>Form</code> document in admin (or in the seed — we do it in <code>rh-seed.ts</code>).</li>
+<li>Reference it from a page via the generic <code>formBlock</code> (<code>form: form.id</code>).</li>
+<li>The web renderer uses <code>react-hook-form</code> + the plugin's field registry.</li>
+<li>Submissions go to <code>form-submissions</code>. We do <strong>not</strong> email by default — see backlog item 7.</li>
+</ol>
+<h3 id="1910-web-manager--machine-to-machine-writes">19.10 Web-manager — machine-to-machine writes</h3>
+<p><code>packages/cms/src/app/(payload)/api/web-manager/*</code> is a set of authenticated routes for programmatic upserts/publishes/revalidation. Use it for content pipelines from external systems (CRMs, scrapers, generators) — <strong>not</strong> for frontend requests. Guarded by <code>WEB_MANAGER_API_SECRET</code> + <code>WEB_MANAGER_ALLOWED_IPS</code>. Route map + field guide in <a href="./web-manager-api.md"><code>docs/web-manager-api.md</code></a>.</p>
+<h3 id="1911-access-control--authenticated-vs-authenticatedorpublished">19.11 Access control — <code>authenticated</code> vs. <code>authenticatedOrPublished</code></h3>
+<ul>
+<li><code>read: authenticatedOrPublished</code> — public can see published docs; authenticated users see drafts too.</li>
+<li><code>create | update | delete: authenticated</code> — only logged-in users.</li>
+<li>Media uploads additionally MIME-whitelist + size-cap. Forms with an <code>hCaptcha</code> block verify server-side in <code>beforeChange</code>.</li>
+</ul>
+<h3 id="1912-seo-plugin">19.12 SEO plugin</h3>
+<p><code>@payloadcms/plugin-seo</code> adds an SEO tab to Pages + Posts + Properties. Configured in <a href="../packages/cms/src/plugins/index.ts"><code>packages/cms/src/plugins/index.ts</code></a> with <code>generateTitle</code> (<code>"&lt;Title&gt; | RH Properties"</code>) and <code>generateURL</code> (<code>SITE_URL/slug</code>). The web pages read <code>data.meta.title / description / image</code> via <code>&lt;Helmet&gt;</code> in each page component.</p>
+<h3 id="1913-admin-ux-helpers">19.13 Admin UX helpers</h3>
+<ul>
+<li><code>BlockRowLabel</code> in <code>packages/cms/src/blocks/RowLabel.tsx</code> — derives a nice row label for blocks in the admin (reads <code>blockName</code>, <code>title</code>, then rich-text headings). Keep the <code>BLOCK_DEFAULTS</code> map in sync when you add new blocks.</li>
+<li><code>BeforeLogin</code> and <code>BeforeDashboard</code> components can be customised per-project; we kept the defaults but trimmed the <code>SeedButton</code> since we have a CLI seed runner.</li>
+</ul>
+<hr />
+<h2 id="20-seo--robotstxt--sitemapxml">20. SEO — robots.txt + sitemap.xml</h2>
+<h3 id="201-robotstxt">20.1 robots.txt</h3>
+<p>Static file at <a href="../packages/web/public/robots.txt"><code>packages/web/public/robots.txt</code></a>. Vite serves <code>public/</code> in dev; Express serves it in prod (<code>server.ts</code> <code>express.static(...)</code>). Current contents:</p>
+<pre><code>User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /admin/*
+Disallow: /api/
+Disallow: /next/
+Disallow: /search?
+
+Sitemap: https://rhproperties.gaiada.online/sitemap.xml
+</code></pre>
+<h3 id="202-sitemapxml--dynamic">20.2 sitemap.xml — dynamic</h3>
+<p>Not a static file — an Express route in <code>packages/web/server.ts</code> that queries the CMS on request and outputs XML. Why: static sitemaps rot; doing it dynamically means every new property / team member / post shows up without a rebuild.</p>
+<p>What it does:</p>
+<ol>
+<li>Fetches <strong>pages</strong>, <strong>properties</strong>, <strong>team-members</strong>, <strong>posts</strong> from the CMS REST API (no pagination, <code>depth=0</code>).</li>
+<li>Filters to published docs with a slug.</li>
+<li>Maps each doc to a URL with the matching route prefix (<code>/</code>, <code>/properties/</code>, <code>/team/</code>, <code>/news/</code>).</li>
+<li>Serialises as a <code>&lt;urlset&gt;</code> with <code>&lt;loc&gt;</code> + <code>&lt;lastmod&gt;</code>.</li>
+<li>Caches the result for 1 hour in the same in-memory TTL cache we use for page data.</li>
+</ol>
+<p>Response headers: <code>Content-Type: application/xml; charset=utf-8</code>, <code>Cache-Control: public, max-age=600</code>.</p>
+<p>Smoke test:</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true"></a><span class="ex">curl</span> -s https://rhproperties.gaiada.online/robots.txt</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true"></a><span class="ex">curl</span> -s https://rhproperties.gaiada.online/sitemap.xml <span class="kw">|</span> <span class="fu">head</span> -40</span></code></pre></div>
+<p>If the sitemap comes back with an empty <code>&lt;urlset&gt;</code>, the CMS isn't reachable from the web process — check the <code>PAYLOAD_URL</code> env var and that the CMS is up.</p>
+<hr />
+<h2 id="21-file-map--where-things-live">21. File map — where things live</h2>
+<pre><code>packages/cms/                         Payload CMS (Next.js 16 App Router)
+├── src/
+│   ├── access/                       Auth rules (authenticated, authenticatedOrPublished)
+│   ├── app/(payload)/api/            Next.js API routes (Payload auto + our web-manager/*)
+│   ├── blocks/                       Payload block configs
+│   │   ├── AboutAgency/config.ts
+│   │   ├── Archive/                  Keep — blog archive block
+│   │   ├── Banner/                   Keep — generic
+│   │   ├── CallToAction/
+│   │   ├── Code/
+│   │   ├── Content/
+│   │   ├── ContactDetails/config.ts  NEW for RH
+│   │   ├── ContentMedia/
+│   │   ├── CtaBanner/config.ts       NEW for RH
+│   │   ├── Form/config.ts            Payload form-builder plugin wrapper
+│   │   ├── MediaBlock/
+│   │   ├── NewsInsights/config.ts    NEW for RH
+│   │   ├── OurServices/config.ts     NEW for RH
+│   │   ├── PropertyShowcase/config.ts  NEW for RH
+│   │   ├── RowLabel.tsx              Admin UX — derives block labels
+│   │   ├── TeamGrid/config.ts        NEW for RH
+│   │   └── Testimonials/config.ts    NEW for RH
+│   ├── collections/
+│   │   ├── Categories.ts
+│   │   ├── Media.ts
+│   │   ├── Pages/index.ts            Wires all layout blocks
+│   │   ├── Posts/index.ts            Labelled &quot;News&quot; in admin
+│   │   ├── Properties/index.ts       NEW for RH
+│   │   ├── TeamMembers/index.ts      NEW for RH
+│   │   └── Users/
+│   ├── Footer/config.ts              Global — footer nav
+│   ├── Header/config.ts              Global — header nav + subItems
+│   ├── Settings/config.ts            Global — whatsapp, email, social
+│   ├── endpoints/seed/
+│   │   ├── assets/                   Figma-sourced images (staged for upload)
+│   │   ├── image-hero-1.ts           Fallback hero image metadata
+│   │   ├── index.ts                  Seed orchestrator (wipe + admin + media + rh-seed)
+│   │   └── rh-seed.ts                All RH-specific seed data
+│   ├── heros/config.ts               rhLanding / highImpact / mediumImpact / lowImpact
+│   ├── payload.config.ts             Payload root config
+│   ├── payload-types.ts              GENERATED — never hand-edit
+│   ├── plugins/                      SEO, form-builder, search, etc.
+│   └── utilities/
+│       ├── generatePreviewPath.ts    Maps collection → URL prefix
+│       └── web-manager.ts            Machine-to-machine write API auth
+
+packages/web/                         Vite SSR React frontend
+├── server.ts                         Express SSR entry
+├── src/
+│   ├── App.tsx                       React Router routes
+│   ├── blocks/                       Web renderers (mirror of cms/src/blocks)
+│   │   └── RenderBlocks.tsx          Block-slug → Component map + full-bleed allow-list
+│   ├── components/
+│   │   ├── Link/                     CMSLink with inline/button appearance
+│   │   ├── Logo/Logo.tsx             Wordmark (drop-in for a real SVG)
+│   │   ├── Media/ImageMedia/         Payload media renderer
+│   │   └── ui/                       shadcn-style button, select, etc.
+│   ├── data-loader.ts                SSR data fetch per URL (cached)
+│   ├── entry-client.tsx              React hydration entry
+│   ├── entry-server.tsx              React SSR entry
+│   ├── Footer/Component.tsx          Rebranded footer
+│   ├── globals.css                   Tailwind v4 theme + tokens
+│   ├── Header/
+│   │   ├── Component.client.tsx
+│   │   └── Nav/index.tsx             RH-styled nav + dropdown
+│   ├── heros/
+│   │   ├── RhLanding/index.tsx       NEW — RH home hero (search widget)
+│   │   ├── HighImpact / MediumImpact / LowImpact / PostHero
+│   │   └── RenderHero.tsx
+│   ├── lib/
+│   │   ├── cache.ts                  In-memory TTL cache (10 min default)
+│   │   └── payload-client.ts         Typed REST client for CMS API
+│   ├── pages/
+│   │   ├── BrowseListPage.tsx        NEW — /browse/:type
+│   │   ├── DynamicPage.tsx           /:slug catch-all (renders blocks)
+│   │   ├── HomePage.tsx              /
+│   │   ├── NotFoundPage.tsx
+│   │   ├── PostPage.tsx              /news/:slug (formerly /posts/:slug)
+│   │   ├── PostsPage.tsx             /news index
+│   │   ├── PostsPaginatedPage.tsx
+│   │   ├── PropertyDetailPage.tsx    NEW — /properties/:slug
+│   │   ├── SearchPage.tsx
+│   │   └── TeamMemberPage.tsx        NEW — /team/:slug
+│   ├── payload-types.ts              MIRROR of cms&#39;s — regen + copy after CMS changes
+│   ├── providers/Theme/              Light-only (auto-dark disabled)
+│   └── utilities/getURL.ts           Vite-safe env access
+
+docs/
+├── figma_automation.md               Chronological work log
+├── figma_to_site_playbook.md         THIS FILE — the reference
+├── TECH_STACK.md                     Stack overview
+└── web-manager-api.md                M2M API docs
+
+ecosystem.config.cjs                  PM2 config (script: &#39;pnpm&#39;, interpreter: &#39;none&#39;)
+CLAUDE.md                             Project-level Claude Code rules
+</code></pre>
+<hr />
+<h2 id="22-next-steps-post-poc">22. Next steps Post POC</h2>
+<p>The nine items we queued after the Team/Contact/News/Browse/Service work landed, in priority order. Cross off as done.</p>
+<ol>
+<li><strong>Deploy everything to the server.</strong> ✅ <em>Done 2026-04-20 — everything through <code>f1d3342</code> is live at <a href="https://rhproperties.gaiada.online/">https://rhproperties.gaiada.online/</a>.</em></li>
+<li><strong>Real hero + about images.</strong> The Figma exports had baked-in text and ghosted under our overlay. Either the client ships proper cityscape + office photos (upload via admin → Media), or we source CC0 stock.</li>
+<li><strong>Property &amp; Post detail pages polish.</strong> <code>/properties/:slug</code> and <code>/news/:slug</code> render but the layouts are generic — port the Figma detail frames (hero + sidebar with price/specs, related listings block).</li>
+<li><strong>Mobile responsive QA.</strong> 375px sweep of every page. Expect overflows on the hero search widget, the footer 4-col, and the testimonials carousel.</li>
+<li><strong>Real RH Properties content.</strong> Swap placeholder copy, contact details, team names, listings for what the client actually wants. Needs input: actual address, phone, email, hours, bios, photos, property data (or a CRM integration).</li>
+<li><strong>Rotate demo credentials + lock admin.</strong> <code>admin@gaiada.com</code> / <code>admin</code> must not ship. Rotate on the server, update the seed to skip admin creation when <code>NODE_ENV === 'production'</code> and a real admin already exists.</li>
+<li><strong>Form submissions wired to email.</strong> The contact form writes to <code>form-submissions</code> but sends no notifications. Add SMTP/Resend + a transactional template.</li>
+<li><strong>Functional search + filter on browse.</strong> Make the hero's Listing Type / Size / Location dropdowns actually filter <code>/browse/:type?size=&lt;200&amp;location=...</code> (currently visual-only).</li>
+<li><strong>Backwards-compat redirects.</strong> If the old RH site had <code>/about</code>, <code>/portfolio</code>, <code>/careers</code>, <code>/blog</code> URLs indexed by Google, 301 them to the new homes from nginx or Express.</li>
+</ol>
+<p>Beyond that:</p>
+<ul>
+<li><strong>Real-listing data source.</strong> Pull from a property CRM or an RSS/XML feed so the Properties collection isn't manually maintained.</li>
+<li><strong>Sitemap + robots.txt.</strong> Payload has a sitemap plugin; wire it.</li>
+<li><strong>Analytics + Vitals dashboards.</strong> GA4 / Plausible + a Lighthouse baseline.</li>
+<li><strong>Accessibility audit.</strong> We used semantic HTML but haven't run axe.</li>
+<li><strong>Dark variant (optional).</strong> The design tokens support it; we just disabled auto-detect. If the client wants dark mode, define the inverted palette in Figma and re-enable.</li>
+</ul>
+<hr />
+<h2 id="appendix-a--git-history-at-handoff-2026-04-20">Appendix A — Git history at handoff (2026-04-20)</h2>
+<pre><code>f1d3342  feat(web): finish Team / Contact / News / Browse / Service pages
+b7789c3  feat(web): real Figma property photos + dropdown polish + service anchors
+02dd76a  feat(web): Home page sections matching Figma + header/footer rebrand
+afe992f  feat: Phase 4 step 2 — IA rework (properties + team + news routes + RH hero)
+289d122  fix(web): don&#39;t read process.env from client code (crashed hydration)
+1eac734  chore: drop templatebase leftovers — title suffix + legacy posts
+c75b240  chore: remove agency/templatebase leftovers (Services/Portfolio/Team/Departments/About)
+a502531  feat(web): Phase 4 step 1 — RH Properties tokens from Figma
+6094fb6  docs: add figma_automation.md + CLAUDE.md Phase 4 handoff
+a2b89ad  chore(cms): add reproducible seed script
+96e8226  fix(pm2): invoke via pnpm, not node_modules/.bin, so shell shims don&#39;t run under Node
+5765be9  chore: scaffold rhproperties from templatebase
+</code></pre>
+<h2 id="appendix-b--named-decisions-log">Appendix B — Named decisions log</h2>
+<ul>
+<li><strong>2026-04-20</strong> — Ports 3007 / 4007 (next free pair after templatebase / templategen / christos / baligirls).</li>
+<li><strong>2026-04-20</strong> — Fresh git history; did not inherit templatebase commits.</li>
+<li><strong>2026-04-20</strong> — PM2 invokes <code>pnpm start</code>, not <code>.bin/next</code>.</li>
+<li><strong>2026-04-20</strong> — Dev topology: laptop-canonical, GitHub-source-of-truth, server-deploy-only.</li>
+<li><strong>2026-04-20</strong> — Seed before Figma so design work has rendered content to iterate against.</li>
+<li><strong>2026-04-20</strong> — Figma MCP = Option A (Dev Mode on laptop), not Framelink.</li>
+<li><strong>2026-04-20</strong> — Tokens-first (palette + font), blocks second. Never mix these in one commit.</li>
+<li><strong>2026-04-20</strong> — Kept <code>posts</code> collection slug internally but re-labelled "News" and renamed the URL route. Avoids an FK cascade on the DB and keeps options open to split News from a generic blog later.</li>
+<li><strong>2026-04-20</strong> — Forced light theme only; OS <code>prefers-color-scheme</code> dark-detect disabled until a proper dark palette is defined in Figma.</li>
+<li><strong>2026-04-20</strong> — Seed wipes + recreates (idempotent). Safe to run any time. Admin user is skipped if it already exists.</li>
+</ul>
+</body>
+</html>

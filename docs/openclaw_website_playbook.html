@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>openclaw_website_playbook</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">openclaw_website_playbook</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#openclaw--website-playbook-victor--templategen">Openclaw → Website Playbook (Victor × templategen)</a>
+<ul>
+<li><a href="#table-of-contents">Table of contents</a></li>
+<li><a href="#1-the-two-box-topology">1. The two-box topology</a></li>
+<li><a href="#2-prerequisites">2. Prerequisites</a></li>
+<li><a href="#3-phase-1--what-openclaw-actually-is">3. Phase 1 — What Openclaw actually is</a></li>
+<li><a href="#4-phase-2--victors-agent-roster">4. Phase 2 — Victor's agent roster</a></li>
+<li><a href="#5-phase-3--the-templategen-site">5. Phase 3 — The templategen site</a></li>
+<li><a href="#6-phase-4--the-apiweb-manager-contract">6. Phase 4 — The <code>/api/web-manager/*</code> contract</a></li>
+<li><a href="#7-phase-5--site-manifests">7. Phase 5 — Site manifests</a></li>
+<li><a href="#8-phase-6--the-three-layer-client">8. Phase 6 — The three-layer client</a></li>
+<li><a href="#9-phase-7--two-skill-paths">9. Phase 7 — Two skill paths</a></li>
+<li><a href="#10-phase-8--request-routing">10. Phase 8 — Request routing</a></li>
+<li><a href="#11-daily-operations-cookbook">11. Daily operations cookbook</a></li>
+<li><a href="#12-onboarding-a-new-website">12. Onboarding a new website</a></li>
+<li><a href="#13-gotchas-we-hit">13. Gotchas we hit</a></li>
+<li><a href="#14-credentials--secrets-map">14. Credentials + secrets map</a></li>
+<li><a href="#15-file-map">15. File map</a></li>
+<li><a href="#16-appendix-a--named-decisions-log">16. Appendix A — Named decisions log</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="openclaw--website-playbook-victor--templategen">Openclaw → Website Playbook (Victor × templategen)</h1>
+<p>End-to-end reference for how the <strong>Openclaw</strong> agent runtime (branded "Victor" at Gaia) manages a Payload + Next.js website — using <code>templategen.gaiada.online</code> as the canonical live integration. Everything here is what's actually wired up across two VMs (<code>gda-ai01</code> for the agents, <code>gda-s01</code> for the site), recorded so the next site can be onboarded without re-deriving the contract.</p>
+<blockquote>
+<p><strong>Companion doc:</strong> <a href="../rhproperties_react/docs/figma_to_site_playbook.md"><code>docs/figma_to_site_playbook.md</code></a> is the reference for <em>building</em> a VRTPN site from a Figma design. This document picks up where that one leaves off — how an agent operates that site after it's live.</p>
+</blockquote>
+<hr />
+<h2 id="table-of-contents">Table of contents</h2>
+<ol>
+<li><a href="#1-the-two-box-topology">The two-box topology</a></li>
+<li><a href="#2-prerequisites">Prerequisites — what to install / access</a></li>
+<li><a href="#3-phase-1--what-openclaw-actually-is">Phase 1 — What Openclaw actually is</a></li>
+<li><a href="#4-phase-2--victors-agent-roster">Phase 2 — Victor's agent roster</a></li>
+<li><a href="#5-phase-3--the-templategen-site">Phase 3 — The templategen site on <code>gda-s01</code></a></li>
+<li><a href="#6-phase-4--the-api-web-manager-contract">Phase 4 — The <code>/api/web-manager/*</code> contract</a></li>
+<li><a href="#7-phase-5--site-manifests">Phase 5 — Site manifests (the registry)</a></li>
+<li><a href="#8-phase-6--the-three-layer-client">Phase 6 — The three-layer web-manager client</a></li>
+<li><a href="#9-phase-7--two-skill-paths">Phase 7 — Two skill paths: <code>SKILL-BLOG</code> vs <code>SKILL-WEB-MANAGER</code></a></li>
+<li><a href="#10-phase-8--request-routing">Phase 8 — How Victor routes a user request</a></li>
+<li><a href="#11-daily-operations-cookbook">Daily operations cookbook</a></li>
+<li><a href="#12-onboarding-a-new-website">Onboarding a new website</a></li>
+<li><a href="#13-gotchas-we-hit">Gotchas we hit</a></li>
+<li><a href="#14-credentials--secrets-map">Credentials + secrets map</a></li>
+<li><a href="#15-file-map">File map — where things live</a></li>
+<li><a href="#16-appendix-a--named-decisions-log">Appendix A — Named decisions log</a></li>
+</ol>
+<hr />
+<h2 id="1-the-two-box-topology">1. The two-box topology</h2>
+<p>Openclaw is a <em>split</em> system: the <strong>runtime</strong> (agents, memory, tool configs) lives on one VM, and the <strong>site</strong> it operates on lives on another. They talk over HTTP using a narrow, versioned contract.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Box</th>
+<th>Purpose</th>
+<th>Path</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>gda-ai01</code></td>
+<td>Openclaw runtime — Victor + his sub-agents, Telegram bot, Mission Control gateway</td>
+<td><code>/opt/.openclaw-var/</code></td>
+</tr>
+<tr class="even">
+<td><code>gda-s01</code></td>
+<td>Production site — Next.js + Payload CMS (<code>templategen</code>)</td>
+<td><code>/var/www/templategen/</code></td>
+</tr>
+<tr class="odd">
+<td>GitHub</td>
+<td>Site source of truth</td>
+<td>(site-specific repo)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Live URLs:</strong></p>
+<ul>
+<li>Website frontend — <a href="http://templategen.gaiada.online/">http://templategen.gaiada.online/</a></li>
+<li>Payload admin — <a href="http://templategen.gaiada.online/admin">http://templategen.gaiada.online/admin</a></li>
+<li>Mission Control (Victor UI) — <a href="https://var.gaiada0.online/">https://var.gaiada0.online/</a></li>
+<li>Telegram — <code>@victor_gaiada_bot</code></li>
+</ul>
+<p><strong>Site ports on <code>gda-s01</code>:</strong></p>
+<ul>
+<li><code>3005</code> — <code>templategen-web</code> (Next.js frontend via <code>tsx server.ts</code>)</li>
+<li><code>4005</code> — <code>templategen-cms</code> (Payload admin + API)</li>
+</ul>
+<p><strong>Runtime ports on <code>gda-ai01</code>:</strong></p>
+<ul>
+<li><code>19289</code> — Openclaw gateway (loopback-only, token auth, token <code>var123abc</code>)</li>
+<li>Tailscale exposure is currently <code>off</code></li>
+</ul>
+<p><strong>Flow (one blog post, end to end):</strong></p>
+<pre><code>user (Telegram / Mission Control)
+  → Victor (main agent)          [interprets request, picks target]
+  → web-manager sub-agent        [authenticates, formats payload]
+  → POST /api/web-manager/posts/upsert on templategen
+  → Payload writes to Postgres
+  → POST /api/web-manager/revalidate
+  → user sees the post at /posts/&lt;slug&gt;
+</code></pre>
+<p>Everything else in this doc unpacks one of those arrows.</p>
+<hr />
+<h2 id="2-prerequisites">2. Prerequisites</h2>
+<h3 id="on-your-laptop-to-read-or-operate-this-system">On your laptop (to read or operate this system)</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="co"># SSH access to both VMs</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a><span class="fu">ssh</span> gda-ai01   # must work without password (entry in ~/.ssh/config)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a><span class="fu">ssh</span> gda-s01</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a><span class="co"># optional but useful</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a><span class="ex">brew</span> install jq curl httpie</span></code></pre></div>
+<h3 id="on-gda-ai01-already-provisioned-for-this-project">On <code>gda-ai01</code> (already provisioned for this project)</h3>
+<ul>
+<li>Node 22+, pnpm, PM2</li>
+<li>Python 3.11+ (the CLI scripts are plain Python, no deps beyond stdlib)</li>
+<li>The Openclaw runtime itself, installed as <code>source_base_openclaw</code> in <code>/opt/</code> and materialised per-tenant as <code>.openclaw-&lt;tenant&gt;</code> directories (<code>-var</code> is Victor's, <code>-gda</code> <code>-biz</code> <code>-bsc</code> <code>-hos</code> <code>-soc</code> are the others)</li>
+</ul>
+<h3 id="on-gda-s01-already-provisioned">On <code>gda-s01</code> (already provisioned)</h3>
+<ul>
+<li>Node 22, pnpm, PM2, Postgres 16, nginx + Let's Encrypt SAN cert</li>
+<li>The templategen repo at <code>/var/www/templategen/</code></li>
+<li>PM2 apps: <code>templategen-cms</code> (port 4005) and <code>templategen-web</code> (port 3005)</li>
+</ul>
+<hr />
+<h2 id="3-phase-1--what-openclaw-actually-is">3. Phase 1 — What Openclaw actually is</h2>
+<p><strong>Openclaw</strong> is a multi-agent runtime with a single JSON root at <code>/opt/.openclaw-&lt;tenant&gt;/openclaw.json</code>. The tenant for Gaia's public assistant is <strong><code>var</code></strong> (hence <code>/opt/.openclaw-var</code>). The assistant's public-facing name is <strong>Victor</strong>.</p>
+<h3 id="31-the-openclaw-var-directory">3.1 The <code>.openclaw-var</code> directory</h3>
+<pre><code>/opt/.openclaw-var/
+├── openclaw.json              ROOT CONFIG — agents, gateway, plugins, models
+├── .claude/                   Claude Code project-local config
+├── .git/                      Yes, the whole var dir is a git repo
+├── agents/                    Agent SKILL packs (shared skills, per role)
+│   ├── main/  booking/  writer/  web-manager/  copywriter/
+│   ├── drive-manager/  analyst/  calendar-manager/  email-manager/
+├── workspace-main/            Victor (the &quot;main&quot; agent) — IDENTITY.md, SOUL.md, ...
+├── workspace-web-manager/     The sub-agent that operates websites
+├── workspace-booking/  workspace-writer/  workspace-copywriter/
+├── workspace-drive-manager/  workspace-analyst/ ...
+├── memory/                    SQLite memory per agent id ({agentId}.sqlite)
+├── credentials/               API keys (Google / Anthropic / DeepSeek profiles)
+├── delivery-queue/            Outbound message queue (Telegram, email)
+├── telegram/                  Telegram session state
+├── flows/                     Stored multi-step flows
+├── logs/                      Runtime logs
+├── tasks/                     Scheduled / in-flight tasks
+├── plugins/                   Loaded plugin configs (mcp, telegram, google, ...)
+├── devices/                   Device registry
+└── update-check.json          Self-update metadata
+</code></pre>
+<h3 id="32-the-openclawjson-root-config--the-parts-that-matter">3.2 The <code>openclaw.json</code> root config — the parts that matter</h3>
+<pre class="jsonc"><code>{
+  &quot;agents&quot;: {
+    &quot;defaults&quot;: {
+      &quot;model&quot;: { &quot;primary&quot;: &quot;deepseek/deepseek-chat&quot;,
+                 &quot;fallbacks&quot;: [&quot;google/gemini-2.5-flash&quot;] },
+      &quot;workspace&quot;: &quot;/opt/.openclaw-var/workspace-main&quot;,
+      &quot;memorySearch&quot;: { &quot;enabled&quot;: true,
+                        &quot;store&quot;: { &quot;path&quot;: &quot;.../memory/{agentId}.sqlite&quot; } },
+      &quot;maxConcurrent&quot;: 4,
+      &quot;subagents&quot;: { &quot;maxConcurrent&quot;: 8 }
+    },
+    &quot;list&quot;: [
+      { &quot;id&quot;: &quot;main&quot;,          &quot;identity&quot;: { &quot;name&quot;: &quot;Victor&quot; },
+        &quot;subagents&quot;: { &quot;allowAgents&quot;: [
+          &quot;booking&quot;,&quot;writer&quot;,&quot;web-manager&quot;,&quot;copywriter&quot;,
+          &quot;drive-manager&quot;,&quot;analyst&quot; ]}},
+      { &quot;id&quot;: &quot;web-manager&quot;,   &quot;identity&quot;: { &quot;name&quot;: &quot;Web Manager&quot; },
+        &quot;workspace&quot;: &quot;/opt/.openclaw-var/workspace-web-manager&quot; },
+      /* ...booking, writer, copywriter, drive-manager, analyst... */
+    ]
+  },
+  &quot;channels&quot;: {
+    &quot;telegram&quot;: { &quot;accounts&quot;: { &quot;main&quot;: {
+      &quot;name&quot;: &quot;Victor&quot;, &quot;dmPolicy&quot;: &quot;open&quot;,
+      &quot;botToken&quot;: &quot;8728810259:AAFC3cVrA5_...&quot; }}}
+  },
+  &quot;gateway&quot;: {
+    &quot;port&quot;: 19289, &quot;bind&quot;: &quot;loopback&quot;,
+    &quot;auth&quot;: { &quot;mode&quot;: &quot;token&quot;, &quot;token&quot;: &quot;var123abc&quot; },
+    &quot;controlUi&quot;: { &quot;allowedOrigins&quot;: [&quot;https://var.gaiada0.online&quot;] }
+  },
+  &quot;plugins&quot;: { &quot;allow&quot;: [
+    &quot;mcp&quot;,&quot;telegram&quot;,&quot;deepseek&quot;,&quot;google&quot;,&quot;browser&quot;,&quot;acpx&quot;,&quot;anthropic&quot;,&quot;memory-core&quot;
+  ]}
+}
+</code></pre>
+<p>Three things to absorb from this file:</p>
+<ol>
+<li><strong>Victor is the <code>main</code> agent.</strong> Everything else is a sub-agent he can spawn via <code>sessions_spawn</code>.</li>
+<li><strong>DeepSeek is the default model</strong> (cheap + fast). Gemini 2.5 Flash is the only fallback. Anthropic is available as a provider but not the default.</li>
+<li><strong>Gateway is local-only.</strong> The outside world reaches Victor through Telegram, the Mission Control web UI at <code>var.gaiada0.online</code>, or a Tailscale tunnel — never a directly exposed port on the VM.</li>
+</ol>
+<hr />
+<h2 id="4-phase-2--victors-agent-roster">4. Phase 2 — Victor's agent roster</h2>
+<p>Each sub-agent is a <strong>workspace</strong> (directory of markdown files describing identity + skills) plus an entry in <code>openclaw.json</code>'s <code>agents.list</code>.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Agent id</th>
+<th>Name</th>
+<th>Scope</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>main</code></td>
+<td>Victor</td>
+<td>Routing + self-introduction only. Delegates everything else.</td>
+</tr>
+<tr class="even">
+<td><code>booking</code></td>
+<td>Booking</td>
+<td>Google Calendar, events, Meet links</td>
+</tr>
+<tr class="odd">
+<td><code>writer</code></td>
+<td>Writer</td>
+<td>Gmail: send / read / search, letter drafting</td>
+</tr>
+<tr class="even">
+<td><code>web-manager</code></td>
+<td>Web Manager</td>
+<td><strong>Operating connected websites</strong> (this doc's focus)</td>
+</tr>
+<tr class="odd">
+<td><code>copywriter</code></td>
+<td>Copywriter</td>
+<td>Long-form writing, ad copy, SEO content, research</td>
+</tr>
+<tr class="even">
+<td><code>drive-manager</code></td>
+<td>Drive Manager</td>
+<td>Google Drive: upload, download, list, search</td>
+</tr>
+<tr class="odd">
+<td><code>analyst</code></td>
+<td>Analyst</td>
+<td>PDF / Excel / Word / image analysis</td>
+</tr>
+<tr class="even">
+<td><code>calendar-manager</code></td>
+<td>Calendar Manager</td>
+<td>(present in <code>agents/</code>, not in default list)</td>
+</tr>
+<tr class="odd">
+<td><code>email-manager</code></td>
+<td>Email Manager</td>
+<td>(present in <code>agents/</code>, not in default list)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="41-workspace-anatomy-applies-to-every-agent">4.1 Workspace anatomy (applies to every agent)</h3>
+<pre><code>workspace-&lt;agent&gt;/
+├── IDENTITY.md      Who the agent is, what it does, canonical introduction
+├── SOUL.md          Tone rules, output-format rules (&quot;never say &#39;I will...&#39;&quot;)
+├── USER.md          Who the end user is (the person receiving the output)
+├── TOOLS.md         What tool families the agent is allowed to use
+├── SKILLS.md        Index of skill files
+├── SKILL-*.md       One per high-level capability
+├── BOOTSTRAP.md     Startup read-order
+├── HEARTBEAT.md     Liveness marker
+├── AGENTS.md        Cross-agent contract (routing rules for sub-sub-agents)
+└── state/           Ephemeral per-session state
+</code></pre>
+<p>The web-manager workspace additionally has <code>docs/</code>, <code>scripts/</code>, <code>sites/</code>, and <code>payloads/</code> subdirectories — see §8.</p>
+<h3 id="42-victors-routing-rules-from-workspace-mainidentitymd">4.2 Victor's routing rules (from <code>workspace-main/IDENTITY.md</code>)</h3>
+<p>When Victor receives a request, he doesn't do the work — he routes:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Intent</th>
+<th>Delegate to</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Calendar / booking / appointment / Google Meet</td>
+<td><code>booking</code></td>
+</tr>
+<tr class="even">
+<td>Email / send / check inbox / count</td>
+<td><code>writer</code></td>
+</tr>
+<tr class="odd">
+<td>Letter writing + email delivery</td>
+<td><code>writer</code></td>
+</tr>
+<tr class="even">
+<td><strong>Blog post / CMS content / delete blog</strong></td>
+<td><strong><code>web-manager</code></strong></td>
+</tr>
+<tr class="odd">
+<td>Research-then-blog</td>
+<td>chain: <code>copywriter</code> → <code>web-manager</code></td>
+</tr>
+<tr class="even">
+<td>Ad copy / article drafting</td>
+<td><code>copywriter</code></td>
+</tr>
+<tr class="odd">
+<td>Google Drive uploads / downloads / search</td>
+<td><code>drive-manager</code></td>
+</tr>
+<tr class="even">
+<td>PDF / Excel / Word / image analysis</td>
+<td><code>analyst</code></td>
+</tr>
+<tr class="odd">
+<td>Download from Drive → analyse</td>
+<td>chain: <code>drive-manager</code> → <code>analyst</code></td>
+</tr>
+<tr class="even">
+<td>Analyse → email result</td>
+<td>chain: <code>analyst</code> → <code>writer</code></td>
+</tr>
+</tbody>
+</table>
+<p>Rule: Victor uses <strong><code>sessions_spawn</code></strong> (never <code>sessions_send</code>). If spawn fails, the user-facing reply is: <em>"One moment, please try again shortly."</em></p>
+<hr />
+<h2 id="5-phase-3--the-templategen-site">5. Phase 3 — The templategen site</h2>
+<p><code>templategen</code> is the reference website that Victor's <code>web-manager</code> operates. It's a textbook VRTPN stack (Vite SSR here replaced with Next.js, but same shape): Next.js + React + Tailwind + <strong>P</strong>ayload CMS + Node + Postgres.</p>
+<h3 id="51-filesystem--ports">5.1 Filesystem + ports</h3>
+<pre><code>/var/www/templategen/
+├── ecosystem.config.cjs     PM2 apps (templategen-cms :4005, templategen-web :3005)
+├── packages/
+│   ├── cms/                 Payload CMS (Next.js 16 App Router)
+│   │   └── src/app/(payload)/api/web-manager/
+│   │       ├── auth/verify/
+│   │       ├── status/
+│   │       ├── content/ (search)
+│   │       ├── pages/ (upsert)
+│   │       ├── posts/ (upsert)
+│   │       ├── globals/ (update)
+│   │       ├── media/ (upload)
+│   │       ├── approval/
+│   │       ├── publish/
+│   │       ├── operations/
+│   │       └── revalidate/
+│   └── web/                 Next.js frontend (SSR + ISR)
+├── docs/
+│   ├── full_prompt.md       Original build spec
+│   └── web-manager-api.md   ← AUTHORITATIVE endpoint reference
+├── database_backup/
+└── config/tooling/
+</code></pre>
+<h3 id="52-pm2-config-as-deployed">5.2 PM2 config (as deployed)</h3>
+<div class="sourceCode" id="cb7"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a>module<span class="op">.</span><span class="at">exports</span> <span class="op">=</span> {</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a>  <span class="dt">apps</span><span class="op">:</span> [</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a>    { <span class="dt">name</span><span class="op">:</span> <span class="st">&#39;templategen-cms&#39;</span><span class="op">,</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a>      <span class="dt">cwd</span><span class="op">:</span> <span class="st">&#39;./packages/cms&#39;</span><span class="op">,</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a>      <span class="dt">script</span><span class="op">:</span> <span class="st">&#39;npx&#39;</span><span class="op">,</span> <span class="dt">args</span><span class="op">:</span> <span class="st">&#39;next start -p 4005&#39;</span><span class="op">,</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true"></a>      <span class="dt">env</span><span class="op">:</span> { <span class="dt">NODE_ENV</span><span class="op">:</span> <span class="st">&#39;production&#39;</span><span class="op">,</span> <span class="dt">NODE_OPTIONS</span><span class="op">:</span> <span class="st">&#39;--no-deprecation&#39;</span> } }<span class="op">,</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true"></a>    { <span class="dt">name</span><span class="op">:</span> <span class="st">&#39;templategen-web&#39;</span><span class="op">,</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true"></a>      <span class="dt">cwd</span><span class="op">:</span> <span class="st">&#39;./packages/web&#39;</span><span class="op">,</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true"></a>      <span class="dt">script</span><span class="op">:</span> <span class="st">&#39;npx&#39;</span><span class="op">,</span> <span class="dt">args</span><span class="op">:</span> <span class="st">&#39;tsx server.ts&#39;</span><span class="op">,</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true"></a>      <span class="dt">env</span><span class="op">:</span> {</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true"></a>        <span class="dt">PORT</span><span class="op">:</span> <span class="dv">3005</span><span class="op">,</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true"></a>        <span class="dt">PAYLOAD_URL</span><span class="op">:</span> <span class="st">&#39;http://localhost:4005&#39;</span><span class="op">,</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true"></a>        <span class="dt">REVALIDATION_SECRET</span><span class="op">:</span> <span class="st">&#39;vrtpn-revalidation-secret-2026&#39;</span><span class="op">,</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true"></a>        <span class="dt">PREVIEW_SECRET</span><span class="op">:</span> <span class="st">&#39;G4iaD4Pr3vi3wS3cr3t2026&#39;</span><span class="op">,</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true"></a>        <span class="dt">PORTAL_USERNAME</span><span class="op">:</span> <span class="st">&#39;user&#39;</span><span class="op">,</span> <span class="dt">PORTAL_PASSWORD</span><span class="op">:</span> <span class="st">&#39;Teameditor@123&#39;</span><span class="op">,</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true"></a>        <span class="dt">PORTAL_SESSION_SECRET</span><span class="op">:</span> <span class="st">&#39;templategen-portal-session&#39;</span><span class="op">,</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true"></a>        <span class="dt">PORTAL_EMAIL_FROM</span><span class="op">:</span> <span class="st">&#39;ai@gaiada.com&#39;</span><span class="op">,</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true"></a>        <span class="dt">PORTAL_SMTP_HOST</span><span class="op">:</span> <span class="st">&#39;smtp.gmail.com&#39;</span><span class="op">,</span> <span class="dt">PORTAL_SMTP_PORT</span><span class="op">:</span> <span class="st">&#39;465&#39;</span><span class="op">,</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true"></a>        <span class="dt">PORTAL_SMTP_USER</span><span class="op">:</span> <span class="st">&#39;ai@gaiada.com&#39;</span><span class="op">,</span> <span class="dt">PORTAL_SMTP_PASS</span><span class="op">:</span> <span class="st">&#39;***&#39;</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true"></a>      } }<span class="op">,</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true"></a>  ]<span class="op">,</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true"></a>}</span></code></pre></div>
+<h3 id="53-payload-collections">5.3 Payload collections</h3>
+<pre><code>About, Categories, Departments, Media, Pages, Portfolio, Posts,
+Services, Team, Users
+</code></pre>
+<p><code>Posts</code> + <code>Pages</code> are the two collections the web-manager sub-agent writes to most often. <code>Categories</code> is read-only from the agent's POV (IDs are pinned — see §9.2).</p>
+<hr />
+<h2 id="6-phase-4--the-apiweb-manager-contract">6. Phase 4 — The <code>/api/web-manager/*</code> contract</h2>
+<p>This is the narrow, versioned HTTP surface the agent uses. It's the single most important thing in this doc: once your new site exposes this contract, Victor can operate it without any agent-side changes.</p>
+<p>Canonical reference on-disk: <a href="#"><code>/var/www/templategen/docs/web-manager-api.md</code></a>.</p>
+<h3 id="61-authentication">6.1 Authentication</h3>
+<p>Every <code>/api/web-manager/*</code> route expects one of:</p>
+<pre class="http"><code>Authorization: Bearer &lt;WEB_MANAGER_API_SECRET&gt;
+x-web-manager-secret: &lt;WEB_MANAGER_API_SECRET&gt;
+</code></pre>
+<p>Optional IP allowlist via <code>WEB_MANAGER_ALLOWED_IPS</code>. The agent's egress IP for the current bridge is <code>34.143.206.68</code> (allowlist this in <code>.env</code>).</p>
+<p>Environment vars on the site:</p>
+<ul>
+<li><code>WEB_MANAGER_API_SECRET</code> (required)</li>
+<li><code>WEB_MANAGER_ALLOWED_IPS</code> (optional, comma-separated)</li>
+</ul>
+<h3 id="62-endpoint-catalog-v1">6.2 Endpoint catalog (V1)</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Method</th>
+<th>Path</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>GET</td>
+<td><code>/api/web-manager/auth/verify</code></td>
+<td>Are my creds + IP valid?</td>
+</tr>
+<tr class="even">
+<td>GET</td>
+<td><code>/api/web-manager/status</code></td>
+<td>Site capabilities + collection counts</td>
+</tr>
+<tr class="odd">
+<td>GET</td>
+<td><code>/api/web-manager/content/search?q=&amp;limit=</code></td>
+<td>Cross-collection search</td>
+</tr>
+<tr class="even">
+<td>POST</td>
+<td><code>/api/web-manager/pages/upsert</code></td>
+<td>Create/update a page by id or slug</td>
+</tr>
+<tr class="odd">
+<td>POST</td>
+<td><code>/api/web-manager/posts/upsert</code></td>
+<td>Create/update a post by id or slug</td>
+</tr>
+<tr class="even">
+<td>POST</td>
+<td><code>/api/web-manager/globals/update</code></td>
+<td>Update <code>header</code> / <code>footer</code> / <code>settings</code></td>
+</tr>
+<tr class="odd">
+<td>POST</td>
+<td><code>/api/web-manager/media/upload</code></td>
+<td>Multipart upload to <code>media</code></td>
+</tr>
+<tr class="even">
+<td>POST</td>
+<td><code>/api/web-manager/approval/request</code></td>
+<td>Is this doc ready to publish?</td>
+</tr>
+<tr class="odd">
+<td>POST</td>
+<td><code>/api/web-manager/publish</code></td>
+<td>Publish (requires approval by default)</td>
+</tr>
+<tr class="even">
+<td>POST</td>
+<td><code>/api/web-manager/revalidate</code></td>
+<td>Bust ISR cache by path / slug / tag</td>
+</tr>
+<tr class="odd">
+<td>POST</td>
+<td><code>/api/web-manager/workflows/publish-bundle</code></td>
+<td>Approval + publish + revalidate, atomic</td>
+</tr>
+<tr class="even">
+<td>GET</td>
+<td><code>/api/web-manager/operations/health</code></td>
+<td>Operational readiness</td>
+</tr>
+<tr class="odd">
+<td>POST</td>
+<td><code>/api/web-manager/operations/cache</code></td>
+<td>Bulk revalidate by paths[] + tags[]</td>
+</tr>
+</tbody>
+</table>
+<h3 id="63-canonical-request-shapes">6.3 Canonical request shapes</h3>
+<p><strong>Upsert a page:</strong></p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a><span class="er">POST</span> <span class="er">/api/web-manager/pages/upsert</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a><span class="fu">{</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true"></a>  <span class="dt">&quot;title&quot;</span><span class="fu">:</span> <span class="st">&quot;About Web Manager&quot;</span><span class="fu">,</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true"></a>  <span class="dt">&quot;slug&quot;</span><span class="fu">:</span> <span class="st">&quot;about-web-manager&quot;</span><span class="fu">,</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true"></a>  <span class="dt">&quot;status&quot;</span><span class="fu">:</span> <span class="st">&quot;draft&quot;</span><span class="fu">,</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true"></a>  <span class="dt">&quot;hero&quot;</span><span class="fu">:</span> <span class="fu">{</span> <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;lowImpact&quot;</span> <span class="fu">},</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true"></a>  <span class="dt">&quot;layout&quot;</span><span class="fu">:</span> <span class="ot">[]</span><span class="fu">,</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true"></a>  <span class="dt">&quot;meta&quot;</span><span class="fu">:</span> <span class="fu">{</span> <span class="dt">&quot;title&quot;</span><span class="fu">:</span> <span class="st">&quot;...&quot;</span><span class="fu">,</span> <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;...&quot;</span> <span class="fu">}</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true"></a><span class="fu">}</span></span></code></pre></div>
+<p>Rules: <code>id</code> wins over <code>slug</code>; both absent = create. Missing <code>hero</code> defaults to <code>{ type: "lowImpact" }</code>. Missing <code>layout</code> defaults to <code>[]</code>.</p>
+<p><strong>Upsert a post:</strong></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true"></a><span class="er">POST</span> <span class="er">/api/web-manager/posts/upsert</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true"></a><span class="fu">{</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true"></a>  <span class="dt">&quot;title&quot;</span><span class="fu">:</span> <span class="st">&quot;Yesterday blog draft&quot;</span><span class="fu">,</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true"></a>  <span class="dt">&quot;slug&quot;</span><span class="fu">:</span> <span class="st">&quot;yesterday-blog-draft&quot;</span><span class="fu">,</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true"></a>  <span class="dt">&quot;status&quot;</span><span class="fu">:</span> <span class="st">&quot;draft&quot;</span><span class="fu">,</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true"></a>  <span class="dt">&quot;meta&quot;</span><span class="fu">:</span> <span class="fu">{</span> <span class="dt">&quot;title&quot;</span><span class="fu">:</span> <span class="st">&quot;...&quot;</span><span class="fu">,</span> <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;...&quot;</span> <span class="fu">}</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true"></a><span class="fu">}</span></span></code></pre></div>
+<p>If <code>content</code> is omitted, the API creates a minimal valid Lexical rich-text body automatically.</p>
+<p><strong>Update a global:</strong></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a><span class="er">POST</span> <span class="er">/api/web-manager/globals/update</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true"></a><span class="fu">{</span> <span class="dt">&quot;global&quot;</span><span class="fu">:</span> <span class="st">&quot;settings&quot;</span><span class="fu">,</span> <span class="dt">&quot;data&quot;</span><span class="fu">:</span> <span class="fu">{</span> <span class="dt">&quot;contactEmail&quot;</span><span class="fu">:</span> <span class="st">&quot;hello@example.com&quot;</span> <span class="fu">}</span> <span class="fu">}</span></span></code></pre></div>
+<p><strong>Media upload (multipart):</strong></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true"></a><span class="ex">curl</span> -X POST <span class="st">&quot;</span><span class="va">$BASE_URL</span><span class="st">/api/web-manager/media/upload&quot;</span> <span class="kw">\</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true"></a>  <span class="ex">-H</span> <span class="st">&quot;Authorization: Bearer </span><span class="va">$WEB_MANAGER_API_SECRET</span><span class="st">&quot;</span> <span class="kw">\</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true"></a>  <span class="ex">-F</span> <span class="st">&quot;file=@./hero.jpg&quot;</span> -F <span class="st">&quot;alt=Homepage hero&quot;</span></span></code></pre></div>
+<p><strong>Revalidate:</strong></p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true"></a><span class="er">POST</span> <span class="er">/api/web-manager/revalidate</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true"></a><span class="fu">{</span> <span class="dt">&quot;slug&quot;</span><span class="fu">:</span> <span class="st">&quot;about-web-manager&quot;</span> <span class="fu">}</span>   <span class="er">//</span> <span class="er">or</span> <span class="fu">{</span> <span class="dt">&quot;path&quot;</span><span class="fu">:</span> <span class="st">&quot;/x&quot;</span> <span class="fu">}</span><span class="er">,</span> <span class="er">or</span> <span class="fu">{</span> <span class="dt">&quot;tag&quot;</span><span class="fu">:</span> <span class="st">&quot;pages-sitemap&quot;</span> <span class="fu">}</span></span></code></pre></div>
+<p><strong>Approval check:</strong></p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true"></a><span class="er">POST</span> <span class="er">/api/web-manager/approval/request</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true"></a><span class="fu">{</span> <span class="dt">&quot;collection&quot;</span><span class="fu">:</span> <span class="st">&quot;posts&quot;</span><span class="fu">,</span> <span class="dt">&quot;slug&quot;</span><span class="fu">:</span> <span class="st">&quot;yesterday-blog-draft&quot;</span> <span class="fu">}</span></span></code></pre></div>
+<p>Response carries <code>readiness</code> flag + <code>issues[]</code> (missing title / slug / body / collection-specific required fields) + current <code>status</code>.</p>
+<h3 id="64-authverify-response-use-this-to-smoke-test-a-manifest">6.4 <code>auth/verify</code> response (use this to smoke-test a manifest)</h3>
+<div class="sourceCode" id="cb16"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true"></a><span class="fu">{</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true"></a>  <span class="dt">&quot;ok&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true"></a>  <span class="dt">&quot;authenticated&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true"></a>  <span class="dt">&quot;clientIp&quot;</span><span class="fu">:</span> <span class="st">&quot;34.143.206.68&quot;</span><span class="fu">,</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true"></a>  <span class="dt">&quot;scope&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;auth:verify&quot;</span><span class="ot">,</span> <span class="st">&quot;status:read&quot;</span><span class="ot">,</span> <span class="st">&quot;pages:write&quot;</span><span class="ot">,</span> <span class="st">&quot;revalidate:write&quot;</span><span class="ot">]</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true"></a><span class="fu">}</span></span></code></pre></div>
+<p><code>scope</code> is derived server-side from the calling secret's capability set. The agent's manifest's <code>allowed_capabilities</code> must be a <strong>subset</strong> of what the server grants — see §7.</p>
+<hr />
+<h2 id="7-phase-5--site-manifests">7. Phase 5 — Site manifests</h2>
+<p>Every site the agent can talk to is described by a JSON manifest in <code>/opt/.openclaw-var/workspace-web-manager/sites/</code>. There are two variants:</p>
+<table>
+<thead>
+<tr class="header">
+<th>File</th>
+<th>Committed?</th>
+<th>Contains secrets?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>&lt;site&gt;.example.json</code></td>
+<td>✅ yes</td>
+<td>No — <code>"api_secret": "set-me-in-&lt;site&gt;.local.json"</code></td>
+</tr>
+<tr class="even">
+<td><code>&lt;site&gt;.local.json</code></td>
+<td>❌ gitignored</td>
+<td>Yes — real secret</td>
+</tr>
+</tbody>
+</table>
+<p>The client prefers <code>.local.json</code> if present, falls back to <code>.example.json</code>.</p>
+<h3 id="71-canonical-fields">7.1 Canonical fields</h3>
+<div class="sourceCode" id="cb17"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true"></a><span class="fu">{</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true"></a>  <span class="dt">&quot;site&quot;</span><span class="fu">:</span> <span class="st">&quot;templategda&quot;</span><span class="fu">,</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true"></a>  <span class="dt">&quot;base_url&quot;</span><span class="fu">:</span> <span class="st">&quot;http://34.124.244.233/templategda&quot;</span><span class="fu">,</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true"></a>  <span class="dt">&quot;api_base_path&quot;</span><span class="fu">:</span> <span class="st">&quot;/api/web-manager&quot;</span><span class="fu">,</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true"></a>  <span class="dt">&quot;api_secret&quot;</span><span class="fu">:</span> <span class="st">&quot;26e6a13ce8622aff5f5a93030a0320f43b2c11d5cce8bacff0a9a9151a04d0a5&quot;</span><span class="fu">,</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true"></a>  <span class="dt">&quot;managed_collections&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;pages&quot;</span><span class="ot">,</span> <span class="st">&quot;posts&quot;</span><span class="ot">,</span> <span class="st">&quot;services&quot;</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true"></a>  <span class="dt">&quot;allowed_capabilities&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true"></a>    <span class="st">&quot;auth:verify&quot;</span><span class="ot">,</span> <span class="st">&quot;status:read&quot;</span><span class="ot">,</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true"></a>    <span class="st">&quot;pages:write&quot;</span><span class="ot">,</span> <span class="st">&quot;posts:write&quot;</span><span class="ot">,</span> <span class="st">&quot;services:write&quot;</span><span class="ot">,</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true"></a>    <span class="st">&quot;globals:write&quot;</span><span class="ot">,</span> <span class="st">&quot;media:write&quot;</span><span class="ot">,</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true"></a>    <span class="st">&quot;approval:write&quot;</span><span class="ot">,</span> <span class="st">&quot;publish:write&quot;</span><span class="ot">,</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true"></a>    <span class="st">&quot;search:read&quot;</span><span class="ot">,</span> <span class="st">&quot;revalidate:write&quot;</span><span class="ot">,</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true"></a>    <span class="st">&quot;workflows:write&quot;</span><span class="ot">,</span> <span class="st">&quot;operations:read&quot;</span><span class="ot">,</span> <span class="st">&quot;cache:write&quot;</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true"></a>  <span class="ot">]</span></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true"></a><span class="fu">}</span></span></code></pre></div>
+<h3 id="72-field-semantics">7.2 Field semantics</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Field</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>site</code></td>
+<td>Short id used on every CLI: <code>python3 web_manager_cli.py verify &lt;site&gt;</code></td>
+</tr>
+<tr class="even">
+<td><code>base_url</code></td>
+<td>Root of the site (no trailing slash). For templategen either <code>http://templategen.gaiada.online</code> or the IP form above.</td>
+</tr>
+<tr class="odd">
+<td><code>api_base_path</code></td>
+<td>Defaults to <code>/api/web-manager</code>. Only change if the site is self-hosting a different namespace.</td>
+</tr>
+<tr class="even">
+<td><code>api_secret</code></td>
+<td>The Bearer token. Matches the site's <code>WEB_MANAGER_API_SECRET</code> env var.</td>
+</tr>
+<tr class="odd">
+<td><code>managed_collections</code></td>
+<td>Allow-list of what this agent can touch. Prevents a typo from writing to <code>Users</code>.</td>
+</tr>
+<tr class="even">
+<td><code>allowed_capabilities</code></td>
+<td>Scope the agent self-enforces before calling. Must be ⊆ what the server will actually grant on verify.</td>
+</tr>
+<tr class="odd">
+<td><code>transport_aliases</code></td>
+<td>Optional list of legacy <code>api_base_path</code>s to fall back to during migrations.</td>
+</tr>
+<tr class="even">
+<td><code>environment</code></td>
+<td><code>"production"</code> / <code>"staging"</code> — audit-only field.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="73-never-commit-a-localjson">7.3 Never commit a <code>.local.json</code></h3>
+<p><code>.gitignore</code> already excludes <code>sites/*.local.json</code>. If you need to share a working manifest with another operator, share the <code>.example.json</code> and let them fill in their own secret.</p>
+<hr />
+<h2 id="8-phase-6--the-three-layer-client">8. Phase 6 — The three-layer client</h2>
+<p>The web-manager workspace ships three Python files, in increasing levels of abstraction:</p>
+<pre><code>workspace-web-manager/scripts/
+├── web_manager_sites.py   (lib)   low-level HTTP client, manifest loader
+├── web_manager_cli.py     (exe)   thin CLI over the client
+├── website_manager.py     (lib)   natural-task wrapper over the CLI
+└── web_manager.py         (exe)   5-line entry point → website_manager.main()
+</code></pre>
+<h3 id="81-low-level-web_manager_sitespy">8.1 Low-level: <code>web_manager_sites.py</code></h3>
+<p>Exports:</p>
+<ul>
+<li><code>SiteConfig</code> (dataclass) — typed manifest</li>
+<li><code>load_site_config(site)</code> — prefers <code>.local.json</code>, else <code>.example.json</code></li>
+<li><code>validate_site_config(cfg)</code> — returns list of issue strings; empty = good</li>
+<li><code>build_site_manifest(...)</code> + <code>write_site_manifest(...)</code> — onboarding helpers</li>
+<li><code>WebManagerSiteClient(cfg)</code> — stdlib-only (urllib) HTTP client with one method per endpoint: <code>.verify()</code>, <code>.status()</code>, <code>.health()</code>, <code>.search()</code>, <code>.upsert_page()</code>, <code>.upsert_post()</code>, <code>.update_global()</code>, <code>.upload_media()</code>, <code>.request_approval()</code>, <code>.publish()</code>, <code>.publish_bundle()</code>, <code>.revalidate()</code>, <code>.cache()</code></li>
+</ul>
+<p>No third-party deps — works anywhere a Python 3.11+ interpreter runs.</p>
+<h3 id="82-middle-web_manager_clipy">8.2 Middle: <code>web_manager_cli.py</code></h3>
+<p>One subcommand per client method:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true"></a><span class="ex">python3</span> web_manager_cli.py verify <span class="op">&lt;</span>site<span class="op">&gt;</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true"></a><span class="ex">python3</span> web_manager_cli.py status <span class="op">&lt;</span>site<span class="op">&gt;</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true"></a><span class="ex">python3</span> web_manager_cli.py health <span class="op">&lt;</span>site<span class="op">&gt;</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true"></a><span class="ex">python3</span> web_manager_cli.py doctor <span class="op">&lt;</span>site<span class="op">&gt;</span>                  # verify+status+health+manifest lint</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true"></a><span class="ex">python3</span> web_manager_cli.py search <span class="op">&lt;</span>site<span class="op">&gt;</span> --query <span class="op">&lt;</span>q<span class="op">&gt;</span> [--limit N]</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true"></a><span class="ex">python3</span> web_manager_cli.py upsert-page  <span class="op">&lt;</span>site<span class="op">&gt;</span> (--json <span class="op">&lt;</span>inline<span class="op">&gt;</span> <span class="kw">|</span> <span class="ex">--file</span> <span class="op">&lt;</span>path<span class="op">&gt;</span>)</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true"></a><span class="ex">python3</span> web_manager_cli.py upsert-post  <span class="op">&lt;</span>site<span class="op">&gt;</span> (--json <span class="op">&lt;</span>inline<span class="op">&gt;</span> <span class="kw">|</span> <span class="ex">--file</span> <span class="op">&lt;</span>path<span class="op">&gt;</span>)</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true"></a><span class="ex">python3</span> web_manager_cli.py update-global <span class="op">&lt;</span>site<span class="op">&gt;</span> <span class="op">&lt;</span>global_slug<span class="op">&gt;</span> (--json <span class="kw">|</span> <span class="ex">--file</span>)</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true"></a><span class="ex">python3</span> web_manager_cli.py approval     <span class="op">&lt;</span>site<span class="op">&gt;</span> <span class="op">&lt;</span>collection<span class="op">&gt;</span> (--id <span class="op">&lt;</span>id<span class="op">&gt;</span> <span class="kw">|</span> <span class="ex">--slug</span> <span class="op">&lt;</span>slug<span class="op">&gt;</span>)</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true"></a><span class="ex">python3</span> web_manager_cli.py publish      <span class="op">&lt;</span>site<span class="op">&gt;</span> <span class="op">&lt;</span>collection<span class="op">&gt;</span> (--id <span class="kw">|</span> <span class="ex">--slug</span>) [<span class="ex">--skip-approval</span>]</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true"></a><span class="ex">python3</span> web_manager_cli.py publish-bundle <span class="op">&lt;</span>site<span class="op">&gt;</span> <span class="op">&lt;</span>collection<span class="op">&gt;</span> (--id <span class="kw">|</span> <span class="ex">--slug</span>) <span class="kw">\</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true"></a>    [<span class="ex">--revalidate-path</span> /x] [--revalidate-tag pages-sitemap]</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true"></a><span class="ex">python3</span> web_manager_cli.py revalidate   <span class="op">&lt;</span>site<span class="op">&gt;</span> [--path <span class="kw">|</span> <span class="ex">--slug</span> <span class="kw">|</span> <span class="ex">--tag</span>]</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true"></a><span class="ex">python3</span> web_manager_cli.py cache        <span class="op">&lt;</span>site<span class="op">&gt;</span> [--paths p1 p2] [--tags t1 t2]</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true"></a><span class="ex">python3</span> web_manager_cli.py upload-media <span class="op">&lt;</span>site<span class="op">&gt;</span> <span class="op">&lt;</span>file_path<span class="op">&gt;</span> [--alt] [--folder]</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true"></a><span class="ex">python3</span> web_manager_cli.py onboard      <span class="op">&lt;</span>site<span class="op">&gt;</span> --base-url <span class="op">&lt;</span>url<span class="op">&gt;</span> --api-secret <span class="op">&lt;</span>s<span class="op">&gt;</span> <span class="kw">\</span></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true"></a>    [<span class="ex">--local</span>] [--force] [--managed-collections ...] [--allowed-capabilities ...]</span></code></pre></div>
+<p>All output is JSON — pipe into <code>jq</code> if you want it pretty.</p>
+<h3 id="83-top-web_managerpy--website_managermain">8.3 Top: <code>web_manager.py</code> → <code>website_manager.main()</code></h3>
+<p>Natural-language wrapper. Takes a sentence, inspects key tokens, picks the right CLI subcommand:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true"></a><span class="ex">python3</span> web_manager.py template <span class="st">&quot;search drafts about the homepage&quot;</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true"></a><span class="ex">python3</span> web_manager.py template <span class="st">&quot;check approval for yesterday-blog-draft&quot;</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true"></a><span class="ex">python3</span> web_manager.py template <span class="st">&quot;publish bundle yesterday-blog-draft&quot;</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true"></a><span class="ex">python3</span> web_manager.py template <span class="st">&quot;create a draft post&quot;</span> --payload-file payloads/post.example.json</span></code></pre></div>
+<p>This is what the LLM-driven agent actually calls. The agent composes the sentence; the wrapper deterministically resolves which operation to run.</p>
+<hr />
+<h2 id="9-phase-7--two-skill-paths">9. Phase 7 — Two skill paths</h2>
+<p>The workspace has <strong>two</strong> skill files for writing to the site, and they take deliberately different paths. Knowing which to use is the single most common source of confusion.</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th><code>SKILL-BLOG.md</code></th>
+<th><code>SKILL-WEB-MANAGER.md</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Auth</strong></td>
+<td>JWT from <code>/api/users/login</code></td>
+<td><code>Authorization: Bearer &lt;WEB_MANAGER_API_SECRET&gt;</code></td>
+</tr>
+<tr class="even">
+<td><strong>Route family</strong></td>
+<td>Payload native — <code>/api/posts</code>, <code>/api/categories</code>, <code>/api/media</code></td>
+<td>Management contract — <code>/api/web-manager/*</code></td>
+</tr>
+<tr class="odd">
+<td><strong>Credentials</strong></td>
+<td><code>demo-author@example.com</code> / <code>password</code></td>
+<td><code>api_secret</code> from site manifest</td>
+</tr>
+<tr class="even">
+<td><strong>Scope</strong></td>
+<td>Just blog posts (create / update / list / delete)</td>
+<td>Everything — pages, posts, globals, media, approval, publish, revalidate</td>
+</tr>
+<tr class="odd">
+<td><strong>When to use</strong></td>
+<td>Simple "write a post" asks; user-delegated to Victor</td>
+<td>Cross-cutting site ops, bundled publish, staging workflow, cache busting</td>
+</tr>
+<tr class="even">
+<td><strong>Transport</strong></td>
+<td>Direct HTTP via <code>fetch</code> MCP tool</td>
+<td>Python CLI wrappers above</td>
+</tr>
+</tbody>
+</table>
+<p>The <code>AGENTS.md</code> decision rule in the workspace:</p>
+<blockquote>
+<ul>
+<li>If the task mentions blog, post, article, publish, or CMS content creation → use <strong>SKILL-BLOG.md</strong></li>
+<li>If the task mentions site health, search, pages, globals, media, or revalidation → use <strong>SKILL-WEB-MANAGER.md</strong></li>
+<li>When in doubt, start with SKILL-BLOG.md — it has direct credentials that work.</li>
+</ul>
+</blockquote>
+<h3 id="91-skill-blogmd--the-four-step-dance">9.1 <code>SKILL-BLOG.md</code> — the four-step dance</h3>
+<ol>
+<li><strong>Authenticate</strong> — <code>POST /api/users/login</code> with the demo-author creds, capture <code>token</code>.</li>
+<li><strong>Create the post</strong> — <code>POST /api/posts</code> with <code>Authorization: JWT &lt;token&gt;</code> and the full Lexical content tree (see §9.3).</li>
+<li><strong>Revalidate</strong> — <code>POST /api/revalidate</code> with <code>{ "collection": "posts", "slug": "&lt;slug&gt;" }</code>. If it 404s, <strong>don't treat as a blocker</strong> — ISR will catch up.</li>
+<li><strong>Confirm</strong> — respond with title + URL (<code>…/posts/&lt;slug&gt;</code>) + the returned <code>id</code>.</li>
+</ol>
+<h3 id="92-category-ids-are-fixed">9.2 Category IDs are fixed</h3>
+<p>Every post <strong>must</strong> have <code>categories: [&lt;id&gt;, ...]</code> with at least one id. The templategen category table is:</p>
+<table>
+<thead>
+<tr class="header">
+<th>ID</th>
+<th>Name</th>
+<th>Use for</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>37</td>
+<td>Technology</td>
+<td>AI, software, apps, digital tools, automation</td>
+</tr>
+<tr class="even">
+<td>38</td>
+<td>News</td>
+<td>Current events, announcements, updates</td>
+</tr>
+<tr class="odd">
+<td>39</td>
+<td>Finance</td>
+<td>Money, markets, business, economics</td>
+</tr>
+<tr class="even">
+<td>40</td>
+<td>Design</td>
+<td>UI/UX, graphics, branding, visual arts</td>
+</tr>
+<tr class="odd">
+<td>41</td>
+<td>Software</td>
+<td>Programming, dev tools, code, architecture</td>
+</tr>
+<tr class="even">
+<td>42</td>
+<td>Engineering</td>
+<td>Hardware, infrastructure, systems, ops</td>
+</tr>
+</tbody>
+</table>
+<p>Multiple categories: <code>"categories": [37, 41]</code> (AI programming post).</p>
+<p>If the user doesn't specify, the skill picks the best fit from content.</p>
+<h3 id="93-lexical-content--the-required-fields">9.3 Lexical content — the required fields</h3>
+<p>Payload's rich-text format is <strong>Lexical</strong>, not plain HTML or Markdown. Every node requires <code>version</code>, <code>format</code>, <code>indent</code>, <code>direction</code>. Every text child additionally requires <code>mode</code>, <code>style</code>, <code>detail</code>, <code>format</code>, <code>version</code>. Skipping any of these renders as <strong>"unknown node"</strong> on the frontend and the post looks broken.</p>
+<p>Minimum viable post body:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true"></a><span class="fu">{</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true"></a>  <span class="dt">&quot;root&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true"></a>    <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;root&quot;</span><span class="fu">,</span> <span class="dt">&quot;format&quot;</span><span class="fu">:</span> <span class="st">&quot;&quot;</span><span class="fu">,</span> <span class="dt">&quot;indent&quot;</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span> <span class="dt">&quot;version&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true"></a>    <span class="dt">&quot;direction&quot;</span><span class="fu">:</span> <span class="st">&quot;ltr&quot;</span><span class="fu">,</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true"></a>    <span class="dt">&quot;children&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="fu">{</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true"></a>      <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;paragraph&quot;</span><span class="fu">,</span> <span class="dt">&quot;format&quot;</span><span class="fu">:</span> <span class="st">&quot;&quot;</span><span class="fu">,</span> <span class="dt">&quot;indent&quot;</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span> <span class="dt">&quot;version&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true"></a>      <span class="dt">&quot;direction&quot;</span><span class="fu">:</span> <span class="st">&quot;ltr&quot;</span><span class="fu">,</span> <span class="dt">&quot;textFormat&quot;</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true"></a>      <span class="dt">&quot;children&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="fu">{</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true"></a>        <span class="dt">&quot;mode&quot;</span><span class="fu">:</span> <span class="st">&quot;normal&quot;</span><span class="fu">,</span> <span class="dt">&quot;style&quot;</span><span class="fu">:</span> <span class="st">&quot;&quot;</span><span class="fu">,</span> <span class="dt">&quot;detail&quot;</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true"></a>        <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;text&quot;</span><span class="fu">,</span> <span class="dt">&quot;format&quot;</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span> <span class="dt">&quot;version&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true"></a>        <span class="dt">&quot;text&quot;</span><span class="fu">:</span> <span class="st">&quot;Your paragraph text here.&quot;</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true"></a>      <span class="fu">}</span><span class="ot">]</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true"></a>    <span class="fu">}</span><span class="ot">]</span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true"></a>  <span class="fu">}</span></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true"></a><span class="fu">}</span></span></code></pre></div>
+<p><strong>Text formatting flags</strong> (bitmask on the text node's <code>format</code>):</p>
+<ul>
+<li><code>0</code> — plain</li>
+<li><code>1</code> — <strong>bold</strong></li>
+<li><code>2</code> — <em>italic</em></li>
+<li><code>3</code> — <em><strong>bold + italic</strong></em></li>
+</ul>
+<p><strong>Heading:</strong> <code>{"type":"heading","tag":"h2",...}</code> (otherwise same shape as paragraph). <strong>Bullet list:</strong> <code>{"type":"list","listType":"bullet","tag":"ul","start":1,"children":[{"type":"listitem",...}]}</code>.</p>
+<p>If no image is supplied, set <code>"heroImage": null</code>. Do not invent a media upload; the demo Hero image is only used when the user supplies one.</p>
+<h3 id="94-skill-web-managermd--the-bigger-toolkit">9.4 <code>SKILL-WEB-MANAGER.md</code> — the bigger toolkit</h3>
+<p>Responsibilities:</p>
+<ul>
+<li>verify connectivity + capability status</li>
+<li>search content across connected sites</li>
+<li>create / update pages and posts</li>
+<li>update globals (<code>header</code>, <code>footer</code>, <code>settings</code>)</li>
+<li>upload media</li>
+<li>run approval readiness checks</li>
+<li>publish approved content</li>
+<li>trigger path / tag revalidation</li>
+</ul>
+<p>Entry points are all Python CLI (see §8.2). The agent should prefer the natural wrapper (<code>web_manager.py template "..."</code>) and fall back to the lower-level CLI (<code>web_manager_cli.py &lt;verb&gt; template ...</code>) when the task requires a specific operation.</p>
+<hr />
+<h2 id="10-phase-8--request-routing">10. Phase 8 — Request routing</h2>
+<p>A concrete end-to-end trace. User sends:</p>
+<blockquote>
+<p><em>"write a short blog post about AI copilots and publish it"</em></p>
+</blockquote>
+<h3 id="step-1--telegram--victor-main">Step 1 — Telegram → Victor (main)</h3>
+<p>Message ingress via <code>@victor_gaiada_bot</code>. Victor's routing table matches <code>"blog post"</code> → delegate to <code>web-manager</code>. He calls:</p>
+<pre><code>sessions_spawn(agentId=&quot;web-manager&quot;, task=&quot;write a short blog post about AI copilots and publish it&quot;)
+</code></pre>
+<p>Victor's reply to the user is <strong>empty</strong> — he's not the one writing. His SOUL.md forbids delegation chatter.</p>
+<h3 id="step-2--web-manager-wakes-up-in-workspace-web-manager">Step 2 — <code>web-manager</code> wakes up in <code>workspace-web-manager</code></h3>
+<p>Startup read order (from <code>AGENTS.md</code>):</p>
+<ol>
+<li><code>SOUL.md</code> → output rules (no internal reasoning in output)</li>
+<li><code>USER.md</code> → who the final reader is</li>
+<li><code>TOOLS.md</code> → what tools are whitelisted</li>
+<li><code>SKILLS.md</code> → index</li>
+<li><strong><code>SKILL-BLOG.md</code></strong> (because task mentions "blog") — takes priority over <code>SKILL-WEB-MANAGER.md</code></li>
+</ol>
+<h3 id="step-3--draft-the-content">Step 3 — Draft the content</h3>
+<p>If body text isn't provided, the skill either writes it directly (short content) or bounces to <code>copywriter</code> (research / long-form). For a 3-paragraph post, web-manager writes it inline.</p>
+<h3 id="step-4--authenticate">Step 4 — Authenticate</h3>
+<pre class="http"><code>POST http://templategen.gaiada.online/api/users/login
+Content-Type: application/json
+{ &quot;email&quot;: &quot;demo-author@example.com&quot;, &quot;password&quot;: &quot;password&quot; }
+→ { &quot;token&quot;: &quot;&lt;jwt&gt;&quot;, &quot;user&quot;: {...} }
+</code></pre>
+<h3 id="step-5--create-the-post">Step 5 — Create the post</h3>
+<pre class="http"><code>POST http://templategen.gaiada.online/api/posts
+Authorization: JWT &lt;jwt&gt;
+Content-Type: application/json
+
+{
+  &quot;title&quot;: &quot;AI Copilots: The New Default&quot;,
+  &quot;categories&quot;: [37],
+  &quot;content&quot;: { &quot;root&quot;: {... full Lexical tree ...} },
+  &quot;heroImage&quot;: null,
+  &quot;_status&quot;: &quot;published&quot;,
+  &quot;meta&quot;: { &quot;title&quot;: &quot;...&quot;, &quot;description&quot;: &quot;...&quot; }
+}
+→ 201 { &quot;doc&quot;: { &quot;id&quot;: 123, &quot;slug&quot;: &quot;ai-copilots-the-new-default&quot;, ... } }
+</code></pre>
+<h3 id="step-6--revalidate">Step 6 — Revalidate</h3>
+<pre class="http"><code>POST http://templategen.gaiada.online/api/revalidate
+Authorization: JWT &lt;jwt&gt;
+{ &quot;collection&quot;: &quot;posts&quot;, &quot;slug&quot;: &quot;ai-copilots-the-new-default&quot; }
+</code></pre>
+<p>If 404 → skip silently.</p>
+<h3 id="step-7--confirm">Step 7 — Confirm</h3>
+<p>web-manager replies (via session_reply, which bubbles back up to Victor's outbound channel):</p>
+<blockquote>
+<p>Post published: <em>AI Copilots: The New Default</em> — <a href="http://templategen.gaiada.online/posts/ai-copilots-the-new-default">http://templategen.gaiada.online/posts/ai-copilots-the-new-default</a> (id 123).</p>
+</blockquote>
+<h3 id="when-the-request-is-update-the-homepage-cta-instead">When the request is "update the homepage CTA" instead</h3>
+<p>Same routing into <code>web-manager</code>, but now <code>SKILL-WEB-MANAGER.md</code> wins:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true"></a><span class="ex">python3</span> scripts/web_manager.py template <span class="kw">\</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true"></a>  <span class="st">&quot;update page home set hero.cta to &#39;Start free&#39;&quot;</span> <span class="kw">\</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true"></a>  <span class="ex">--payload-file</span> payloads/home-cta.json</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true"></a><span class="co"># → upsert-page → approval → publish-bundle → revalidate</span></span></code></pre></div>
+<hr />
+<h2 id="11-daily-operations-cookbook">11. Daily operations cookbook</h2>
+<p>All commands run from inside <code>/opt/.openclaw-var/workspace-web-manager/</code> on <code>gda-ai01</code>.</p>
+<h3 id="111-verify-everything-is-healthy">11.1 Verify everything is healthy</h3>
+<div class="sourceCode" id="cb27"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true"></a><span class="ex">python3</span> scripts/web_manager_cli.py doctor template</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true"></a><span class="co"># → verify + status + health + manifest lint in one go</span></span></code></pre></div>
+<p>Expected: <code>"ok": true</code>, empty <code>manifestIssues</code>, <code>authenticated: true</code>.</p>
+<h3 id="112-search-drafts">11.2 Search drafts</h3>
+<div class="sourceCode" id="cb28"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true"></a><span class="ex">python3</span> scripts/web_manager_cli.py search template --query <span class="st">&quot;homepage&quot;</span> --limit 20</span></code></pre></div>
+<h3 id="113-create-a-draft-post-from-a-payload-file">11.3 Create a draft post from a payload file</h3>
+<div class="sourceCode" id="cb29"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true"></a><span class="ex">python3</span> scripts/web_manager_cli.py upsert-post template <span class="kw">\</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true"></a>  <span class="ex">--file</span> payloads/post.example.json</span></code></pre></div>
+<h3 id="114-check-approval--publish--revalidate-atomic">11.4 Check approval → publish → revalidate (atomic)</h3>
+<div class="sourceCode" id="cb30"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true"></a><span class="ex">python3</span> scripts/web_manager_cli.py publish-bundle template posts <span class="kw">\</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true"></a>  <span class="ex">--slug</span> yesterday-blog-draft <span class="kw">\</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true"></a>  <span class="ex">--revalidate-tag</span> posts-sitemap</span></code></pre></div>
+<h3 id="115-bust-isr-cache-for-multiple-paths">11.5 Bust ISR cache for multiple paths</h3>
+<div class="sourceCode" id="cb31"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true"></a><span class="ex">python3</span> scripts/web_manager_cli.py cache template <span class="kw">\</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true"></a>  <span class="ex">--paths</span> / /posts/latest /team <span class="kw">\</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true"></a>  <span class="ex">--tags</span>  posts-sitemap pages-sitemap</span></code></pre></div>
+<h3 id="116-upload-a-hero-image">11.6 Upload a hero image</h3>
+<div class="sourceCode" id="cb32"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true"></a><span class="ex">python3</span> scripts/web_manager_cli.py upload-media template ./hero.jpg <span class="kw">\</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true"></a>  <span class="ex">--alt</span> <span class="st">&quot;Homepage hero&quot;</span> --folder homepage</span></code></pre></div>
+<h3 id="117-update-the-site-wide-contact-email">11.7 Update the site-wide contact email</h3>
+<div class="sourceCode" id="cb33"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true"></a><span class="ex">python3</span> scripts/web_manager_cli.py update-global template settings <span class="kw">\</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true"></a>  <span class="ex">--json</span> <span class="st">&#39;{&quot;contactEmail&quot;:&quot;hello@gaiada.com&quot;}&#39;</span></span></code></pre></div>
+<h3 id="118-re-authenticate-when-a-jwt-expires">11.8 Re-authenticate when a JWT expires</h3>
+<p>Tokens from <code>/api/users/login</code> are short-lived. On <code>401</code>, re-login and retry — do not treat an expired token as a failure. The <code>web-manager</code> script wrapper does this transparently.</p>
+<hr />
+<h2 id="12-onboarding-a-new-website">12. Onboarding a new website</h2>
+<p>To point Victor at a new VRTPN site (e.g. <code>rhproperties</code> once it's live):</p>
+<h3 id="121-on-the-site">12.1 On the site</h3>
+<ol>
+<li>Implement (or inherit from templategen) the <code>/api/web-manager/*</code> routes.</li>
+<li>Set <code>WEB_MANAGER_API_SECRET=$(openssl rand -hex 32)</code> in <code>packages/cms/.env</code>.</li>
+<li>Set <code>WEB_MANAGER_ALLOWED_IPS=34.143.206.68</code> (the agent egress IP).</li>
+<li>Restart PM2.</li>
+</ol>
+<h3 id="122-on-gda-ai01">12.2 On <code>gda-ai01</code></h3>
+<div class="sourceCode" id="cb34"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true"></a><span class="bu">cd</span> /opt/.openclaw-var/workspace-web-manager</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true"></a></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true"></a><span class="ex">python3</span> scripts/web_manager_cli.py onboard rhproperties <span class="kw">\</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true"></a>  <span class="ex">--base-url</span> https://rhproperties.gaiada.online <span class="kw">\</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true"></a>  <span class="ex">--api-secret</span> <span class="op">&lt;</span>the-secret-from-step-2<span class="op">&gt;</span> <span class="kw">\</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true"></a>  <span class="ex">--local</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true"></a></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true"></a><span class="ex">python3</span> scripts/web_manager_cli.py doctor rhproperties</span></code></pre></div>
+<p><code>--local</code> writes <code>sites/rhproperties.local.json</code>. Commit a matching <code>sites/rhproperties.example.json</code> with <code>"api_secret": "set-me-in-..."</code> so future operators know the site exists.</p>
+<h3 id="123-smoke-test">12.3 Smoke test</h3>
+<div class="sourceCode" id="cb35"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true"></a><span class="ex">python3</span> scripts/web_manager_cli.py verify rhproperties</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true"></a><span class="ex">python3</span> scripts/web_manager_cli.py status rhproperties</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true"></a><span class="ex">python3</span> scripts/web_manager_cli.py search rhproperties --query test</span></code></pre></div>
+<p>All three should return <code>"ok": true</code>.</p>
+<h3 id="124-wire-into-victors-routing-optional-if-you-want-a-custom-route">12.4 Wire into Victor's routing (optional, if you want a custom route)</h3>
+<p>Edit <code>workspace-main/IDENTITY.md</code> to add the new site's brand under the blog/CMS row, then edit <code>workspace-web-manager/SKILL-BLOG.md</code> to list the new site under "CMS Connection". Without these edits, the agent can still operate the site via explicit CLI commands — the edits just let natural language find it.</p>
+<hr />
+<h2 id="13-gotchas-we-hit">13. Gotchas we hit</h2>
+<h3 id="131-openclaw-var-is-tenant-scoped">13.1 <code>.openclaw-var</code> is tenant-scoped</h3>
+<p>The directory you want is <strong><code>/opt/.openclaw-var</code></strong> (no dot before <code>var</code>, dash not period). <code>/opt/.openclaw.var</code> doesn't exist. The six tenants on <code>gda-ai01</code> are <code>biz</code>, <code>bsc</code>, <code>gda</code>, <code>hos</code>, <code>soc</code>, <code>var</code>.</p>
+<h3 id="132-skill-blog-wins-over-skill-web-manager-for-blog-tasks">13.2 SKILL-BLOG wins over SKILL-WEB-MANAGER for blog tasks</h3>
+<p>Both skills can create a post. The workspace rule is: if the task mentions blog / post / article / publish / CMS content → <strong>use <code>SKILL-BLOG.md</code> first</strong>. Reason: it has direct working credentials baked in (the demo-author JWT) and doesn't need a manifest to be set up.</p>
+<p>Side effect: new operators often read <code>SKILL-WEB-MANAGER.md</code> first (it's longer, looks more authoritative) and then get stuck trying to configure a manifest when they could have just used the JWT path. <code>AGENTS.md</code> fixes this — read it first.</p>
+<h3 id="133-lexical-unknown-node-errors">13.3 Lexical "unknown node" errors</h3>
+<p>The most common symptom: post publishes successfully but the frontend renders a big "unknown node" placeholder. Cause: a text node missing <code>mode</code> / <code>style</code> / <code>detail</code> / <code>format</code> / <code>version</code>, or a paragraph missing <code>version</code> / <code>format</code> / <code>indent</code> / <code>direction</code>.</p>
+<p>Do not use the simplified <code>{"text": "..."}</code> shape you'll see in older Payload docs — templategen uses Lexical (not Slate), and Lexical is strict. Template from §9.3 and stop worrying about it.</p>
+<h3 id="134-category-is-required">13.4 Category is <strong>required</strong></h3>
+<p><code>POST /api/posts</code> with no <code>categories</code> field → 400. At least one id from §9.2 must be present.</p>
+<h3 id="135-egress-ip-allowlist">13.5 Egress IP allowlist</h3>
+<p>The agent's egress IP is currently <strong><code>34.143.206.68</code></strong>. If the site's <code>WEB_MANAGER_ALLOWED_IPS</code> doesn't include it, every call 403s. Verify the IP hasn't changed with:</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true"></a><span class="fu">ssh</span> gda-ai01 <span class="st">&quot;curl -s https://ifconfig.me&quot;</span></span></code></pre></div>
+<p>Update the site's <code>.env</code> and restart PM2 if it drifts.</p>
+<h3 id="136-apirevalidate-404-is-not-a-blocker">13.6 <code>/api/revalidate</code> 404 is not a blocker</h3>
+<p>Older site versions didn't ship a revalidate route. Agents should <strong>swallow a 404 from revalidate</strong>, not retry and not escalate. The page will update on the next ISR interval regardless.</p>
+<h3 id="137-manifest-fallback-order-matters">13.7 Manifest fallback order matters</h3>
+<p><code>load_site_config()</code> prefers <code>.local.json</code> over <code>.example.json</code>. If you accidentally commit a <code>.local.json</code> with a live secret and then a teammate also creates one locally, the committed one wins and they'll be writing to the wrong site. Keep <code>sites/*.local.json</code> in <code>.gitignore</code> and keep it that way.</p>
+<h3 id="138-api_base_path-vs-the-url">13.8 <code>api_base_path</code> vs the URL</h3>
+<p><code>base_url</code> is the host, <code>api_base_path</code> is the namespace. The final URL is <code>base_url + api_base_path + route</code>. If <code>base_url</code> already contains <code>/api/web-manager</code>, strip it — you'll end up calling <code>…/api/web-manager/api/web-manager/…</code>.</p>
+<h3 id="139-mission-control-origin-allowlist">13.9 Mission Control origin allowlist</h3>
+<p>The gateway only accepts control-UI calls from <code>https://var.gaiada0.online</code> (see <code>openclaw.json</code> <code>gateway.controlUi.allowedOrigins</code>). If you fork the UI to a new domain, add it there or CORS will block it.</p>
+<h3 id="1310-deepseek-primary-means-non-reasoning-by-default">13.10 DeepSeek-primary means non-reasoning by default</h3>
+<p>The default model is <code>deepseek-chat</code> (non-reasoning). Tasks that need chain-of-thought (multi-step planning, tricky edits) will underperform unless you override to <code>deepseek-reasoner</code> or an Anthropic model. The override is per-agent in <code>agents.list[].model</code>.</p>
+<h3 id="1311-tables-for-removed-collections-linger">13.11 Tables for removed collections linger</h3>
+<p>Payload's Postgres adapter auto-creates tables but doesn't drop them. If you remove a collection from a site and wonder why the old table is still there — it always will be, until manually dropped. Not a correctness issue, just clutter.</p>
+<hr />
+<h2 id="14-credentials--secrets-map">14. Credentials + secrets map</h2>
+<p>Two independent credential sets are in play. Don't mix them.</p>
+<h3 id="141-site-side-templategen">14.1 Site-side (templategen)</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Thing</th>
+<th>Where it lives</th>
+<th>Value (demo)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Payload admin</td>
+<td><code>templategen.gaiada.online/admin</code></td>
+<td><code>admin@gaiada.com</code> / <code>admin</code></td>
+</tr>
+<tr class="even">
+<td>Demo author (for SKILL-BLOG JWT)</td>
+<td>Payload <code>users</code> collection</td>
+<td><code>demo-author@example.com</code> / <code>password</code></td>
+</tr>
+<tr class="odd">
+<td>Portal basic auth</td>
+<td><code>packages/web/.env</code> → PM2 env</td>
+<td><code>user</code> / <code>Teameditor@123</code></td>
+</tr>
+<tr class="even">
+<td><code>WEB_MANAGER_API_SECRET</code></td>
+<td><code>packages/cms/.env</code></td>
+<td>(64-hex from openssl)</td>
+</tr>
+<tr class="odd">
+<td><code>WEB_MANAGER_ALLOWED_IPS</code></td>
+<td><code>packages/cms/.env</code></td>
+<td><code>34.143.206.68</code></td>
+</tr>
+<tr class="even">
+<td><code>REVALIDATION_SECRET</code></td>
+<td><code>packages/web/.env</code></td>
+<td><code>vrtpn-revalidation-secret-2026</code></td>
+</tr>
+<tr class="odd">
+<td><code>PREVIEW_SECRET</code></td>
+<td><code>packages/web/.env</code></td>
+<td><code>G4iaD4Pr3vi3wS3cr3t2026</code></td>
+</tr>
+<tr class="even">
+<td>Portal SMTP</td>
+<td><code>packages/web/.env</code></td>
+<td><code>ai@gaiada.com</code> / Gmail 465</td>
+</tr>
+</tbody>
+</table>
+<h3 id="142-agent-side-openclaw-var">14.2 Agent-side (openclaw-var)</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Thing</th>
+<th>Where it lives</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Gateway token</td>
+<td><code>openclaw.json</code> <code>gateway.auth.token</code></td>
+<td><code>var123abc</code> — loopback only</td>
+</tr>
+<tr class="even">
+<td>Telegram bot token</td>
+<td><code>openclaw.json</code> <code>channels.telegram.accounts.main.botToken</code></td>
+<td><code>@victor_gaiada_bot</code></td>
+</tr>
+<tr class="odd">
+<td>Site manifest secret</td>
+<td><code>workspace-web-manager/sites/&lt;site&gt;.local.json</code> → <code>api_secret</code></td>
+<td>Matches <code>WEB_MANAGER_API_SECRET</code> on the target site</td>
+</tr>
+<tr class="even">
+<td>Model API keys (Google, Anthropic, DeepSeek)</td>
+<td><code>/opt/.openclaw-var/credentials/</code></td>
+<td>Referenced by <code>openclaw.json</code> <code>auth.profiles</code></td>
+</tr>
+<tr class="odd">
+<td>Google account for services</td>
+<td><code>azlan@gaiada.com</code></td>
+<td>Gmail / Calendar / Drive</td>
+</tr>
+<tr class="even">
+<td>Agent memory (SQLite)</td>
+<td><code>/opt/.openclaw-var/memory/{agentId}.sqlite</code></td>
+<td>One per agent</td>
+</tr>
+</tbody>
+</table>
+<h3 id="143-rotation-rules">14.3 Rotation rules</h3>
+<ul>
+<li><strong><code>WEB_MANAGER_API_SECRET</code></strong> must be rotated on both ends together:
+<ol>
+<li>New value into site's <code>packages/cms/.env</code> + <code>pm2 restart templategen-cms</code></li>
+<li>New value into agent's <code>sites/&lt;site&gt;.local.json</code></li>
+<li><code>python3 scripts/web_manager_cli.py verify &lt;site&gt;</code> → expect 200</li>
+</ol></li>
+<li><strong>Gateway token</strong> (<code>var123abc</code>) — rotate if you ever expose the gateway beyond loopback. At present it doesn't matter.</li>
+<li><strong>Telegram bot token</strong> — if leaked, revoke via BotFather; pasted into <code>openclaw.json</code> then <code>pm2 restart</code> (or the equivalent openclaw reload).</li>
+</ul>
+<hr />
+<h2 id="15-file-map">15. File map</h2>
+<pre><code># ─── gda-ai01 ────────────────────────────────────────────────────────
+/opt/
+├── source_base_openclaw/             Upstream openclaw source (read-only ref)
+├── .openclaw-var/                    ← Victor&#39;s tenant (this doc&#39;s focus)
+│   ├── openclaw.json                 Root config — agents, models, gateway
+│   ├── workspace-main/               Victor
+│   │   ├── IDENTITY.md  SOUL.md  USER.md  TOOLS.md  SKILLS.md
+│   │   ├── SKILL-RESEARCH-BLOG.md    Research-then-blog chain
+│   │   ├── AGENTS.md  BOOTSTRAP.md   Routing + startup
+│   │   └── state/
+│   ├── workspace-web-manager/        ← the sub-agent this doc is about
+│   │   ├── AGENTS.md                 Skill-selection rules (blog vs web-mgr)
+│   │   ├── SKILL-BLOG.md             JWT path — /api/posts
+│   │   ├── SKILL-WEB-MANAGER.md      Bearer path — /api/web-manager/*
+│   │   ├── IDENTITY.md  SOUL.md  TOOLS.md  USER.md  SKILLS.md  BOOTSTRAP.md
+│   │   ├── scripts/
+│   │   │   ├── web_manager_sites.py  Client lib (stdlib-only)
+│   │   │   ├── web_manager_cli.py    CLI wrapper
+│   │   │   ├── website_manager.py    Natural-task wrapper (middleware)
+│   │   │   └── web_manager.py        Entry point (5 lines)
+│   │   ├── sites/
+│   │   │   ├── templategda.example.json   Committed template (no secret)
+│   │   │   └── templategda.local.json     Gitignored (real secret)
+│   │   ├── payloads/
+│   │   │   ├── page.example.json
+│   │   │   ├── post.example.json
+│   │   │   └── settings.example.json
+│   │   ├── docs/web-manager/
+│   │   │   ├── overview.md           One-page intro
+│   │   │   ├── spec.md               Role + scope + architecture
+│   │   │   ├── operations.md         Operation catalog (verify, upsert, ...)
+│   │   │   ├── sites.md              Manifest schema + onboarding
+│   │   │   ├── workflow-layer.md     Workflow wrapper rationale
+│   │   │   ├── migration-plan.md     Bridge → Grayson migration
+│   │   │   ├── manifest.schema.json  JSON Schema for manifests
+│   │   │   └── manifest.example.json Canonical manifest
+│   │   ├── ai-dream-state-payload.json  Example payload
+│   │   └── create_post.py               Ad-hoc creation script
+│   ├── workspace-booking/            Calendar sub-agent
+│   ├── workspace-writer/             Email sub-agent
+│   ├── workspace-copywriter/         Long-form writing
+│   ├── workspace-drive-manager/      Google Drive
+│   ├── workspace-analyst/            Doc + image analysis
+│   ├── agents/                       Shared skill packs
+│   ├── memory/{agentId}.sqlite       Per-agent memory stores
+│   ├── credentials/                  API keys (Google, Anthropic, DeepSeek)
+│   ├── delivery-queue/               Outbound message queue
+│   ├── telegram/                     Session state
+│   ├── logs/
+│   ├── tasks/
+│   ├── flows/
+│   ├── plugins/
+│   └── update-check.json
+└── .openclaw-{biz,bsc,gda,hos,soc}/  Other tenants (same shape)
+
+# ─── gda-s01 ─────────────────────────────────────────────────────────
+/var/www/templategen/
+├── ecosystem.config.cjs              PM2: -cms :4005, -web :3005
+├── packages/
+│   ├── cms/                          Payload + Next.js
+│   │   └── src/app/(payload)/api/web-manager/
+│   │       ├── auth/verify/          ← /api/web-manager/auth/verify
+│   │       ├── status/
+│   │       ├── content/              search
+│   │       ├── pages/                upsert
+│   │       ├── posts/                upsert
+│   │       ├── globals/              update
+│   │       ├── media/                upload
+│   │       ├── approval/             request
+│   │       ├── publish/
+│   │       ├── operations/           health, cache
+│   │       ├── revalidate/
+│   │       └── workflows/            publish-bundle
+│   └── web/                          Next.js + tsx SSR
+├── docs/
+│   ├── full_prompt.md                Original build spec
+│   └── web-manager-api.md            ← authoritative endpoint reference
+├── database_backup/
+└── config/tooling/
+</code></pre>
+<hr />
+<h2 id="16-appendix-a--named-decisions-log">16. Appendix A — Named decisions log</h2>
+<ul>
+<li><strong>2026-04-12</strong> — Openclaw tenant <code>var</code> is Victor's. Six tenants on <code>gda-ai01</code> (<code>biz</code>, <code>bsc</code>, <code>gda</code>, <code>hos</code>, <code>soc</code>, <code>var</code>); each is a full sibling install, not a shared kernel.</li>
+<li><strong>2026-04-12</strong> — Victor's default model is <code>deepseek/deepseek-chat</code>, fallback <code>google/gemini-2.5-flash</code>. Cheaper than Claude for routing; we keep Anthropic available for tasks that need it.</li>
+<li><strong>2026-04-12</strong> — Gateway bound to <code>loopback</code> only, Tailscale <code>off</code>. External channels are Telegram and Mission Control web UI, not raw HTTP.</li>
+<li><strong>2026-04-12</strong> — <code>web-manager</code> is the canonical agent role name for website ops. The old <code>web-manager-bridge</code> wording is retired.</li>
+<li><strong>2026-04-12</strong> — Site contract lives at <code>/api/web-manager/*</code> (not <code>/api/agent/*</code>). Any future alias has to keep this as the canonical path.</li>
+<li><strong>2026-04-12</strong> — Two skill paths on purpose. <code>SKILL-BLOG.md</code> uses the Payload JWT and needs no manifest; <code>SKILL-WEB-MANAGER.md</code> uses the bearer-secret contract and covers everything else. <code>AGENTS.md</code> decides per-task.</li>
+<li><strong>2026-04-12</strong> — Site manifests split into <code>.example.json</code> (committed, no secret) and <code>.local.json</code> (gitignored, real secret). Never the other way around.</li>
+<li><strong>2026-04-12</strong> — CLI scripts use stdlib-only Python (urllib). No pip install step on agent bootstrap.</li>
+<li><strong>2026-04-12</strong> — Category IDs 37–42 on templategen are considered stable. Agents pin to them by id, not by name, to survive label changes.</li>
+<li><strong>2026-04-16</strong> — <code>openclaw.json</code> last touched at 08:15Z; no schema changes beyond metadata bumps since.</li>
+<li><strong>2026-04-22</strong> — Migration plan (Phase 2) to lift the site registry into "Grayson"-owned storage with secret references (not raw secrets) is still in draft. Current bridge registry under <code>/opt/.openclaw-gda/workspace-web-manager</code> is treated as transitional.</li>
+</ul>
+</body>
+</html>
