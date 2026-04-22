@@ -208,6 +208,60 @@
     .chip.green  { background:#d1fae5; color:#064e3b; border-color:#6ee7b7; }
     .chip.ink    { background:var(--gda-ink); color:var(--gda-gold); border-color:var(--gda-ink); }
 
+    /* ── Venturi flow intro ── */
+    .venturi-wrap {
+      background: #FAF6E6;
+      border: 1px solid var(--gda-gold);
+      border-radius: 10px;
+      padding: 10px 12px;
+      margin: 6px 0 10px;
+      text-align: center;
+    }
+    .venturi-img {
+      width: 100%;
+      max-width: 1100px;
+      height: auto;
+      max-height: 320px;
+      display: block;
+      margin: 0 auto;
+    }
+
+    /* ── Live banner ── */
+    .live-banner {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #ECFDF5;
+      border: 1px solid #6EE7B7;
+      border-left: 4px solid var(--gda-green);
+      border-radius: 8px;
+      padding: 6px 12px;
+      margin: 6px 0;
+      font-size: 12.5px;
+      color: #064E3B;
+    }
+    .live-banner::before {
+      content: "";
+      display: inline-block;
+      width: 8px; height: 8px;
+      background: var(--gda-green);
+      border-radius: 50%;
+      box-shadow: 0 0 0 3px rgba(5,150,105,0.15);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.45; }
+    }
+    .live-banner strong { color: var(--gda-ink); }
+    .live-banner a {
+      color: var(--gda-green);
+      text-decoration: none;
+      font-weight: 600;
+      font-family: monospace;
+    }
+    .live-banner a:hover { text-decoration: underline; }
+
     /* ── Overview TOC card grid ── */
     .toc-grid {
       display: grid;
@@ -444,6 +498,14 @@
     One document, six workstreams. This is the Gaia Digital Agency operating model and the blueprints for every service it delivers — from the Venturi business thesis down to a live WhatsApp AI running school meal orders today. Every section here is tied to a real repository or a live system. Jump to any part using the nav bar above, or press <kbd>1</kbd>–<kbd>7</kbd>.
   </p>
 
+  <h3>The Venturi — AI as the tool, not the star</h3>
+  <div class="venturi-wrap">
+    <img src="assets/venturi_flow.svg" alt="The Venturi flow — chaotic client demand compressed by the AI stack and talent pool into laminar high-velocity output" class="venturi-img" />
+  </div>
+  <p class="section-desc">
+    AI on its own is just a tool. Its job here is <strong>compression</strong>: take the turbulent, chaotic stream of client demand on the left — hospitality, F&amp;B, branding, web, content — and squeeze it through a narrow throat where the proprietary <strong>VRTN stack</strong> plus a fixed <strong>25-person talent pool</strong> compose the work. What exits on the right is <strong>laminar</strong>: parallel, high-velocity output at elite standard. The point isn't that AI replaces people. It's that AI <em>turns mess into flow</em> so a small team can deliver the volume of a much bigger one — elite-standard digital assets, autonomous guest ecosystems, operational alpha.
+  </p>
+
   <h3>Table of contents</h3>
   <div class="toc-grid">
     <a class="toc-card" href="#plan">
@@ -454,12 +516,12 @@
     <a class="toc-card" href="#figma">
       <div><span class="num">3</span><span class="title">Figma → Site + QA Automation</span></div>
       <div class="sub">Figma → MCP → Site → QA → 85% ready → Manual finish. No agent.</div>
-      <div class="meta"><span class="status noagent">No agent</span><span class="chip">2 pages</span></div>
+      <div class="meta"><span class="status noagent">No agent</span><span class="chip">2 pages</span><span class="chip green">Live: christos.gaiada.online</span></div>
     </a>
     <a class="toc-card" href="#full-service">
       <div><span class="num">4</span><span class="title">Full Service (Templatebase + Victor)</span></div>
       <div class="sub">Managed service layer. Victor (openclaw_var) orchestrates the pipeline end-to-end.</div>
-      <div class="meta"><span class="status active">Agent Active</span><span class="chip">2 pages</span></div>
+      <div class="meta"><span class="status active">Agent Active</span><span class="chip">2 pages</span><span class="chip green">Live: templategen.gaiada.online</span></div>
     </a>
     <a class="toc-card" href="#socmed">
       <div><span class="num">5</span><span class="title">Social Media Automation (SOMA)</span></div>
@@ -469,7 +531,7 @@
     <a class="toc-card" href="#poc">
       <div><span class="num">6</span><span class="title">Full Service POC — Schoolcatering + Brian</span></div>
       <div class="sub">WhatsApp AI operator for Blossom School Catering. Live on <code>bsc.gaiada0.online</code>.</div>
-      <div class="meta"><span class="status live">Live</span><span class="chip">1 page</span></div>
+      <div class="meta"><span class="status live">Live</span><span class="chip">1 page</span><span class="chip green">Live: blossomcatering.online</span></div>
     </a>
     <a class="toc-card" href="#appendix">
       <div><span class="num">7</span><span class="title">Appendix + References</span></div>
@@ -680,6 +742,12 @@ flowchart LR
     <strong>Flow:</strong> Figma → MCP → Site → QA → 85% ready → Manual finish → GCP.
   </blockquote>
 
+  <div class="live-banner">
+    <strong>Live example:</strong>
+    <a href="https://christos.gaiada.online/" target="_blank" rel="noopener">christos.gaiada.online</a>
+    — a site built through this pipeline.
+  </div>
+
   <h3>Flow chain</h3>
   <div class="chip-row">
     <span class="chip blue">Figma</span>
@@ -793,6 +861,12 @@ flowchart LR
   <blockquote>
     <strong>Victor (main) · openclaw_var · gateway :19289</strong> — DeepSeek primary, Gemini fallback. Channels: Telegram + Mission Control. Delegates to 7 specialist agents.
   </blockquote>
+
+  <div class="live-banner">
+    <strong>Live CMS:</strong>
+    <a href="https://templategen.gaiada.online/" target="_blank" rel="noopener">templategen.gaiada.online</a>
+    — the site Victor's web-manager publishes to.
+  </div>
 
   <h3>Victor's agent roster</h3>
   <div class="chip-row">
@@ -1001,6 +1075,12 @@ flowchart TB
   <blockquote>
     <strong>Live runtime:</strong> WhatsApp → Brian (gateway :18789 on <code>gda-ai01</code>) → Orders → BSC API <code>https://schoolcatering.gaiada1.online/api/v1</code>. Public URL: <code>bsc.gaiada0.online</code>.
   </blockquote>
+
+  <div class="live-banner">
+    <strong>Live customer site:</strong>
+    <a href="https://blossomcatering.online/" target="_blank" rel="noopener">blossomcatering.online</a>
+    — the parent / kitchen / delivery web product Brian orchestrates against.
+  </div>
 
   <div class="diagram-wrap">
     <div class="mermaid">
