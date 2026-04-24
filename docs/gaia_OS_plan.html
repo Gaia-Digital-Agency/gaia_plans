@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>gaia_OS_plan</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded",()=>{document.querySelectorAll("pre.sourceCode.mermaid code, pre code.language-mermaid").forEach(el=>{const d=document.createElement("div");d.className="mermaid";d.textContent=el.textContent;el.parentElement.replaceWith(d);});mermaid.initialize({startOnLoad:true});});</script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">gaia_OS_plan</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#gaia-os--180-day-accumulation-plan">Gaia OS — 180-Day Accumulation Plan</a>
+<ul>
+<li><a href="#table-of-contents">Table of Contents</a></li>
+<li><a href="#1-executive-intent">1. Executive Intent</a></li>
+<li><a href="#2-foundation-hierarchy">2. Foundation Hierarchy</a></li>
+<li><a href="#3-plan-logic">3. Plan Logic</a></li>
+<li><a href="#4-core-rules">4. Core Rules</a></li>
+<li><a href="#5-project-selection-principle">5. Project Selection Principle</a></li>
+<li><a href="#6-180-day-structure">6. 180-Day Structure</a></li>
+<li><a href="#7-12-projects-across-180-days">7. 12 Projects Across 180 Days</a></li>
+<li><a href="#8-shared-operating-model">8. Shared Operating Model</a></li>
+<li><a href="#9-multi-organization-ai-stack">9. Multi-Organization AI Stack</a></li>
+<li><a href="#10-shared-technical-stack">10. Shared Technical Stack</a></li>
+<li><a href="#11-agent-system-architecture">11. Agent-System Architecture</a></li>
+<li><a href="#12-critical-success-factors">12. Critical Success Factors</a></li>
+<li><a href="#13-day-180-end-state">13. Day-180 End State</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="gaia-os--180-day-accumulation-plan">Gaia OS — 180-Day Accumulation Plan</h1>
+<p><strong>Prepared for:</strong> Gaia Digital Agency<br />
+<strong>Date:</strong> 2026-04-24<br />
+<strong>Purpose:</strong> Concise 180-day plan for building Gaia OS through 12 execution projects aligned to Gaia’s real agency services and client needs.</p>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+<li>Executive Intent</li>
+<li>Foundation Hierarchy</li>
+<li>Plan Logic</li>
+<li>Core Rules</li>
+<li>Project Selection Principle</li>
+<li>180-Day Structure</li>
+<li>12 Projects Across 180 Days</li>
+<li>Shared Operating Model</li>
+<li>Multi-Organization AI Stack</li>
+<li>Shared Technical Stack</li>
+<li>Agent-System Architecture</li>
+<li>Critical Success Factors</li>
+<li>Day-180 End State</li>
+</ol>
+<h2 id="1-executive-intent">1. Executive Intent</h2>
+<p>Gaia should use the next 180 days to build one operating system for agency delivery: controlled, reusable, measurable, and scalable without linear headcount growth.</p>
+<p>Each project must do two things:</p>
+<ul>
+<li>solve a real agency or client need,</li>
+<li>leave behind a reusable Gaia OS capability.</li>
+</ul>
+<h2 id="2-foundation-hierarchy">2. Foundation Hierarchy</h2>
+<p>This hierarchy is the foundation of the plan. The first four projects are the initial build path into it.</p>
+<pre class="mermaid"><code>flowchart TD
+    A[&quot;Gaia OS&quot;] --&gt; B[&quot;AI Model Layer&lt;br/&gt;(ChatGPT / Claude / DeepSeek)&quot;]
+    B --&gt; C[&quot;Order Management&quot;]
+    B --&gt; D[&quot;Digital Agency Asset Management&quot;]
+    B --&gt; E[&quot;Content Management&quot;]
+    B --&gt; F[&quot;Website Build Automation&quot;]
+    B --&gt; G[&quot;Next Project&quot;]
+</code></pre>
+<p>Interpretation:</p>
+<ul>
+<li><code>Gaia OS</code> is the umbrella operating layer.</li>
+<li><code>AI Model Layer</code> is the execution and orchestration layer.</li>
+<li>The first four projects build the base operating modules.</li>
+<li>The next eight projects use that base to solve agency service needs and expand Gaia OS.</li>
+</ul>
+<h2 id="3-plan-logic">3. Plan Logic</h2>
+<ul>
+<li><code>12 projects</code></li>
+<li><code>14 days target per project</code></li>
+<li><code>Project 1 starts Day 1</code></li>
+<li><code>Days 1-168</code> used for execution</li>
+<li><code>Days 169-180</code> reserved for stabilization, gap closure, and go-live hardening</li>
+</ul>
+<p>This is not a phase narrative. It is a project accumulation plan.</p>
+<h2 id="4-core-rules">4. Core Rules</h2>
+<ul>
+<li>AI is the execution and orchestration layer; humans remain accountable.</li>
+<li>No public output, client commitment, budget change, pricing change, or production deployment without human approval.</li>
+<li>All work enters through controlled intake and workflow states.</li>
+<li>Memory is scoped by organization, module, client, and task.</li>
+<li>Every project must create reusable capability, not one-off delivery.</li>
+<li>Governance, routing, audit, and observability are mandatory from the start.</li>
+</ul>
+<h2 id="5-project-selection-principle">5. Project Selection Principle</h2>
+<p>The 12 projects are based on two filters:</p>
+<ul>
+<li>Gaia’s existing or visible service demand: website, branding, digital marketing, ads, SEO, social media, content, PR, account support.</li>
+<li>Gaia OS build value: each project must strengthen the operating system, not just produce isolated output.</li>
+</ul>
+<h2 id="6-180-day-structure">6. 180-Day Structure</h2>
+<p>The 180 days should be organized as four project waves plus a final stabilization block. These are dependency waves, not abstract transformation phases.</p>
+<h3 id="wave-1--base-control-and-production-core">Wave 1 — Base Control and Production Core</h3>
+<p><strong>Days 1-56 | Projects 1-4</strong></p>
+<p>Build the four identified starting projects first because every later service depends on them:</p>
+<ul>
+<li>Order Management</li>
+<li>Digital Agency Asset Management</li>
+<li>Content Management</li>
+<li>Website Build Automation</li>
+</ul>
+<p>Output of Wave 1:</p>
+<ul>
+<li>Gaia can intake, route, store, review, and deliver work through a controlled base layer.</li>
+</ul>
+<h3 id="wave-2--brand-and-creative-service-expansion">Wave 2 — Brand and Creative Service Expansion</h3>
+<p><strong>Days 57-84 | Projects 5-6</strong></p>
+<p>Use the base layer to extend into client-facing brand and design work:</p>
+<ul>
+<li>Branding Strategy and Identity Delivery</li>
+<li>Design Production Workflow</li>
+</ul>
+<p>Output of Wave 2:</p>
+<ul>
+<li>Gaia can run strategic and creative production through structured workflows instead of ad hoc coordination.</li>
+</ul>
+<h3 id="wave-3--marketing-execution-expansion">Wave 3 — Marketing Execution Expansion</h3>
+<p><strong>Days 85-140 | Projects 7-10</strong></p>
+<p>Extend Gaia OS into recurring digital marketing execution:</p>
+<ul>
+<li>Social Media Managed Service</li>
+<li>Ads Campaign Planning and Optimization</li>
+<li>SEO Research and Optimization</li>
+<li>Digital Marketing Strategy and Calendar</li>
+</ul>
+<p>Output of Wave 3:</p>
+<ul>
+<li>Gaia can run recurring content and marketing execution through one shared operating system.</li>
+</ul>
+<h3 id="wave-4--communications-and-client-visibility">Wave 4 — Communications and Client Visibility</h3>
+<p><strong>Days 141-168 | Projects 11-12</strong></p>
+<p>Close the loop with high-sensitivity communication and retained-service visibility:</p>
+<ul>
+<li>Public Relations and Communications Workflow</li>
+<li>Client Reporting and Performance Insight</li>
+</ul>
+<p>Output of Wave 4:</p>
+<ul>
+<li>Gaia can manage both outward communication and inward reporting through controlled operating logic.</li>
+</ul>
+<h3 id="stabilization-block">Stabilization Block</h3>
+<p><strong>Days 169-180</strong></p>
+<p>Use the final 12 days to:</p>
+<ul>
+<li>close integration gaps,</li>
+<li>harden approvals,</li>
+<li>clean workflow exceptions,</li>
+<li>finalize documentation,</li>
+<li>confirm Day-180 readiness.</li>
+</ul>
+<h2 id="7-12-projects-across-180-days">7. 12 Projects Across 180 Days</h2>
+<h3 id="project-1--order-management">Project 1 — Order Management</h3>
+<p><strong>Window:</strong> Days 1-14<br />
+<strong>Reason:</strong> foundational project already identified<br />
+<strong>Client / agency need:</strong> controlled intake, routing, approval, and close-out of requests<br />
+<strong>Gaia OS contribution:</strong> operating control layer</p>
+<h3 id="project-2--digital-agency-asset-management">Project 2 — Digital Agency Asset Management</h3>
+<p><strong>Window:</strong> Days 15-28<br />
+<strong>Reason:</strong> foundational project already identified<br />
+<strong>Client / agency need:</strong> source-of-truth asset, metadata, tagging, approval, and retrieval<br />
+<strong>Gaia OS contribution:</strong> reusable asset and brand memory layer</p>
+<h3 id="project-3--content-management">Project 3 — Content Management</h3>
+<p><strong>Window:</strong> Days 29-42<br />
+<strong>Reason:</strong> foundational project already identified<br />
+<strong>Client / agency need:</strong> brief, draft, review, publish handoff, refresh, and editorial control<br />
+<strong>Gaia OS contribution:</strong> structured content operations layer</p>
+<h3 id="project-4--website-build-automation">Project 4 — Website Build Automation</h3>
+<p><strong>Window:</strong> Days 43-56<br />
+<strong>Reason:</strong> foundational project already identified<br />
+<strong>Client / agency need:</strong> faster website build, QA, staging, deployment, and handoff<br />
+<strong>Gaia OS contribution:</strong> web delivery automation layer</p>
+<h3 id="project-5--branding-strategy-and-identity-delivery">Project 5 — Branding Strategy and Identity Delivery</h3>
+<p><strong>Window:</strong> Days 57-70<br />
+<strong>Reason:</strong> added from Gaia service demand<br />
+<strong>Client / agency need:</strong> positioning, brand direction, messaging system, and identity consistency<br />
+<strong>Gaia OS contribution:</strong> brand rules, identity memory, and approval logic</p>
+<h3 id="project-6--design-production-workflow">Project 6 — Design Production Workflow</h3>
+<p><strong>Window:</strong> Days 71-84<br />
+<strong>Reason:</strong> added from Gaia service demand<br />
+<strong>Client / agency need:</strong> creative brief intake, design queue, revision control, and approval flow<br />
+<strong>Gaia OS contribution:</strong> structured creative production workflow</p>
+<h3 id="project-7--social-media-managed-service">Project 7 — Social Media Managed Service</h3>
+<p><strong>Window:</strong> Days 85-98<br />
+<strong>Reason:</strong> added from Gaia service demand<br />
+<strong>Client / agency need:</strong> calendar planning, draft creation, review, scheduling handoff, and community support<br />
+<strong>Gaia OS contribution:</strong> recurring social operations module</p>
+<h3 id="project-8--ads-campaign-planning-and-optimization">Project 8 — Ads Campaign Planning and Optimization</h3>
+<p><strong>Window:</strong> Days 99-112<br />
+<strong>Reason:</strong> added from Gaia service demand<br />
+<strong>Client / agency need:</strong> campaign planning, creative-angle testing, optimization memos, and approval gates<br />
+<strong>Gaia OS contribution:</strong> performance marketing workflow logic</p>
+<h3 id="project-9--seo-research-and-optimization">Project 9 — SEO Research and Optimization</h3>
+<p><strong>Window:</strong> Days 113-126<br />
+<strong>Reason:</strong> added from Gaia service demand<br />
+<strong>Client / agency need:</strong> keyword research, page mapping, content briefs, on-page fixes, and reporting support<br />
+<strong>Gaia OS contribution:</strong> search workflow and SEO memory layer</p>
+<h3 id="project-10--digital-marketing-strategy-and-calendar">Project 10 — Digital Marketing Strategy and Calendar</h3>
+<p><strong>Window:</strong> Days 127-140<br />
+<strong>Reason:</strong> added from Gaia service demand<br />
+<strong>Client / agency need:</strong> goals, audience logic, channel mix, budget framing, tactic plan, and marketing calendar<br />
+<strong>Gaia OS contribution:</strong> strategic planning and cross-channel coordination layer</p>
+<h3 id="project-11--public-relations-and-communications-workflow">Project 11 — Public Relations and Communications Workflow</h3>
+<p><strong>Window:</strong> Days 141-154<br />
+<strong>Reason:</strong> added from Gaia service demand<br />
+<strong>Client / agency need:</strong> PR brief intake, message control, approval, escalation, and distribution support<br />
+<strong>Gaia OS contribution:</strong> reputational-risk workflow and high-sensitivity approval logic</p>
+<h3 id="project-12--client-reporting-and-performance-insight">Project 12 — Client Reporting and Performance Insight</h3>
+<p><strong>Window:</strong> Days 155-168<br />
+<strong>Reason:</strong> added from client retention need<br />
+<strong>Client / agency need:</strong> weekly and monthly insight summaries, anomaly flags, next actions, and account visibility<br />
+<strong>Gaia OS contribution:</strong> management visibility and optimization layer</p>
+<h2 id="8-shared-operating-model">8. Shared Operating Model</h2>
+<p>All projects should use one common flow:</p>
+<ol>
+<li>intake</li>
+<li>context loading</li>
+<li>planning</li>
+<li>execution / drafting</li>
+<li>QA / compliance</li>
+<li>human review</li>
+<li>release / publish / deploy</li>
+<li>monitoring</li>
+<li>learning / refinement</li>
+</ol>
+<p>This keeps the service lanes different in output but consistent in control.</p>
+<h2 id="9-multi-organization-ai-stack">9. Multi-Organization AI Stack</h2>
+<p>Gaia should run one stack on one server with separated domains:</p>
+<ul>
+<li><code>Commercial Operations</code>
+<ul>
+<li>sales</li>
+<li>support</li>
+<li>booking / order handling</li>
+</ul></li>
+<li><code>Digital Agency Operations</code>
+<ul>
+<li>branding</li>
+<li>design</li>
+<li>content</li>
+<li>social media</li>
+<li>ads</li>
+<li>SEO</li>
+<li>website</li>
+</ul></li>
+<li><code>Shared Gaia OS Services</code>
+<ul>
+<li>memory</li>
+<li>workflow state</li>
+<li>routing</li>
+<li>approval</li>
+<li>audit</li>
+<li>operator UI</li>
+<li>API gateway</li>
+</ul></li>
+</ul>
+<h2 id="10-shared-technical-stack">10. Shared Technical Stack</h2>
+<ul>
+<li><code>GCP</code> for environments, storage, networking, logging, and secrets</li>
+<li><code>PostgreSQL</code> for workflow state, memory index, approvals, and audit records</li>
+<li><code>Object storage</code> for assets, site artifacts, briefs, exports, and logs</li>
+<li><code>Operator UI</code> for queue control, approvals, memory references, and execution visibility</li>
+<li><code>API / endpoints</code> for internal tools, external platforms, webhooks, and deployment flows</li>
+<li><code>ChatGPT</code> for orchestration, structure, drafting, and general reasoning</li>
+<li><code>Claude</code> for long-context planning, review, content, and code workflows</li>
+<li><code>DeepSeek</code> for bounded lower-cost technical support tasks</li>
+<li><code>PRTVN stack</code> for Gaia application and web delivery implementation</li>
+<li>integrations to social platforms, ad platforms, SEO tooling, CMS, analytics, and client systems</li>
+</ul>
+<h2 id="11-agent-system-architecture">11. Agent-System Architecture</h2>
+<p>Default structure:</p>
+<ul>
+<li><code>Orchestrator</code>: intake, triage, routing, escalation, coordination</li>
+<li><code>Agent</code>: service-lane or module owner</li>
+<li><code>Subagent</code>: narrow specialist executor</li>
+</ul>
+<p>Initial operating layout:</p>
+<ul>
+<li><code>Commercial orchestrator</code>
+<ul>
+<li>order agent</li>
+<li>sales / proposal agent</li>
+<li>support / booking agent</li>
+</ul></li>
+<li><code>Digital agency orchestrator</code>
+<ul>
+<li>branding agent</li>
+<li>design agent</li>
+<li>content agent</li>
+<li>social media agent</li>
+<li>ads / SEO agent</li>
+<li>web delivery agent</li>
+</ul></li>
+</ul>
+<p>Memory boundaries:</p>
+<ul>
+<li>organization memory</li>
+<li>module memory</li>
+<li>client memory</li>
+<li>task memory</li>
+</ul>
+<p>Minimum workflow states:</p>
+<ul>
+<li><code>new</code></li>
+<li><code>triaged</code></li>
+<li><code>in progress</code></li>
+<li><code>qa</code></li>
+<li><code>awaiting approval</code></li>
+<li><code>approved</code></li>
+<li><code>released</code></li>
+<li><code>closed</code></li>
+<li><code>exception</code></li>
+</ul>
+<p>YAML patterns should define:</p>
+<ul>
+<li>role</li>
+<li>mission</li>
+<li>memory scope</li>
+<li>input contract</li>
+<li>output contract</li>
+<li>escalation triggers</li>
+<li>approval rules</li>
+<li>model preference</li>
+<li>tool access</li>
+</ul>
+<h2 id="12-critical-success-factors">12. Critical Success Factors</h2>
+<ul>
+<li>strong ownership and decision rights from Day 1,</li>
+<li>controlled intake and workflow state across all active projects,</li>
+<li>structured memory that improves with every client engagement,</li>
+<li>human approval at all commercial, reputational, and deployment edges,</li>
+<li>operator UI that gives real visibility into queue, approval, and exceptions,</li>
+<li>reliable routing, escalation, and auditability across organizations,</li>
+<li>reusable templates, prompts, playbooks, and logic captured as Gaia OS assets,</li>
+<li>measurable improvement in speed, consistency, and coordination load,</li>
+<li>stable technical stack across GCP, models, storage, APIs, and delivery tooling,</li>
+<li>disciplined expansion: no new project enters Gaia OS without ownership, use case clarity, and integration readiness.</li>
+</ul>
+<h2 id="13-day-180-end-state">13. Day-180 End State</h2>
+<p>By Day 180, Gaia should have:</p>
+<ul>
+<li>12 executed projects completed or operationally landed,</li>
+<li>a working Gaia OS control layer covering intake, workflow state, approval, routing, and audit,</li>
+<li>active operating workflows for order handling, assets, content, website delivery, branding, design, social, ads, SEO, marketing planning, PR, and reporting,</li>
+<li>one shared multi-organization stack on one server supporting both commercial and digital agency operations,</li>
+<li>structured memory accumulating across clients, modules, and tasks,</li>
+<li>practical model use across ChatGPT, Claude, and DeepSeek by task type,</li>
+<li>a clearer service-delivery system that is more repeatable, more visible, and less dependent on manual coordination.</li>
+</ul>
+</body>
+</html>

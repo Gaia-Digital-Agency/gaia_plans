@@ -1,0 +1,1644 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>socmed_plan</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded",()=>{document.querySelectorAll("pre.sourceCode.mermaid code, pre code.language-mermaid").forEach(el=>{const d=document.createElement("div");d.className="mermaid";d.textContent=el.textContent;el.parentElement.replaceWith(d);});mermaid.initialize({startOnLoad:true});});</script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">socmed_plan</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#gda-social-media-automation-system-soma--architecture-plan">GDA Social Media Automation System (SOMA) — Architecture Plan</a>
+<ul>
+<li><a href="#context">Context</a></li>
+<li><a href="#architecture-overview">Architecture Overview</a></li>
+<li><a href="#system-components">System Components</a></li>
+<li><a href="#human-in-the-loop-design-critical">Human-in-the-Loop Design (Critical)</a></li>
+<li><a href="#implementation-phases">Implementation Phases</a></li>
+<li><a href="#technology-stack-summary">Technology Stack Summary</a></li>
+<li><a href="#key-risks--mitigations">Key Risks &amp; Mitigations</a></li>
+<li><a href="#change-management--team-allocation">Change Management &amp; Team Allocation</a></li>
+<li><a href="#exact-tooling-stack">Exact Tooling Stack</a></li>
+<li><a href="#end-to-end-connection-architecture">End-to-End Connection Architecture</a></li>
+<li><a href="#project-structure">Project Structure</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="gda-social-media-automation-system-soma--architecture-plan">GDA Social Media Automation System (SOMA) — Architecture Plan</h1>
+<h2 id="context">Context</h2>
+<p>Gaia Digital Agency (GDA) is building an AI Business Unit under the <strong>Venturi Model</strong> — compressing complex, labor-heavy social media management through an AI orchestration core to produce consistent, high-velocity outputs without growing headcount. Victor (OpenClaw framework) is the existing multi-agent MVP. This plan extends that architecture into Social Media Automation across 5 platforms: Instagram, Facebook, YouTube, X (Twitter), and TikTok.</p>
+<p><strong>Core workflow constraint:</strong> GDA team retains human approval over all AI-generated content before publishing. OpenClaw executes the actual push to platforms — never direct from AI.</p>
+<h2 id="architecture-overview">Architecture Overview</h2>
+<pre><code>┌─────────────────────────────────────────────────────────┐
+│                    INTAKE LAYER                         │
+│  Client Brief · Brand Voice · Content Calendar          │
+│  GDA Creative Assets (images, video) uploaded here      │
+└──────────────────────┬──────────────────────────────────┘
+                       │
+┌──────────────────────▼──────────────────────────────────┐
+│              VENTURI THROAT — AI ORCHESTRATION          │
+│                  (OpenClaw Framework)                   │
+│                                                         │
+│  ┌─────────────────┐    ┌──────────────────────────┐    │
+│  │  Content Agent  │    │   Interaction Agent      │    │
+│  │  (Claude API)   │    │   (Claude API)           │    │
+│  │                 │    │                          │    │
+│  │ - Posts/captions│    │ - Comment replies        │    │
+│  │ - Long articles │    │ - DM responses           │    │
+│  │ - Platform-tuned│    │ - Mention responses      │    │
+│  │   copy          │    │ - Sentiment routing      │    │
+│  └────────┬────────┘    └─────────────┬────────────┘    │
+│           │                           │                 │
+│  ┌────────▼───────────────────────────▼────────────┐    │
+│  │           Content Queue (PostgreSQL)            │    │
+│  │  status: draft → pending_review → approved      │    │
+│  │           → scheduled → published               │    │
+│  └─────────────────────────────────────────────────┘    │
+└──────────────────────┬──────────────────────────────────┘
+                       │
+┌──────────────────────▼──────────────────────────────────┐
+│              GDA REVIEW &amp; APPROVAL PORTAL               │
+│                  (Next.js Dashboard)                    │
+│                                                         │
+│  - View AI-drafted content + attached media             │
+│  - Approve / Edit / Reject each item                    │
+│  - Bulk approval for batch content                      │
+│  - Schedule picker (date/time per platform)             │
+│  - Brand compliance flags (Claude pre-check)            │
+│  - Role-based: Reviewer → Approver → Supervisor         │
+└──────────────────────┬──────────────────────────────────┘
+                       │ (approved + scheduled)
+┌──────────────────────▼──────────────────────────────────┐
+│              OPENCLAW PUBLISHER AGENT                   │
+│                                                         │
+│  Platform Dispatcher — routes to correct API adapter    │
+│                                                         │
+│  ┌──────────┐ ┌──────────┐ ┌────────┐ ┌───┐ ┌───────┐   │
+│  │Instagram │ │Facebook  │ │YouTube │ │ X │ │TikTok │   │
+│  │Graph API │ │Graph API │ │Data API│ │API│ │Content│   │
+│  │          │ │          │ │v3      │ │v2 │ │Posting│   │
+│  └──────────┘ └──────────┘ └────────┘ └───┘ └───────┘   │
+│                                                         │
+│  Capabilities per platform:                             │
+│  - Text post / caption push                             │
+│  - Image upload + attach                                │
+│  - Video upload + metadata                              │
+│  - Story / Reel / Short posting where supported         │
+│  - Reply to comments/DMs                                │
+└──────────────────────┬──────────────────────────────────┘
+                       │
+┌──────────────────────▼──────────────────────────────────┐
+│              MONITORING &amp; ANALYTICS LAYER               │
+│                                                         │
+│  - Post performance ingestion (likes, reach, CTR)       │
+│  - New comments/replies surfaced for AI response        │
+│  - Error handling + retry logic for failed pushes       │
+│  - GDA Mission Control dashboard (Telegram + Web)       │
+│  - Audit log: who approved what, when, which platform   │
+└─────────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="system-components">System Components</h2>
+<h3 id="1-ai-content-generation-claude-as-primary-engine">1. AI Content Generation (Claude as Primary Engine)</h3>
+<p><strong>Claude claude-sonnet-4-6</strong> handles all generative tasks via Anthropic API:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Agent</th>
+<th>Task</th>
+<th>Prompt Strategy</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Content Agent</td>
+<td>Post captions, articles, platform copy</td>
+<td>Brand voice system prompt + client brief context</td>
+</tr>
+<tr class="even">
+<td>Interaction Agent</td>
+<td>Reply to comments, DMs, mentions</td>
+<td>Sentiment analysis → tone calibration → reply draft</td>
+</tr>
+<tr class="odd">
+<td>Brand Compliance Checker</td>
+<td>Pre-review check before queuing for GDA</td>
+<td>Rule-based + Claude self-review pass</td>
+</tr>
+<tr class="even">
+<td>Content Planner</td>
+<td>Suggest content calendar slots</td>
+<td>Client niche + platform trend awareness</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Prompt caching</strong> (Anthropic API) should be applied to brand voice and client brief system prompts — these are large, static, reused every generation. This significantly cuts token cost at volume.</p>
+<h3 id="2-openclaw-agent-layer-existing-framework">2. OpenClaw Agent Layer (Existing Framework)</h3>
+<p>Extend Victor's existing OpenClaw multi-agent architecture with dedicated Social Media specialist agents:</p>
+<pre><code>OpenClaw Orchestrator
+  ├── SocialContentAgent      → generates, queues content
+  ├── SocialInteractionAgent  → monitors + drafts replies
+  ├── SocialPublisherAgent    → executes posting after approval
+  │     ├── InstagramAdapter
+  │     ├── FacebookAdapter
+  │     ├── YouTubeAdapter
+  │     ├── XAdapter
+  │     └── TikTokAdapter
+  └── SocialMonitorAgent      → ingests performance + new interactions
+</code></pre>
+<p>Each adapter wraps the platform's official API and normalizes the interface so OpenClaw sends one standardized publish command regardless of platform.</p>
+<h3 id="3-gda-review--approval-portal-nextjs--nestjs">3. GDA Review &amp; Approval Portal (Next.js + NestJS)</h3>
+<p>Consistent with existing GDA SaaS stack: <strong>NextJS + NestJS + PostgreSQL + Tailwind + JWT + Drizzle</strong></p>
+<p><strong>Key screens:</strong></p>
+<ul>
+<li><strong>Content Queue</strong> — cards showing draft content + attached media, platform tag, scheduled time, AI confidence score</li>
+<li><strong>Approval Flow</strong> — Approve / Edit inline / Reject with reason</li>
+<li><strong>Media Library</strong> — GDA team uploads images/videos here; AI agent attaches assets to relevant posts</li>
+<li><strong>Content Calendar</strong> — visual week/month view of scheduled + published content per platform</li>
+<li><strong>Interaction Inbox</strong> — AI-drafted replies to comments/DMs awaiting GDA approval</li>
+<li><strong>Mission Control</strong> — real-time feed of posts published, errors, performance snapshots</li>
+</ul>
+<p><strong>User roles:</strong></p>
+<ul>
+<li><code>content_creator</code> — GDA team member, uploads media, views drafts</li>
+<li><code>reviewer</code> — can approve/reject/edit content</li>
+<li><code>supervisor</code> — bulk approve, override scheduling, access analytics</li>
+</ul>
+<h3 id="4-data-layer-postgresql">4. Data Layer (PostgreSQL)</h3>
+<p>Core tables:</p>
+<pre><code>clients            — brand voice, niche, platform accounts
+content_items      — AI draft, status, platform, scheduled_at, approved_by
+media_assets       — images/videos uploaded by GDA team
+platform_accounts  — OAuth tokens per platform per client
+interactions       — comments/DMs surfaced for reply
+reply_drafts       — AI-generated replies pending approval
+publish_log        — audit trail of all published actions
+analytics_snapshots — performance data ingested from platforms
+</code></pre>
+<p>Content status state machine:</p>
+<pre><code>draft → brand_check → pending_review → approved → scheduled → publishing → published
+                                    ↘ rejected
+</code></pre>
+<h3 id="5-platform-api-integration">5. Platform API Integration</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Platform</th>
+<th>API</th>
+<th>Auth</th>
+<th>Key Capabilities</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Instagram</td>
+<td>Graph API v18+</td>
+<td>OAuth2 (Business account)</td>
+<td>Feed posts, Stories, Reels, DM, comment reply</td>
+</tr>
+<tr class="even">
+<td>Facebook</td>
+<td>Graph API v18+</td>
+<td>OAuth2 (Page token)</td>
+<td>Page posts, Stories, comment reply</td>
+</tr>
+<tr class="odd">
+<td>YouTube</td>
+<td>Data API v3</td>
+<td>OAuth2</td>
+<td>Video upload, description, community post, comment reply</td>
+</tr>
+<tr class="even">
+<td>X (Twitter)</td>
+<td>API v2</td>
+<td>OAuth2 + Bearer</td>
+<td>Tweet, thread, media upload, reply</td>
+</tr>
+<tr class="odd">
+<td>TikTok</td>
+<td>Content Posting API</td>
+<td>OAuth2</td>
+<td>Video upload, caption, comment reply</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Key constraint:</strong> Instagram + TikTok require video as file upload (not URL), YouTube has async processing. Publisher Agent must handle async callbacks and update <code>publish_log</code> on completion.</p>
+<h3 id="6-media-handling-gda-creative-assets">6. Media Handling (GDA Creative Assets)</h3>
+<p>GDA team creates images/videos externally, then uploads to the Media Library in the portal. Flow:</p>
+<pre><code>GDA designer uploads → GCS bucket (GCP) → media_assets record created
+AI Content Agent tags/links media to content_item during generation
+GDA reviewer sees content + asset together in approval view
+On approval → OpenClaw Publisher Agent streams/uploads media to platform API
+</code></pre>
+<p>For <strong>video</strong> (YouTube, TikTok, Reels): large file upload via resumable upload APIs. Publisher Agent manages chunked upload with progress tracking.</p>
+<h3 id="7-interaction--reply-loop">7. Interaction &amp; Reply Loop</h3>
+<pre><code>SocialMonitorAgent polls platforms every N minutes (or via webhook where available)
+  → new comments/DMs ingested → stored in interactions table
+  → SocialInteractionAgent (Claude) drafts replies with brand voice
+  → reply_drafts queued in Interaction Inbox
+  → GDA reviewer approves/edits reply
+  → OpenClaw Publisher Agent posts reply via platform API
+</code></pre>
+<h3 id="8-infrastructure-gcp">8. Infrastructure (GCP)</h3>
+<p>Consistent with business plan Chapter 10:</p>
+<ul>
+<li><strong>GCP Cloud Run</strong> — OpenClaw agent workers (containerized, auto-scaling)</li>
+<li><strong>GCP Cloud SQL (PostgreSQL)</strong> — primary data layer</li>
+<li><strong>GCP Cloud Storage (GCS)</strong> — media asset storage</li>
+<li><strong>GCP Cloud Scheduler</strong> — trigger scheduled posts, monitoring polls</li>
+<li><strong>GCP Secret Manager</strong> — platform OAuth tokens, Anthropic API keys</li>
+<li><strong>GCP Pub/Sub</strong> — event bus between OpenClaw agents (content queued → publisher triggered)</li>
+</ul>
+<h2 id="human-in-the-loop-design-critical">Human-in-the-Loop Design (Critical)</h2>
+<p>The human approval gate is enforced at the <strong>data layer</strong>, not just the UI:</p>
+<ul>
+<li>OpenClaw Publisher Agent only processes items with <code>status = 'approved'</code> AND <code>approved_by IS NOT NULL</code></li>
+<li>Approval records include: <code>approver_id</code>, <code>approved_at</code>, <code>approval_notes</code></li>
+<li>No bypass path exists — approval is required even for scheduled content</li>
+<li>Supervisors can set "trusted client" mode for bulk-approval of templated content only</li>
+</ul>
+<h2 id="implementation-phases">Implementation Phases</h2>
+<h3 id="phase-1--foundation-weeks-14">Phase 1 — Foundation (Weeks 1–4)</h3>
+<ul>
+<li>Set up PostgreSQL schema (content_items, media_assets, platform_accounts)</li>
+<li>Build GDA Review Portal core (Next.js): content queue, approval flow, media library</li>
+<li>Implement Claude Content Agent (basic post generation, brand voice system prompt)</li>
+<li>Build Instagram + Facebook adapters in OpenClaw (simplest APIs, highest priority clients)</li>
+<li>End-to-end test: Claude drafts → GDA approves → OpenClaw posts to IG/FB</li>
+</ul>
+<h3 id="phase-2--expand-platforms--interaction-weeks-58">Phase 2 — Expand Platforms + Interaction (Weeks 5–8)</h3>
+<ul>
+<li>Add X, YouTube, TikTok adapters</li>
+<li>Build Interaction Agent (comment/DM monitoring + reply drafting)</li>
+<li>Interaction Inbox in Review Portal</li>
+<li>Prompt caching for brand voice system prompts (cost control)</li>
+<li>Content Calendar view in portal</li>
+</ul>
+<h3 id="phase-3--intelligence--scale-weeks-912">Phase 3 — Intelligence + Scale (Weeks 9–12)</h3>
+<ul>
+<li>Brand Compliance Checker (pre-review Claude pass)</li>
+<li>Analytics ingestion + Mission Control dashboard</li>
+<li>Content Planner agent (schedule suggestions)</li>
+<li>Performance-driven content tuning (high-performing post patterns fed back to Content Agent)</li>
+<li>White-label packaging for client-facing delivery</li>
+</ul>
+<h2 id="technology-stack-summary">Technology Stack Summary</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Layer</th>
+<th>Technology</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>AI Engine</td>
+<td>Anthropic Claude API (claude-sonnet-4-6), Prompt Caching</td>
+</tr>
+<tr class="even">
+<td>Orchestration</td>
+<td>OpenClaw (existing Victor framework)</td>
+</tr>
+<tr class="odd">
+<td>Backend API</td>
+<td>NestJS + TypeScript</td>
+</tr>
+<tr class="even">
+<td>Frontend Portal</td>
+<td>Next.js + Tailwind + TypeScript</td>
+</tr>
+<tr class="odd">
+<td>Database</td>
+<td>PostgreSQL (Drizzle ORM)</td>
+</tr>
+<tr class="even">
+<td>Auth</td>
+<td>JWT + PassportJS</td>
+</tr>
+<tr class="odd">
+<td>Media Storage</td>
+<td>GCP Cloud Storage</td>
+</tr>
+<tr class="even">
+<td>Infra</td>
+<td>GCP Cloud Run, Cloud Scheduler, Pub/Sub, Secret Manager</td>
+</tr>
+<tr class="odd">
+<td>Platform APIs</td>
+<td>Instagram/FB Graph API, YouTube Data API v3, X API v2, TikTok Content API</td>
+</tr>
+</tbody>
+</table>
+<h2 id="key-risks--mitigations">Key Risks &amp; Mitigations</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Risk</th>
+<th>Mitigation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Platform API rate limits</td>
+<td>Per-platform queue with backoff + retry; schedule posts to spread load</td>
+</tr>
+<tr class="even">
+<td>TikTok/YouTube video upload timeouts</td>
+<td>Resumable upload with progress tracking; async callback on completion</td>
+</tr>
+<tr class="odd">
+<td>OAuth token expiry</td>
+<td>Token refresh service in NestJS; alerts when refresh fails</td>
+</tr>
+<tr class="even">
+<td>AI content off-brand</td>
+<td>Brand compliance pre-check before GDA queue; Claude self-review pass</td>
+</tr>
+<tr class="odd">
+<td>Approval bottleneck at GDA</td>
+<td>Bulk approval for templated/scheduled content series; supervisor override</td>
+</tr>
+<tr class="even">
+<td>Platform policy violations</td>
+<td>Banned-content keyword filter pre-Claude; compliance system prompt layer</td>
+</tr>
+</tbody>
+</table>
+<h2 id="change-management--team-allocation">Change Management &amp; Team Allocation</h2>
+<h3 id="context-20--25-people-whole-of-gda">Context: 20 → 25 People, Whole of GDA</h3>
+<p>The business plan's <strong>No-Manpower-Growth principle</strong> is clear: the 30-person equivalent becomes a 25-person AI-enabled team. GDA currently has 20 — meaning up to 5 new hires are possible, but only where AI cannot close the gap. SOMA is the proof point: the same or better social media output with a leaner, elevated team.</p>
+<p><strong>The core message to the team: no one is replaced. Every role is elevated from producer to orchestrator.</strong></p>
+<h3 id="current-20-person-team-estimated-role-distribution">Current 20-Person Team (Estimated Role Distribution)</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Role</th>
+<th>Headcount</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Graphic Designer</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td>Video Creator</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td>Copywriter</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td>Branding Specialist</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td>SEO Specialist</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>Advertising Specialist</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td>Social Media Platform Manager</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>Client Representative</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td>Management / Leadership</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td><strong>Total</strong></td>
+<td><strong>20</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="gda-team-allocation-at-25-post-soma">GDA Team Allocation at 25 (Post-SOMA)</h3>
+<p><strong>SOMA Dedicated Team: 6 people</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>New Role</th>
+<th>Headcount</th>
+<th>Sourced From</th>
+<th>What Changed</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Social Media Operations Lead</td>
+<td>1</td>
+<td>Sr. Social Media Platform Manager</td>
+<td>Manual posting → owns SOMA pipeline, content strategy, client delivery</td>
+</tr>
+<tr class="even">
+<td>AI Content Editor / Reviewer</td>
+<td>2</td>
+<td>Copywriters (2 of 3)</td>
+<td>Writing from scratch → prompt engineering, reviewing and editing AI drafts, brand voice custodianship</td>
+</tr>
+<tr class="odd">
+<td>Creative Asset Producer — Graphics</td>
+<td>1</td>
+<td>Graphic Designer (1 of 3)</td>
+<td>All-purpose design → focused social asset creation + reusable templates for AI attachment</td>
+</tr>
+<tr class="even">
+<td>Creative Asset Producer — Video</td>
+<td>1</td>
+<td>Video Creator (1 of 2)</td>
+<td>All video work → short-form social video (Reels, Shorts, TikTok)</td>
+</tr>
+<tr class="odd">
+<td>SOMA Systems Specialist</td>
+<td>1</td>
+<td>Redeployed (tech-adjacent, e.g. 2nd Social Media Manager)</td>
+<td>Manages OpenClaw, portal admin, platform OAuth, monitoring</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Rest of GDA: 19 people (existing 14 redeployed + 5 new hires)</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Headcount</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Web Development</td>
+<td>5</td>
+<td>+2 new hires (TypeScript/NestJS/Next.js for SOMA build + client sites)</td>
+</tr>
+<tr class="even">
+<td>Branding &amp; Identity</td>
+<td>2</td>
+<td>Existing branding specialists, now AI-assisted</td>
+</tr>
+<tr class="odd">
+<td>SEO</td>
+<td>2</td>
+<td>Existing, now using Claude for content optimization</td>
+</tr>
+<tr class="even">
+<td>Advertising / Paid Media</td>
+<td>2</td>
+<td>Existing, ad copy goes through SOMA pipeline</td>
+</tr>
+<tr class="odd">
+<td>Client Success Management</td>
+<td>2</td>
+<td>Existing Client Reps, now portal-empowered with data</td>
+</tr>
+<tr class="even">
+<td>Business Development</td>
+<td>2</td>
+<td>+1 new hire for SOMA commercial sales</td>
+</tr>
+<tr class="odd">
+<td>AI Operations (shared)</td>
+<td>1</td>
+<td>New hire — AI prompt/workflow ops across all GDA units</td>
+</tr>
+<tr class="even">
+<td>Operations / Leadership</td>
+<td>3</td>
+<td>Existing management, +1 AI Business Unit Lead new hire</td>
+</tr>
+<tr class="odd">
+<td><strong>Total GDA</strong></td>
+<td><strong>25</strong></td>
+<td><strong>At capacity ceiling</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="role-transformation-map">Role Transformation Map</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Old Role</th>
+<th>Old Output</th>
+<th>New Role</th>
+<th>New Output</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Social Media Platform Manager</td>
+<td>Manually posts to 5 platforms</td>
+<td>Social Media Ops Lead</td>
+<td>Manages SOMA queue, approves schedule, owns client delivery</td>
+</tr>
+<tr class="even">
+<td>Social Media Platform Manager #2</td>
+<td>Monitors comments, replies manually</td>
+<td>SOMA Systems Specialist</td>
+<td>Manages OpenClaw health, platform API accounts, monitoring alerts</td>
+</tr>
+<tr class="odd">
+<td>Copywriter (×3)</td>
+<td>Writes all captions, articles from scratch</td>
+<td>AI Content Editor (×2) + redeployed to SEO/web content</td>
+<td>Prompt engineering, review + edit AI drafts, reject off-brand content</td>
+</tr>
+<tr class="even">
+<td>Graphic Designer #1</td>
+<td>General agency design work</td>
+<td>Creative Asset Producer — Graphics</td>
+<td>Social-format images, templates, brand asset library for SOMA</td>
+</tr>
+<tr class="odd">
+<td>Graphic Designer #2, #3</td>
+<td>General agency design work</td>
+<td>Stay in GDA design (branding + web)</td>
+<td>Now AI-assisted for mood boards, concept ideation</td>
+</tr>
+<tr class="even">
+<td>Video Creator #1</td>
+<td>General video production</td>
+<td>Creative Asset Producer — Video</td>
+<td>Short-form social video: Reels, Shorts, TikTok formats</td>
+</tr>
+<tr class="odd">
+<td>Video Creator #2</td>
+<td>General video production</td>
+<td>Stay in GDA video (client projects)</td>
+<td>Now AI-assisted for scripting, storyboarding</td>
+</tr>
+<tr class="even">
+<td>Branding Specialist (×2)</td>
+<td>Brand guidelines, identity</td>
+<td>Brand custodian role absorbed into AI Content Editors</td>
+<td>Brand voice documents become Claude system prompts</td>
+</tr>
+<tr class="odd">
+<td>SEO Specialist (×2)</td>
+<td>Manual keyword research, content audits</td>
+<td>AI-assisted SEO</td>
+<td>Claude handles drafts, team handles strategy + approval</td>
+</tr>
+<tr class="even">
+<td>Advertising Specialist (×2)</td>
+<td>Manual ad copy creation</td>
+<td>AI-assisted Ad Creative</td>
+<td>Ad copy through SOMA pipeline; team optimises and A/B tests</td>
+</tr>
+<tr class="odd">
+<td>Client Representative (×2)</td>
+<td>Manual reporting, status calls</td>
+<td>Client Success Manager</td>
+<td>Portal analytics → client dashboard; data-driven review calls</td>
+</tr>
+</tbody>
+</table>
+<h3 id="change-management-program">Change Management Program</h3>
+<h4 id="phase-0--leadership-alignment-week-0-before-any-announcement">Phase 0 — Leadership Alignment (Week 0, before any announcement)</h4>
+<ul>
+<li>Management aligns on role map and no-redundancy commitment</li>
+<li>Confirm which 5 new hires are needed and when</li>
+<li>Identify the 1–2 team members who need the most transition support</li>
+</ul>
+<h4 id="phase-1--vision-announcement-week-1">Phase 1 — Vision Announcement (Week 1)</h4>
+<ul>
+<li>All-hands: present the Venturi Model in plain language
+<ul>
+<li><em>"We're not replacing you with AI. We're making each of you 3× more capable."</em></li>
+</ul></li>
+<li>Show the before/after role map — every person sees where they land</li>
+<li>Commit publicly: no role eliminations from this transition</li>
+<li>Introduce SOMA as the first proof point</li>
+</ul>
+<h4 id="phase-2--role-reclassification-weeks-23">Phase 2 — Role Reclassification (Weeks 2–3)</h4>
+<ul>
+<li>One-on-one sessions: each team member maps to their new role</li>
+<li>Updated job descriptions: language shifts from "creates" to "orchestrates", "produces" to "directs"</li>
+<li>Salary review: orchestrator roles should carry equal or higher comp than producer roles</li>
+<li>Address the 3rd copywriter: redeployment to web content/SEO (where Claude also assists — not a downgrade)</li>
+</ul>
+<h4 id="phase-3--skills-upskilling-weeks-28-parallel-to-phase-1-build">Phase 3 — Skills Upskilling (Weeks 2–8, parallel to Phase 1 build)</h4>
+<table>
+<thead>
+<tr class="header">
+<th>Training Module</th>
+<th>Who</th>
+<th>Format</th>
+<th>When</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>AI Literacy &amp; Claude 101</td>
+<td>All 20 team members</td>
+<td>1-day workshop</td>
+<td>Week 2</td>
+</tr>
+<tr class="even">
+<td>Prompt Engineering for Content</td>
+<td>AI Content Editors, Copywriters</td>
+<td>2-day intensive</td>
+<td>Week 3</td>
+</tr>
+<tr class="odd">
+<td>SOMA Portal Operations</td>
+<td>All SOMA team</td>
+<td>Hands-on training session</td>
+<td>Week 5 (when portal MVP is live)</td>
+</tr>
+<tr class="even">
+<td>Brand Voice Prompt Writing</td>
+<td>AI Content Editors</td>
+<td>Workshop with branding team</td>
+<td>Week 4</td>
+</tr>
+<tr class="odd">
+<td>OpenClaw &amp; Platform API Operations</td>
+<td>SOMA Systems Specialist</td>
+<td>Paired with dev team</td>
+<td>Weeks 4–6</td>
+</tr>
+<tr class="even">
+<td>Analytics &amp; Reporting for Clients</td>
+<td>Client Success Managers</td>
+<td>1-day workshop</td>
+<td>Week 6</td>
+</tr>
+<tr class="odd">
+<td>Short-form Video Strategy (Reels/TikTok)</td>
+<td>Video Creator</td>
+<td>Online course + internal workshop</td>
+<td>Weeks 3–4</td>
+</tr>
+</tbody>
+</table>
+<h4 id="phase-4--parallel-running-weeks-58">Phase 4 — Parallel Running (Weeks 5–8)</h4>
+<ul>
+<li>SOMA runs alongside the old manual process for all clients</li>
+<li>SOMA output compared to manual: speed, consistency, engagement rate</li>
+<li>Team builds confidence; catches edge cases before full cutover</li>
+<li>Target: SOMA handles at least 60% of total post volume by Week 8</li>
+</ul>
+<h4 id="phase-5--full-cutover-week-9">Phase 5 — Full Cutover (Week 9+)</h4>
+<ul>
+<li>Manual posting workflow retired</li>
+<li>SOMA is the sole publishing mechanism</li>
+<li>Old social media scheduling tools (Buffer, Hootsuite, etc.) cancelled</li>
+<li>Client-facing reporting shifts to portal analytics dashboard</li>
+</ul>
+<h4 id="governance-during-transition">Governance During Transition</h4>
+<ul>
+<li>Weekly Change Pulse: short team survey — confidence, blockers, concerns</li>
+<li>SOMA Champion: one team member (suggested: AI Content Editor) acts as internal advocate and first point of contact for questions</li>
+<li>Escalation path: any team member can raise a role or workflow concern directly to Unit Lead, non-anonymously</li>
+</ul>
+<h2 id="exact-tooling-stack">Exact Tooling Stack</h2>
+<h3 id="mcp-servers-openclaw-integration-layer">MCP Servers (OpenClaw Integration Layer)</h3>
+<table>
+<thead>
+<tr class="header">
+<th>MCP Server</th>
+<th>Purpose</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>mcp-instagram-facebook</code></td>
+<td>Meta Graph API v18+ — post, story, reel, comment reply, DM</td>
+<td>Custom-built adapter</td>
+</tr>
+<tr class="even">
+<td><code>mcp-youtube</code></td>
+<td>YouTube Data API v3 — video upload, description, community post, comment reply</td>
+<td>Custom-built adapter</td>
+</tr>
+<tr class="odd">
+<td><code>mcp-twitter-x</code></td>
+<td>X API v2 — tweet, thread, media upload, reply</td>
+<td>Custom-built adapter</td>
+</tr>
+<tr class="even">
+<td><code>mcp-tiktok</code></td>
+<td>TikTok Content Posting API — video upload, caption, comment</td>
+<td>Custom-built adapter</td>
+</tr>
+<tr class="odd">
+<td><code>mcp-postgres</code></td>
+<td>Read/write content_items, interactions, publish_log</td>
+<td><code>@modelcontextprotocol/server-postgres</code> (open source)</td>
+</tr>
+<tr class="even">
+<td><code>mcp-gcs</code></td>
+<td>Upload/retrieve media assets from GCP Cloud Storage</td>
+<td>Custom-built adapter</td>
+</tr>
+<tr class="odd">
+<td><code>mcp-notion</code></td>
+<td>Content briefs, client documentation, content calendar inputs</td>
+<td>Notion official MCP (already in Victor)</td>
+</tr>
+<tr class="even">
+<td><code>mcp-gmail</code></td>
+<td>Client communication, approval notifications by email</td>
+<td>Google official MCP (already in Victor)</td>
+</tr>
+<tr class="odd">
+<td><code>mcp-google-calendar</code></td>
+<td>Content scheduling, posting time management</td>
+<td>Google official MCP (already in Victor)</td>
+</tr>
+<tr class="even">
+<td><code>mcp-telegram</code></td>
+<td>Mission Control alerts, publish success/failure notifications</td>
+<td>Custom (already in Victor)</td>
+</tr>
+<tr class="odd">
+<td><code>mcp-slack</code></td>
+<td>Internal team notifications (approval needed, errors)</td>
+<td>Slack official MCP</td>
+</tr>
+</tbody>
+</table>
+<h3 id="hardware">Hardware</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Item</th>
+<th>Spec</th>
+<th>Who</th>
+<th>Qty</th>
+<th>Est. Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Creative Workstation</td>
+<td>Apple Mac Studio M3 Max (64GB RAM, 1TB SSD)</td>
+<td>Graphic Designer, Video Creator</td>
+<td>2</td>
+<td>~USD 4,000 each</td>
+</tr>
+<tr class="even">
+<td>Team Laptops</td>
+<td>MacBook Pro M3 14" (18GB RAM, 512GB)</td>
+<td>AI Content Editors, Ops Lead, Systems Specialist</td>
+<td>4</td>
+<td>~USD 2,000 each</td>
+</tr>
+<tr class="odd">
+<td>Development Laptops</td>
+<td>MacBook Pro M3 16" (36GB RAM, 1TB)</td>
+<td>Dev team (web/API)</td>
+<td>5</td>
+<td>~USD 2,500 each</td>
+</tr>
+<tr class="even">
+<td>NAS (Network Storage)</td>
+<td>Synology DS923+ with 4× 4TB HDDs</td>
+<td>Media staging before GCS upload</td>
+<td>1</td>
+<td>~USD 1,200</td>
+</tr>
+<tr class="odd">
+<td>External SSDs</td>
+<td>Samsung T7 2TB</td>
+<td>Video asset transfer</td>
+<td>4</td>
+<td>~USD 120 each</td>
+</tr>
+<tr class="even">
+<td>Monitors</td>
+<td>LG 27" 4K UltraFine</td>
+<td>Creative workstations</td>
+<td>2</td>
+<td>~USD 700 each</td>
+</tr>
+<tr class="odd">
+<td>Internet Upgrade</td>
+<td>Fiber 500Mbps symmetric</td>
+<td>Office</td>
+<td>1</td>
+<td>~USD 100/month</td>
+</tr>
+<tr class="even">
+<td><strong>Hardware CAPEX Total</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td><strong>~USD 30,000</strong></td>
+</tr>
+</tbody>
+</table>
+<p><em>Note: If team members already have suitable machines, hardware CAPEX reduces significantly. Repurpose existing equipment where possible.</em></p>
+<h3 id="software-subscriptions">Software Subscriptions</h3>
+<h4 id="creative-tools">Creative Tools</h4>
+<table>
+<thead>
+<tr class="header">
+<th>Tool</th>
+<th>Plan</th>
+<th>Users</th>
+<th>Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Adobe Creative Cloud</td>
+<td>All Apps</td>
+<td>2 (Designer + Video)</td>
+<td>~USD 60/user/month = USD 120/month</td>
+</tr>
+<tr class="even">
+<td>Figma</td>
+<td>Organization</td>
+<td>3 (Design team)</td>
+<td>~USD 45/editor/month = USD 135/month</td>
+</tr>
+<tr class="odd">
+<td>CapCut for Business</td>
+<td>Pro</td>
+<td>1 (Video Creator)</td>
+<td>~USD 20/month</td>
+</tr>
+<tr class="even">
+<td>DaVinci Resolve Studio</td>
+<td>One-time licence</td>
+<td>1</td>
+<td>USD 295 one-time</td>
+</tr>
+</tbody>
+</table>
+<h4 id="development--operations">Development &amp; Operations</h4>
+<table>
+<thead>
+<tr class="header">
+<th>Tool</th>
+<th>Plan</th>
+<th>Users</th>
+<th>Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Cursor</td>
+<td>Pro</td>
+<td>5 (dev team)</td>
+<td>USD 20/user/month = USD 100/month</td>
+</tr>
+<tr class="even">
+<td>GitHub</td>
+<td>Team</td>
+<td>All devs</td>
+<td>USD 4/user/month = USD 20/month</td>
+</tr>
+<tr class="odd">
+<td>Docker Desktop</td>
+<td>Pro</td>
+<td>Dev team</td>
+<td>USD 21/user/month = USD 105/month</td>
+</tr>
+<tr class="even">
+<td>Postman</td>
+<td>Basic</td>
+<td>Dev team</td>
+<td>USD 14/user/month = USD 70/month</td>
+</tr>
+</tbody>
+</table>
+<h4 id="collaboration--project-management">Collaboration &amp; Project Management</h4>
+<table>
+<thead>
+<tr class="header">
+<th>Tool</th>
+<th>Plan</th>
+<th>Users</th>
+<th>Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Notion</td>
+<td>Team</td>
+<td>All GDA (25)</td>
+<td>USD 10/user/month = USD 250/month</td>
+</tr>
+<tr class="even">
+<td>Slack</td>
+<td>Pro</td>
+<td>All GDA (25)</td>
+<td>USD 7.25/user/month = USD 180/month</td>
+</tr>
+<tr class="odd">
+<td>Telegram</td>
+<td>Free</td>
+<td>SOMA team</td>
+<td>USD 0</td>
+</tr>
+<tr class="even">
+<td>1Password Teams</td>
+<td>Teams</td>
+<td>All GDA (25)</td>
+<td>USD 4/user/month = USD 100/month</td>
+</tr>
+</tbody>
+</table>
+<h4 id="monitoring--analytics">Monitoring &amp; Analytics</h4>
+<table>
+<thead>
+<tr class="header">
+<th>Tool</th>
+<th>Plan</th>
+<th>Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Sentry</td>
+<td>Team</td>
+<td>USD 26/month</td>
+</tr>
+<tr class="even">
+<td>Metabase</td>
+<td>Open source (self-hosted on GCP)</td>
+<td>USD 0 (hosting included in GCP)</td>
+</tr>
+<tr class="odd">
+<td>GCP Cloud Monitoring</td>
+<td>Included</td>
+<td>USD 0</td>
+</tr>
+</tbody>
+</table>
+<h3 id="platform-api-access">Platform API Access</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Platform</th>
+<th>API Tier</th>
+<th>Cost</th>
+<th>Requirements</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Instagram</td>
+<td>Meta Graph API — free</td>
+<td>USD 0</td>
+<td>Approved Meta Business account, app review for advanced permissions</td>
+</tr>
+<tr class="even">
+<td>Facebook</td>
+<td>Meta Graph API — free</td>
+<td>USD 0</td>
+<td>Facebook Page admin, same app as Instagram</td>
+</tr>
+<tr class="odd">
+<td>YouTube</td>
+<td>Data API v3 — free quota</td>
+<td>USD 0 (10k units/day free)</td>
+<td>Google Cloud project, OAuth consent screen</td>
+</tr>
+<tr class="even">
+<td>X (Twitter)</td>
+<td>Basic tier</td>
+<td>USD 100/month</td>
+<td>App registration, required for automated posting</td>
+</tr>
+<tr class="odd">
+<td>TikTok</td>
+<td>Content Posting API — free</td>
+<td>USD 0</td>
+<td>TikTok for Business account + app approval (2–4 week review process)</td>
+</tr>
+</tbody>
+</table>
+<p><em>Note: TikTok API approval can take 2–4 weeks. Apply at project start — do not wait.</em></p>
+<h3 id="cloud-infrastructure-gcp--monthly-estimates">Cloud Infrastructure (GCP) — Monthly Estimates</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Service</th>
+<th>Purpose</th>
+<th>Est. Cost/Month</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Cloud Run</td>
+<td>OpenClaw agent workers</td>
+<td>USD 50–150</td>
+</tr>
+<tr class="even">
+<td>Cloud SQL (PostgreSQL)</td>
+<td>Primary database</td>
+<td>USD 50–120</td>
+</tr>
+<tr class="odd">
+<td>Cloud Storage (GCS)</td>
+<td>Media asset storage</td>
+<td>USD 20–60</td>
+</tr>
+<tr class="even">
+<td>Cloud Scheduler</td>
+<td>Scheduled post triggers, monitoring polls</td>
+<td>USD 5</td>
+</tr>
+<tr class="odd">
+<td>Pub/Sub</td>
+<td>Agent event bus</td>
+<td>USD 10–30</td>
+</tr>
+<tr class="even">
+<td>Secret Manager</td>
+<td>API keys, OAuth tokens</td>
+<td>USD 6</td>
+</tr>
+<tr class="odd">
+<td>Cloud Logging &amp; Monitoring</td>
+<td>Observability</td>
+<td>USD 20–40</td>
+</tr>
+<tr class="even">
+<td>Cloud Build / Artifact Registry</td>
+<td>CI/CD pipeline</td>
+<td>USD 10–20</td>
+</tr>
+<tr class="odd">
+<td><strong>GCP Total</strong></td>
+<td></td>
+<td><strong>USD 170–430/month</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="ai-engine-costs-anthropic-claude-api">AI Engine Costs (Anthropic Claude API)</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Model</th>
+<th>Use Case</th>
+<th>Pricing</th>
+<th>Est. Monthly</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>claude-sonnet-4-6</td>
+<td>Content generation, interaction replies</td>
+<td>USD 3/MTok input, USD 15/MTok output</td>
+<td>USD 200–600</td>
+</tr>
+<tr class="even">
+<td>Prompt Caching</td>
+<td>Brand voice + client brief system prompts (reused)</td>
+<td>90% cheaper on cached input tokens</td>
+<td>Saves USD 150–400/month at volume</td>
+</tr>
+</tbody>
+</table>
+<p><em>At 10 clients × 30 posts/month × 5 platforms = 1,500 content generations/month. Prompt caching on 2,000-token brand voice prompts makes this economically viable.</em></p>
+<h3 id="total-monthly-opex-estimate-operating-at-scale">Total Monthly OPEX Estimate (Operating at Scale)</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Category</th>
+<th>Monthly Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>GCP Infrastructure</td>
+<td>USD 200–430</td>
+</tr>
+<tr class="even">
+<td>Anthropic Claude API</td>
+<td>USD 200–600</td>
+</tr>
+<tr class="odd">
+<td>Platform APIs (X Twitter only paid)</td>
+<td>USD 100</td>
+</tr>
+<tr class="even">
+<td>Adobe Creative Cloud</td>
+<td>USD 120</td>
+</tr>
+<tr class="odd">
+<td>Figma</td>
+<td>USD 135</td>
+</tr>
+<tr class="even">
+<td>CapCut + other creative</td>
+<td>USD 20</td>
+</tr>
+<tr class="odd">
+<td>Cursor (dev)</td>
+<td>USD 100</td>
+</tr>
+<tr class="even">
+<td>GitHub + Docker + Postman</td>
+<td>USD 195</td>
+</tr>
+<tr class="odd">
+<td>Notion + Slack + 1Password</td>
+<td>USD 530</td>
+</tr>
+<tr class="even">
+<td>Sentry</td>
+<td>USD 26</td>
+</tr>
+<tr class="odd">
+<td>Internet upgrade</td>
+<td>USD 100</td>
+</tr>
+<tr class="even">
+<td><strong>Total SOMA System OPEX</strong></td>
+<td><strong>~USD 1,700–2,400/month</strong></td>
+</tr>
+</tbody>
+</table>
+<p><em>Human team salaries are separate OPEX and follow GDA's existing payroll structure.</em></p>
+<h2 id="end-to-end-connection-architecture">End-to-End Connection Architecture</h2>
+<h3 id="full-system-map-gda-station--social-media-platforms">Full System Map: GDA Station → Social Media Platforms</h3>
+<pre><code>╔══════════════════════════════════════════════════════════════════╗
+║                    GDA TEAM STATIONS                             ║
+║  MacBook / Mac Studio — Chrome/Safari browser                    ║
+║                                                                  ║
+║  ┌─────────────────┐  ┌────────────────┐  ┌──────────────────┐   ║
+║  │ AI Content      │  │ SOMA Review    │  │ SOMA Systems     │   ║
+║  │ Editor          │  │ Portal         │  │ Specialist       │   ║
+║  │ · Writes briefs │  │ (Next.js SPA)  │  │ · Admin console  │   ║
+║  │ · Edits AI copy │  │ · Content Queue│  │ · Platform OAuth │   ║
+║  │ · Approves post │  │ · Media Library│  │ · OpenClaw logs  │   ║
+║  └────────┬────────┘  └───────┬────────┘  └────────┬─────────┘   ║
+╚═══════════╪═══════════════════╪════════════════════╪════════════╝
+            │ HTTPS/443         │ HTTPS/443           │ HTTPS/443
+            │   (TLS)           │   (TLS)             │   (TLS)
+╔═══════════╪═══════════════════╪════════════════════╪════════════╗
+║           ▼       SOMA PORTAL LAYER (GCP Cloud Run)             ║
+║  ┌──────────────────────────────────────────────────────────┐   ║
+║  │                Next.js Frontend App                      │   ║
+║  │  JWT Auth (PassportJS) · Role-based rendering            │   ║
+║  │  · Content Queue · Media Library · Calendar · Inbox      │   ║
+║  └────────────────────────┬─────────────────────────────────┘   ║
+║                           │ REST API calls (internal)           ║
+║  ┌────────────────────────▼─────────────────────────────────┐   ║
+║  │                NestJS API Backend                        │   ║
+║  │  Routes: /content  /media  /approve  /schedule           │   ║
+║  │          /interactions  /publish-log  /analytics         │   ║
+║  │  Webhook handler: /webhooks/meta  /webhooks/youtube      │   ║
+║  └──┬──────────┬──────────────┬──────────────┬─────────────-┘   ║
+║     │          │              │              │                  ║
+║     ▼          ▼              ▼              ▼                  ║
+║  ┌──────┐  ┌──────┐   ┌───────────┐  ┌───────────┐              ║
+║  │Cloud │  │Cloud │   │  GCP      │  │  GCP      │              ║
+║  │SQL   │  │Pub/  │   │  Storage  │  │  Secret   │              ║
+║  │(PG)  │  │Sub   │   │  (GCS)    │  │  Manager  │              ║
+║  │      │  │      │   │  media    │  │  tokens   │              ║
+║  └──┬───┘  └──┬───┘   └───────────┘  └───────────┘              ║
+╚═════╪═════════╪═════════════════════════════════════════════=═══╝
+      │         │ event: content_approved
+      │         ▼
+╔═════╪══════════════════════════════════════════════════════════╗
+║     │        OPENCLAW AGENT LAYER (GCP Cloud Run — workers)    ║
+║     │                                                          ║
+║     │   ┌──────────────────────────────────────────────────┐   ║
+║     │   │           OpenClaw Orchestrator                  │   ║
+║     │   │   Pub/Sub subscriber · task router               │   ║
+║     └───┤   reads approved content_items from PostgreSQL   │   ║
+║         └──────┬──────────┬────────────────────┬───────────┘   ║
+║                │          │                    │               ║
+║         ┌──────▼──┐  ┌────▼──────────┐  ┌─────▼──────────┐     ║  
+║         │Content  │  │Interaction    │  │Publisher       │     ║
+║         │Agent    │  │Agent          │  │Agent           │     ║
+║         │(Claude) │  │(Claude)       │  │(dispatcher)    │     ║
+║         │generates│  │drafts replies │  │routes to       │     ║
+║         │copy     │  │from comments  │  │platform adapter│     ║
+║         └──┬──────┘  └────┬──────────┘  └─────┬──────────┘     ║
+║            │              │                    │               ║
+║            ▼              ▼                    ▼               ║
+║   ┌────────────────────────────────────────────────────────┐   ║
+║   │               MCP SERVER LAYER                        │    ║
+║   │  (stdio transport — local to Cloud Run container)     │    ║
+║   │                                                       │    ║
+║   │  mcp-instagram-facebook   mcp-youtube                 │    ║
+║   │  mcp-twitter-x            mcp-tiktok                  │    ║
+║   │  mcp-postgres             mcp-gcs                     │    ║
+║   └──────┬────────┬──────────┬────────────┬───────────────┘    ║
+╚══════════╪════════╪══════════╪════════════╪══════════════════=═╝
+           │ HTTPS  │ HTTPS    │ HTTPS      │ HTTPS
+           │        │          │            │
+╔══════════╪════════╪══════════╪════════════╪═══════════════════╗
+║          ▼        ▼          ▼            ▼                   ║
+║     SOCIAL MEDIA PLATFORM APIs (External — Internet)          ║
+║                                                               ║
+║  ┌──────────────┐  ┌──────────────┐  ┌──────────────────┐     ║
+║  │ Meta         │  │ YouTube      │  │ X (Twitter)      │     ║
+║  │ Graph API    │  │ Data API v3  │  │ API v2           │     ║
+║  │ graph.face   │  │ googleapis   │  │ api.twitter.com  │     ║
+║  │ book.com/v18 │  │ .com/youtube │  │ /2/tweets        │     ║
+║  │              │  │ /v3/         │  │                  │     ║
+║  │ Instagram ✓  │  │ Video upload │  │ Tweet + media    │     ║
+║  │ Facebook  ✓  │  │ Comment reply│  │ Reply            │     ║
+║  └──────────────┘  └──────────────┘  └──────────────────┘     ║
+║                                                               ║
+║  ┌──────────────────────────────────────────────────────┐     ║
+║  │ TikTok Content Posting API                           │     ║
+║  │ open.tiktokapis.com/v2/post/publish/                 │     ║
+║  │ Video upload (2-step: init → upload → complete)      │     ║
+║  └──────────────────────────────────────────────────────┘     ║
+║                                                               ║
+║  ▼▼▼ PUBLISHED TO FOLLOWERS ▼▼▼                               ║
+╚═══════════════════════════════════════════════════════════════╝
+</code></pre>
+<h3 id="connection-detail-content-publishing-flow">Connection Detail: Content Publishing Flow</h3>
+<pre><code>1. GDA Portal (browser)
+   │  User clicks &quot;Approve + Schedule&quot;
+   │  POST /api/content/{id}/approve  { scheduled_at: &quot;2026-04-22T10:00:00Z&quot; }
+   ▼
+2. NestJS API
+   │  Updates content_items: status=&#39;approved&#39;, approved_by, scheduled_at
+   │  Publishes Pub/Sub message: { content_id, platform, scheduled_at }
+   ▼
+3. GCP Cloud Scheduler (for scheduled posts)
+   │  At scheduled_at time, triggers Cloud Run job
+   │  OR Pub/Sub message triggers worker immediately if scheduled_at = now
+   ▼
+4. OpenClaw SocialPublisherAgent (Cloud Run)
+   │  Reads content_item from PostgreSQL via mcp-postgres
+   │  Reads media file URL from GCS via mcp-gcs (generates signed download URL)
+   │  Selects correct platform adapter based on content_item.platform
+   ▼
+5. Platform Adapter (MCP Server, inside same container)
+   │  Retrieves OAuth token from GCP Secret Manager
+   │  Executes platform-specific publish sequence (see per-platform below)
+   ▼
+6. Social Media Platform API
+   │  Returns post_id / media_id on success
+   ▼
+7. OpenClaw writes back to PostgreSQL
+      status = &#39;published&#39;, platform_post_id, published_at
+      Sends Telegram/Slack notification to GDA Mission Control
+</code></pre>
+<h3 id="connection-detail-interaction-reply-flow">Connection Detail: Interaction Reply Flow</h3>
+<pre><code>1. SocialMonitorAgent (Cloud Run — triggered every 15 min by Cloud Scheduler)
+   │  OR: Webhook received from Meta/YouTube at /webhooks/{platform}
+   ▼
+2. Platform poll / webhook payload
+   │  New comments, mentions, DMs collected
+   │  Stored in interactions table (PostgreSQL)
+   ▼
+3. SocialInteractionAgent (Claude claude-sonnet-4-6)
+   │  Reads interaction + brand voice system prompt (cached)
+   │  Generates reply draft
+   │  Writes to reply_drafts table, status=&#39;pending_review&#39;
+   ▼
+4. GDA Portal — Interaction Inbox
+   │  GDA reviewer sees reply draft
+   │  Approve / Edit / Reject
+   ▼
+5. On Approval: same Pub/Sub → OpenClaw Publisher → Platform reply API
+      POST /{comment_id}/replies  (Meta)
+      POST /youtube/v3/comments   (YouTube)
+      POST /2/tweets (in_reply_to) (X)
+      POST /v2/comment/reply      (TikTok)
+</code></pre>
+<h3 id="per-platform-connection-specification">Per-Platform Connection Specification</h3>
+<h4 id="instagram-via-meta-graph-api-v18">Instagram (via Meta Graph API v18+)</h4>
+<pre><code>AUTHENTICATION
+  Flow:    OAuth2 Authorization Code
+  Token:   Long-lived Page Access Token (60-day expiry, auto-refresh)
+  Scope:   instagram_basic, instagram_content_publish,
+           instagram_manage_comments, instagram_manage_insights,
+           pages_read_engagement
+  Storage: GCP Secret Manager → key: soma/instagram/{client_id}/access_token
+
+MEDIA UPLOAD — IMAGE POST
+  Step 1:  POST https://graph.facebook.com/v18.0/{ig_user_id}/media
+           Body: { image_url: &quot;&lt;GCS signed URL&gt;&quot;, caption: &quot;...&quot;, access_token }
+           Returns: { id: &quot;creation_container_id&quot; }
+  Step 2:  POST https://graph.facebook.com/v18.0/{ig_user_id}/media_publish
+           Body: { creation_id: &quot;...&quot;, access_token }
+           Returns: { id: &quot;ig_media_id&quot; }  ← saved to publish_log
+
+MEDIA UPLOAD — REEL (VIDEO)
+  Step 1:  POST /media  { media_type: &quot;REELS&quot;, video_url: &quot;&lt;GCS signed URL&gt;&quot;,
+                          caption: &quot;...&quot;, share_to_feed: true }
+  Wait:    Poll GET /media/{id}?fields=status_code until status = FINISHED
+  Step 2:  POST /media_publish  { creation_id }
+
+MEDIA UPLOAD — STORY
+  Step 1:  POST /media  { media_type: &quot;STORIES&quot;, image_url or video_url }
+  Step 2:  POST /media_publish
+
+COMMENT REPLY
+  POST https://graph.facebook.com/v18.0/{comment_id}/replies
+  Body: { message: &quot;reply text&quot;, access_token }
+
+WEBHOOK (incoming comments/mentions)
+  Register: POST /app/subscriptions  { object: &quot;instagram&quot;, fields: [&quot;comments&quot;] }
+  Receives: POST /webhooks/meta  (NestJS handler verifies X-Hub-Signature-256)
+
+RATE LIMITS
+  200 API calls/hour per token. Publisher Agent applies exponential backoff
+  on 429 responses. Posts spread across time to stay under limit.
+</code></pre>
+<h4 id="facebook-via-meta-graph-api-v18">Facebook (via Meta Graph API v18+)</h4>
+<pre><code>AUTHENTICATION
+  Same OAuth2 app as Instagram. Separate Page Access Token per FB Page.
+  Scope: pages_manage_posts, pages_read_engagement, pages_manage_comments
+
+TEXT POST
+  POST https://graph.facebook.com/v18.0/{page_id}/feed
+  Body: { message: &quot;...&quot;, access_token }
+
+IMAGE POST
+  POST https://graph.facebook.com/v18.0/{page_id}/photos
+  Body: { url: &quot;&lt;GCS signed URL&gt;&quot;, caption: &quot;...&quot;, access_token }
+
+VIDEO POST (standard, up to 1GB)
+  POST https://graph-video.facebook.com/v18.0/{page_id}/videos
+  Body: multipart/form-data  { source: &lt;video bytes&gt;, description: &quot;...&quot; }
+  Large files: Resumable upload (chunked, 10MB chunks)
+
+COMMENT REPLY
+  POST https://graph.facebook.com/v18.0/{comment_id}/comments
+  Body: { message: &quot;...&quot;, access_token }
+
+WEBHOOK
+  Same Meta app subscription: object: &quot;page&quot;, fields: [&quot;feed&quot;, &quot;mention&quot;]
+</code></pre>
+<h4 id="youtube-data-api-v3">YouTube (Data API v3)</h4>
+<pre><code>AUTHENTICATION
+  Flow:    OAuth2 Authorization Code (Google)
+  Token:   Access token (1hr) + Refresh token (permanent until revoked)
+  Scope:   https://www.googleapis.com/auth/youtube.upload
+           https://www.googleapis.com/auth/youtube.force-ssl
+  Storage: GCP Secret Manager → key: soma/youtube/{channel_id}/refresh_token
+  Library: google-auth-library (Node.js)
+
+VIDEO UPLOAD — RESUMABLE (required for files &gt; 5MB)
+  Step 1:  POST https://www.googleapis.com/upload/youtube/v3/videos
+           ?uploadType=resumable
+           Headers: Authorization: Bearer {token}
+                    X-Upload-Content-Type: video/mp4
+                    X-Upload-Content-Length: {bytes}
+           Body: { snippet: { title, description, tags, categoryId },
+                   status: { privacyStatus: &quot;public&quot; } }
+           Returns: Location header with resumable upload URI
+
+  Step 2:  OpenClaw streams video from GCS to YouTube resumable URI
+           PUT {resumable_uri}  (chunked, 256KB minimum per chunk)
+           On completion: Returns { id: &quot;youtube_video_id&quot; }
+
+  Note:    YouTube processes video asynchronously (transcoding).
+           Poll GET /videos?id={id}&amp;part=status until status.uploadStatus = &quot;processed&quot;
+
+COMMENT REPLY
+  POST https://www.googleapis.com/youtube/v3/comments
+  Body: { snippet: { parentId: &quot;{comment_id}&quot;, textOriginal: &quot;reply&quot; } }
+
+POLLING (no webhook for comments)
+  GET /youtube/v3/commentThreads?videoId={id}&amp;order=time
+  Cloud Scheduler triggers SocialMonitorAgent every 30 min
+
+QUOTA
+  10,000 units/day free. Video upload = 1,600 units. Comment reply = 50 units.
+  Monitor via GCP dashboard. Request quota increase if needed (~48hr approval).
+</code></pre>
+<h4 id="x--twitter-api-v2">X / Twitter (API v2)</h4>
+<pre><code>AUTHENTICATION
+  Flow:    OAuth2 with PKCE (user-context, required for posting)
+  Token:   Access token + Refresh token
+  Scope:   tweet.read tweet.write users.read offline.access
+  Storage: GCP Secret Manager → key: soma/twitter/{account_id}/access_token
+  Plan:    X Basic ($100/month) — required for automated posting
+
+TEXT TWEET
+  POST https://api.twitter.com/2/tweets
+  Headers: Authorization: Bearer {access_token}
+  Body: { text: &quot;...&quot; }
+  Returns: { data: { id: &quot;tweet_id&quot; } }
+
+TWEET WITH IMAGE
+  Step 1 (media upload — still v1.1):
+    POST https://upload.twitter.com/1.1/media/upload.json
+    (INIT)     Body: { command: &quot;INIT&quot;, media_type: &quot;image/jpeg&quot;,
+                       total_bytes: N, media_category: &quot;tweet_image&quot; }
+    (APPEND)   PUT with chunk
+    (FINALIZE) POST { command: &quot;FINALIZE&quot; }
+    Returns: { media_id_string: &quot;...&quot; }
+  Step 2:
+    POST /2/tweets  Body: { text: &quot;...&quot;, media: { media_ids: [&quot;...&quot;] } }
+
+TWEET WITH VIDEO
+  Same CHUNKED_MEDIA upload flow with media_category: &quot;tweet_video&quot;
+  Poll CHUNKED_MEDIA STATUS until processing_info.state = &quot;succeeded&quot;
+  Then POST /2/tweets with media_ids
+
+REPLY
+  POST /2/tweets  Body: { text: &quot;...&quot;, reply: { in_reply_to_tweet_id: &quot;...&quot; } }
+
+MENTION MONITORING
+  GET /2/tweets/search/recent?query=@{handle}&amp;max_results=100
+  Cloud Scheduler every 15 min (Basic plan: 500k tweets/month read cap)
+
+RATE LIMITS
+  Basic: 1,500 tweets/month write, 10,000 reads/month
+  Spread posts — do not burst. Queue enforces max 50 posts/day per account.
+</code></pre>
+<h4 id="tiktok-content-posting-api">TikTok (Content Posting API)</h4>
+<pre><code>AUTHENTICATION
+  Flow:    OAuth2 Authorization Code (TikTok Login Kit)
+  Token:   Access token (24hr) + Refresh token (365 days)
+  Scope:   video.publish video.upload user.info.basic
+  Storage: GCP Secret Manager → key: soma/tiktok/{account_id}/access_token
+  Note:    Requires TikTok for Business account + app approval (2–4 weeks)
+           Apply at project start. Sandbox available while waiting.
+
+VIDEO UPLOAD — 2-STEP FLOW
+  Step 1 — Initialise:
+    POST https://open.tiktokapis.com/v2/post/publish/video/init/
+    Headers: Authorization: Bearer {access_token}
+    Body: { post_info: { title: &quot;caption #hashtags&quot;,
+                         privacy_level: &quot;PUBLIC_TO_EVERYONE&quot;,
+                         disable_comment: false },
+            source_info: { source: &quot;FILE_UPLOAD&quot;,
+                           video_size: N, chunk_size: 10MB,
+                           total_chunk_count: N } }
+    Returns: { publish_id, upload_url }
+
+  Step 2 — Upload chunks:
+    PUT {upload_url}
+    Headers: Content-Range: bytes 0-{chunk_size}/{total}
+    Body: video bytes (chunk)
+    Repeat for each chunk
+
+  Step 3 — Check status:
+    GET /v2/post/publish/status/fetch/
+    Body: { publish_id }
+    Poll until status = &quot;PUBLISH_COMPLETE&quot;
+
+COMMENT REPLY
+  POST https://open.tiktokapis.com/v2/comment/reply/publish/
+  Body: { video_id: &quot;...&quot;, text: &quot;reply&quot;, comment_id: &quot;...&quot; }
+
+COMMENT POLLING
+  GET /v2/video/comment/list/?video_id={id}
+  Cloud Scheduler every 30 min (no webhook available on standard tier)
+
+SANDBOX TESTING
+  Use https://developers.tiktok.com/tools/sandbox during development.
+  Sandbox posts do not appear publicly — safe for testing full upload flow.
+</code></pre>
+<h3 id="oauth-token-lifecycle-management">OAuth Token Lifecycle Management</h3>
+<p>All platform tokens are managed by a dedicated <strong>TokenService</strong> in the NestJS API:</p>
+<pre><code>┌─────────────────────────────────────────────────────────────────┐
+│                    TokenService (NestJS)                        │
+│                                                                 │
+│  Stores in:  GCP Secret Manager (encrypted at rest)             │
+│  Table:      platform_accounts (token metadata only, not value) │
+│                                                                 │
+│  REFRESH LOGIC:                                                 │
+│  - Cloud Scheduler checks token expiry daily                    │
+│  - If expires_in &lt; 7 days → auto-refresh via platform API       │
+│  - On refresh failure → alert to Telegram + Slack (URGENT)      │
+│  - Never store raw tokens in PostgreSQL — only Secret Manager   │
+│                                                                 │
+│  TOKEN ROTATION PER PLATFORM:                                   │
+│  Instagram/Facebook  60-day long-lived token, refresh monthly   │
+│  YouTube             Refresh token permanent, access = 1hr      │
+│  X (Twitter)         Refresh token, set offline.access scope    │
+│  TikTok              Refresh token 365 days, access = 24hr      │
+└────────────────────────────────────────────────────────────────-─┘
+</code></pre>
+<h3 id="media-flow-gda-station--gcs--platform">Media Flow: GDA Station → GCS → Platform</h3>
+<pre><code>GDA Creative uploads file in SOMA Portal
+  │  Browser → multipart POST /api/media/upload
+  │  NestJS issues GCS Signed Upload URL (no file passes through server)
+  │  Browser uploads directly to GCS via signed URL (PUT)
+  │  NestJS records media_assets row (gcs_path, mime_type, size, client_id)
+  ▼
+Media sits in GCS bucket: gs://soma-media/{client_id}/{uuid}.mp4
+  │  Bucket policy: private (no public access)
+  │  Lifecycle: delete after 90 days post-publish (cost control)
+  ▼
+On publish, OpenClaw Publisher Agent:
+  │  Requests short-lived GCS Signed Download URL (15 min expiry)
+  │  Streams file from GCS → platform upload API
+  │  For large videos: streams in chunks (no full download to worker memory)
+  ▼
+Platform stores file on own CDN → public to followers
+</code></pre>
+<h3 id="webhook-registration--inbound-connection">Webhook Registration &amp; Inbound Connection</h3>
+<p>Platforms that support webhooks push new events to SOMA rather than being polled:</p>
+<pre><code>META (Instagram + Facebook)
+  Register once:
+    POST https://graph.facebook.com/v18.0/{app_id}/subscriptions
+    { object: &quot;instagram&quot;, callback_url: &quot;https://soma.gaiada.com/webhooks/meta&quot;,
+      fields: [&quot;comments&quot;, &quot;mentions&quot;, &quot;messages&quot;],
+      verify_token: {SECRET}, access_token: {app_token} }
+  Meta sends: GET /webhooks/meta?hub.challenge=... (verification)
+  NestJS responds with hub.challenge to confirm
+  Live events: POST /webhooks/meta  { entry: [...] }
+  Verification: HMAC-SHA256 of payload with app_secret (X-Hub-Signature-256 header)
+
+YOUTUBE
+  No webhook for comments. Cloud Scheduler polls every 30 min.
+  YouTube Data API v3 Notifications available for new video uploads only
+  (PubSubHubbub) — register at: https://pubsubhubbub.appspot.com/
+
+X (TWITTER)
+  Basic tier does not include Account Activity API (webhooks).
+  Polling via /2/tweets/search/recent on 15-min Cloud Scheduler.
+
+TIKTOK
+  No comment webhook on standard tier. Polling on 30-min Cloud Scheduler.
+</code></pre>
+<h3 id="network--security">Network &amp; Security</h3>
+<pre><code>GDA Stations → SOMA Portal
+  · HTTPS/TLS 1.3 only
+  · JWT access token (15min) + refresh token (7 days, httpOnly cookie)
+  · CSRF protection on all mutating routes
+  · Role-based route guards (NestJS Guards)
+
+SOMA Portal → NestJS API
+  · Internal GCP VPC (if co-located on Cloud Run)
+  · Or same Cloud Run service (monorepo deploy)
+
+NestJS → GCP Services
+  · Service Account with least-privilege IAM roles
+  · Cloud SQL: private IP (VPC peering, no public IP)
+  · GCS: signed URLs only (no public bucket)
+  · Secret Manager: secretAccessor role only
+
+OpenClaw Workers → Platform APIs
+  · Static egress IP via GCP Cloud NAT (required by some platforms)
+  · All calls over HTTPS
+  · Platform API keys never in code — always Secret Manager at runtime
+
+Inbound Webhooks
+  · /webhooks/* routes behind HMAC signature verification
+  · Invalid signatures → 401, logged, alerted
+  · Replay attack prevention: timestamp validation (± 5 min window)
+</code></pre>
+<h3 id="environment-summary">Environment Summary</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Environment</th>
+<th>Purpose</th>
+<th>URL Pattern</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Local Dev</td>
+<td>Developer machine, Docker Compose</td>
+<td>localhost:3000 / localhost:3001</td>
+</tr>
+<tr class="even">
+<td>Staging</td>
+<td>Cloud Run (staging project), sandbox platform APIs</td>
+<td>staging.soma.gaiada.com</td>
+</tr>
+<tr class="odd">
+<td>Production</td>
+<td>Cloud Run (prod project), live platform APIs</td>
+<td>soma.gaiada.com</td>
+</tr>
+</tbody>
+</table>
+<p>Each environment has its own GCP project, Secret Manager, and Cloud SQL instance. Platform OAuth apps should have separate staging apps where supported (Meta + Google both allow this). TikTok sandbox is used for staging.</p>
+<h2 id="project-structure">Project Structure</h2>
+<pre><code>gda_socmed/
+├── apps/
+│   ├── portal/          # Next.js GDA Review Portal
+│   └── api/             # NestJS backend
+├── packages/
+│   ├── openclaw-social/ # Social Media OpenClaw agents
+│   ├── platform-adapters/ # IG, FB, YT, X, TikTok wrappers
+│   └── db/              # Drizzle schema + migrations
+├── infrastructure/      # GCP Terraform / deployment configs
+└── docs/                # Architecture docs
+</code></pre>
+</body>
+</html>

@@ -486,17 +486,18 @@
     <div class="nav-links">
       <a href="#overview">Overview<span class="nav-key">1</span></a>
       <a href="#plan">Plan<span class="nav-key">2</span></a>
-      <a href="#figma">Figma→Site<span class="nav-key">3</span></a>
-      <a href="#full-service">Full Service<span class="nav-key">4</span></a>
-      <a href="#socmed">Socmed<span class="nav-key">5</span></a>
-      <a href="#poc">POC<span class="nav-key">6</span></a>
-      <a href="#appendix">Appendix<span class="nav-key">7</span></a>
+      <a href="#implementation">Impl<span class="nav-key">3</span></a>
+      <a href="#figma">Figma→Site<span class="nav-key">4</span></a>
+      <a href="#full-service">Full Service<span class="nav-key">5</span></a>
+      <a href="#socmed">Socmed<span class="nav-key">6</span></a>
+      <a href="#poc">POC<span class="nav-key">7</span></a>
+      <a href="#appendix">Appendix<span class="nav-key">8</span></a>
     </div>
   </div>
 </nav>
 
 <div class="kbd-hint">
-  Jump: <kbd>1</kbd>–<kbd>7</kbd> sections · <kbd>0</kbd> Top · <kbd>Home</kbd>/<kbd>End</kbd> · <kbd>Ctrl</kbd>+<kbd>F</kbd> Search
+  Jump: <kbd>1</kbd>–<kbd>8</kbd> sections · <kbd>0</kbd> Top · <kbd>Home</kbd>/<kbd>End</kbd> · <kbd>Ctrl</kbd>+<kbd>F</kbd> Search
 </div>
 
 <!-- ══════ Doc header ══════ -->
@@ -543,19 +544,24 @@
       <div class="sub">The thesis: broad demand → AI throat → high-velocity output. Commercial targets.</div>
       <div class="meta"><span class="status strategic">Strategic</span><span class="chip">2 pages</span></div>
     </a>
+    <a class="toc-card" href="#implementation">
+      <div><span class="num">3</span><span class="title">Implementation — 180-Day Gaia OS Build</span></div>
+      <div class="sub">12 projects across 4 waves + stabilization. Every project leaves behind a reusable Gaia OS capability.</div>
+      <div class="meta"><span class="status active">Active</span><span class="chip">1 page</span></div>
+    </a>
     <a class="toc-card" href="#figma">
-      <div><span class="num">3</span><span class="title">Figma → Site + QA Automation</span></div>
+      <div><span class="num">4</span><span class="title">Figma → Site + QA Automation</span></div>
       <div class="sub">Figma → MCP → Site → QA → 85% ready → Manual finish. No agent.</div>
       <div class="meta"><span class="status noagent">No agent</span><span class="chip">2 pages</span><span class="chip green">Live: christos.gaiada.online</span></div>
     </a>
     <a class="toc-card" href="#full-service">
-      <div><span class="num">4</span><span class="title">Full Service (Templatebase + Victor)</span></div>
+      <div><span class="num">5</span><span class="title">Full Service (Templatebase + Victor)</span></div>
       <div class="sub">Managed service layer. Victor (openclaw_var) orchestrates the pipeline end-to-end.</div>
       <div class="meta"><span class="status active">Agent Active</span><span class="chip">2 pages</span><span class="chip green">Live: templategen.gaiada.online</span></div>
     </a>
     <div class="toc-card">
       <a href="#socmed" style="text-decoration:none;color:inherit;display:block;">
-        <div><span class="num">5</span><span class="title">Social Media Automation (SOMA)</span></div>
+        <div><span class="num">6</span><span class="title">Social Media Automation (SOMA)</span></div>
         <div class="sub">5-platform orchestration. Openclaw publishes; humans approve. Agent not yet built.</div>
         <div class="meta"><span class="status planned">Planned</span><span class="chip">1 page</span></div>
       </a>
@@ -581,12 +587,12 @@
       </div>
     </div>
     <a class="toc-card" href="#poc">
-      <div><span class="num">6</span><span class="title">Full Service POC — Schoolcatering + Brian</span></div>
+      <div><span class="num">7</span><span class="title">Full Service POC — Schoolcatering + Brian</span></div>
       <div class="sub">WhatsApp AI operator for Blossom School Catering. Live on <code>bsc.gaiada0.online</code>.</div>
       <div class="meta"><span class="status live">Live</span><span class="chip">1 page</span><span class="chip green">Live: blossomcatering.online</span></div>
     </a>
     <a class="toc-card" href="#appendix">
-      <div><span class="num">7</span><span class="title">Appendix + References</span></div>
+      <div><span class="num">8</span><span class="title">Appendix + References</span></div>
       <div class="sub">Change Management · Timeline · Principles · Reference documents.</div>
       <div class="meta"><span class="chip">1 page</span></div>
     </a>
@@ -775,17 +781,100 @@ flowchart LR
 
   <div class="prev-next">
     <a href="#plan">← Plan · What</a>
+    <a href="#implementation">Implementation →</a>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════
+     PAGE 4 · IMPLEMENTATION — 180-DAY GAIA OS BUILD
+     Foundation Hierarchy + 4 waves + 12 projects + operating model
+     ══════════════════════════════════════════════════════════════ -->
+<section class="section" id="implementation">
+  <div class="section-tools"><a href="#top">↑ Top</a></div>
+  <h2><span class="part-tag">3 · Implementation</span>180-Day Gaia OS Build<span class="status active">Active</span></h2>
+  <p class="section-desc">
+    The accumulation plan that turns the Business Plan into a running operating system. <strong>12 execution projects across 180 days</strong>, each one doing two things: solve a real agency/client need <em>and</em> leave behind a reusable Gaia OS capability. Not phases — dependency waves.
+  </p>
+
+  <h3>Foundation Hierarchy</h3>
+  <p class="section-desc">
+    <code>Gaia OS</code> is the umbrella. <code>AI Model Layer</code> is the execution/orchestration layer. The first four projects build the base modules; the rest extend into agency service delivery.
+  </p>
+  <div class="diagram-wrap">
+    <div class="mermaid">
+%%{init: {"flowchart": {"subGraphTitleMargin": {"top": 20, "bottom": 10}}}}%%
+flowchart TD
+    classDef os fill:#070201,stroke:#070201,color:#E8B830,stroke-width:3px,font-weight:bold
+    classDef ai fill:#D97706,stroke:#7C2D12,color:#fff,stroke-width:2px,font-weight:bold
+    classDef base fill:#0B5394,stroke:#052E5C,color:#fff,stroke-width:2px
+    classDef next fill:#7C3AED,stroke:#4C1D95,color:#fff,stroke-width:2px,stroke-dasharray: 4 2
+
+    A["Gaia OS"]:::os --> B["AI Model Layer<br/>ChatGPT · Claude · DeepSeek"]:::ai
+    B --> C["Order Management"]:::base
+    B --> D["Digital Agency Asset Management"]:::base
+    B --> E["Content Management"]:::base
+    B --> F["Website Build Automation"]:::base
+    B --> G["Next Project…"]:::next
+    </div>
+  </div>
+
+  <h3>180-day structure — 4 waves + stabilization</h3>
+  <table>
+    <thead><tr><th>Wave</th><th>Days</th><th>Focus</th><th>Projects</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Wave 1</strong></td><td>1–56</td><td>Base Control + Production Core</td><td>1 Order Mgmt · 2 Asset Mgmt · 3 Content Mgmt · 4 Website Build</td></tr>
+      <tr><td><strong>Wave 2</strong></td><td>57–84</td><td>Brand + Creative</td><td>5 Branding Strategy · 6 Design Production</td></tr>
+      <tr><td><strong>Wave 3</strong></td><td>85–140</td><td>Marketing Execution</td><td>7 Social Media · 8 Ads · 9 SEO · 10 Marketing Strategy</td></tr>
+      <tr><td><strong>Wave 4</strong></td><td>141–168</td><td>Comms + Visibility</td><td>11 PR &amp; Comms · 12 Client Reporting</td></tr>
+      <tr><td><strong>Stabilize</strong></td><td>169–180</td><td>Harden &amp; finalize</td><td>Gap closure · approvals hardening · docs · go-live</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Shared operating model (every project)</h3>
+  <div class="chip-row">
+    <span class="chip">1 · Intake</span>
+    <span class="chip">2 · Context load</span>
+    <span class="chip">3 · Planning</span>
+    <span class="chip">4 · Execution</span>
+    <span class="chip">5 · QA / compliance</span>
+    <span class="chip">6 · Human review</span>
+    <span class="chip">7 · Release</span>
+    <span class="chip">8 · Monitoring</span>
+    <span class="chip">9 · Learning</span>
+  </div>
+
+  <h3>Agent-system architecture</h3>
+  <div class="chip-row">
+    <span class="chip orange">Orchestrator — intake · triage · routing · escalation</span>
+    <span class="chip orange">Agent — service-lane / module owner</span>
+    <span class="chip orange">Subagent — narrow specialist executor</span>
+  </div>
+
+  <h3>Day-180 end state</h3>
+  <div class="metrics">
+    <div class="metric"><span class="v">12</span><span class="l">projects landed</span></div>
+    <div class="metric"><span class="v">1 stack</span><span class="l">one server · multi-org</span></div>
+    <div class="metric"><span class="v">9-state</span><span class="l">workflow control</span></div>
+    <div class="metric"><span class="v">4-level</span><span class="l">memory scope</span></div>
+  </div>
+
+  <p class="section-desc" style="margin-top:8px;">
+    Full plan: <a class="ref-link" href="docs/gaia_OS_plan.html" data-doc="docs/gaia_OS_plan.html">gaia_OS_plan.html</a>
+  </p>
+
+  <div class="prev-next">
+    <a href="#plan-arch">← Plan · Architecture</a>
     <a href="#figma">Figma→Site →</a>
   </div>
 </section>
 
 <!-- ══════════════════════════════════════════════════════════════
-     PAGE 4 · FIGMA → SITE + QA · WHAT IS IT
+     PAGE 5 · FIGMA → SITE + QA · WHAT IS IT
      No agent — Figma > MCP > Site > QA > 85% > Manual
      ══════════════════════════════════════════════════════════════ -->
 <section class="section" id="figma">
   <div class="section-tools"><a href="#top">↑ Top</a></div>
-  <h2><span class="part-tag">3 · 1/2</span>Figma → Site + QA Automation — What it is<span class="status noagent">No Agent</span></h2>
+  <h2><span class="part-tag">4 · 1/2</span>Figma → Site + QA Automation — What it is<span class="status noagent">No Agent</span></h2>
   <p class="section-desc">
     A highly-automated, <strong>one-shot build pipeline</strong> that takes a Figma file and turns it into a running production site. Gets to <strong>~85% ready</strong> automatically; the last 15% (content polish, edge cases, copy tune) is finished by a human developer. <em>No agent is involved</em> — this is pure tooling + Claude Code + Python QA.
   </p>
@@ -844,17 +933,17 @@ flowchart LR
   </p>
 
   <div class="prev-next">
-    <a href="#plan-arch">← Plan · Architecture</a>
+    <a href="#implementation">← Implementation</a>
     <a href="#figma-arch">Figma→Site · Architecture →</a>
   </div>
 </section>
 
 <!-- ══════════════════════════════════════════════════════════════
-     PAGE 5 · FIGMA → SITE + QA · ARCHITECTURE (no agent)
+     PAGE 6 · FIGMA → SITE + QA · ARCHITECTURE (no agent)
      ══════════════════════════════════════════════════════════════ -->
 <section class="section arch" id="figma-arch">
   <div class="section-tools"><a href="#top">↑ Top</a></div>
-  <h2><span class="part-tag">3 · 2/2</span>Figma → Site + QA — Architecture<span class="status noagent">No Agent</span></h2>
+  <h2><span class="part-tag">4 · 2/2</span>Figma → Site + QA — Architecture<span class="status noagent">No Agent</span></h2>
   <p class="section-desc">
     Linear pipeline. No Openclaw agent in the loop. Claude Code does the build (invoked by a developer), Python QA scans the artifact, the developer finishes the last 15% by hand, then deploys to GCP.
   </p>
@@ -907,7 +996,7 @@ flowchart LR
      ══════════════════════════════════════════════════════════════ -->
 <section class="section" id="full-service">
   <div class="section-tools"><a href="#top">↑ Top</a></div>
-  <h2><span class="part-tag">4 · 1/2</span>Full Service (Templatebase + Victor) — What it is<span class="status active">Agent Active</span></h2>
+  <h2><span class="part-tag">5 · 1/2</span>Full Service (Templatebase + Victor) — What it is<span class="status active">Agent Active</span></h2>
   <p class="section-desc">
     Same Templatebase pipeline as Part 3, but wrapped by <strong>Victor</strong> — the Openclaw multi-agent orchestrator (<code>openclaw_var</code>). Turns a one-shot build into an <em>ongoing managed service</em>: blog posts, CMS updates, content ops, email, calendar, file operations — all delegated to specialist agents under Victor's control.
   </p>
@@ -961,7 +1050,7 @@ flowchart LR
      ══════════════════════════════════════════════════════════════ -->
 <section class="section arch" id="full-service-arch">
   <div class="section-tools"><a href="#top">↑ Top</a></div>
-  <h2><span class="part-tag">4 · 2/2</span>Full Service — Architecture<span class="status active">Agent Active</span></h2>
+  <h2><span class="part-tag">5 · 2/2</span>Full Service — Architecture<span class="status active">Agent Active</span></h2>
   <p class="section-desc">
     Victor receives user intent on Telegram / Mission Control, delegates to the right specialist agent, which then drives the underlying build + CMS + publish pipeline.
   </p>
@@ -1025,7 +1114,7 @@ flowchart LR
      ══════════════════════════════════════════════════════════════ -->
 <section class="section arch" id="socmed">
   <div class="section-tools"><a href="#top">↑ Top</a></div>
-  <h2><span class="part-tag" style="background:var(--gda-red);color:#fff;">5 · Planned</span>Social Media Automation (SOMA)<span class="status planned">Agent not yet built</span></h2>
+  <h2><span class="part-tag" style="background:var(--gda-red);color:#fff;">6 · Planned</span>Social Media Automation (SOMA)<span class="status planned">Agent not yet built</span></h2>
   <p class="section-desc">
     Planned 5-platform orchestration layer that will extend Openclaw with platform-specialist agents. <strong>The agent is not yet built</strong> — this section is the spec for what comes next. Content drafting, interaction handling, publishing and monitoring will all run through the same Venturi-throat pattern with humans approving every publish.
   </p>
@@ -1103,7 +1192,7 @@ flowchart TB
   </table>
 
   <p class="section-desc" style="margin-top:6px;">
-    Full plan: <a class="ref-link" href="docs/socmed_plan_01.md" data-doc="docs/socmed_plan_01.md">docs/socmed_plan_01.md</a>
+    Full plan: <a class="ref-link" href="docs/socmed_plan.html" data-doc="docs/socmed_plan.html">socmed_plan.html</a>
   </p>
 
   <div class="prev-next">
@@ -1118,7 +1207,7 @@ flowchart TB
      ══════════════════════════════════════════════════════════════ -->
 <section class="section arch" id="poc">
   <div class="section-tools"><a href="#top">↑ Top</a></div>
-  <h2><span class="part-tag" style="background:var(--gda-green);color:#fff;">6 · Live</span>Full Service POC (Schoolcatering + Brian)<span class="status live">Live</span></h2>
+  <h2><span class="part-tag" style="background:var(--gda-green);color:#fff;">7 · Live</span>Full Service POC (Schoolcatering + Brian)<span class="status live">Live</span></h2>
   <p class="section-desc">
     Proof-of-concept showing Openclaw running a <em>full-working service</em>. <strong>Brian</strong> (<code>openclaw_bsc</code>) is the public-facing WhatsApp AI operator; <strong>Orders</strong> is the internal execution agent that talks to the Schoolcatering API. Families register, order meals, cancel, and get reminders — entirely through WhatsApp.
   </p>
@@ -1203,7 +1292,7 @@ flowchart LR
      ══════════════════════════════════════════════════════════════ -->
 <section class="section appendix-card" id="appendix">
   <div class="section-tools"><a href="#top">↑ Top</a></div>
-  <h2><span class="part-tag" style="background:var(--gda-teal);color:#fff;">7 · Appendix</span>Change Management · Timeline · Principles · References</h2>
+  <h2><span class="part-tag" style="background:var(--gda-teal);color:#fff;">8 · Appendix</span>Change Management · Timeline · Principles · References</h2>
 
   <h3>Dual-Track Transformation · Integrated Timeline</h3>
   <div class="diagram-wrap">
@@ -1284,16 +1373,16 @@ flowchart LR
   <div id="references" style="margin-top:12px;padding-top:10px;border-top:2px solid var(--gda-gold);">
     <h3 style="margin-top:0;">Reference Documents</h3>
     <ul class="ref-list">
-      <li><a class="ref-link" href="docs/ai_business_plan.html" data-doc="docs/ai_business_plan.html">docs/ai_business_plan.html</a></li>
-      <li><a class="ref-link" href="docs/ai_business_plan_appendix.html" data-doc="docs/ai_business_plan_appendix.html">docs/ai_business_plan_appendix.html</a></li>
-      <li><a class="ref-link" href="docs/figma_to_site_automation.html" data-doc="docs/figma_to_site_automation.html">docs/figma_to_site_automation.html</a></li>
-      <li><a class="ref-link" href="docs/figma_to_site_playbook_v2.html" data-doc="docs/figma_to_site_playbook_v2.html">docs/figma_to_site_playbook_v2.html</a></li>
-      <li><a class="ref-link" href="docs/openclaw_website_playbook.html" data-doc="docs/openclaw_website_playbook.html">docs/openclaw_website_playbook.html</a></li>
-      <li><a class="ref-link" href="docs/specialty_service_playbook.html" data-doc="docs/specialty_service_playbook.html">docs/specialty_service_playbook.html</a></li>
-      <li><a class="ref-link" href="docs/qa_automation.html" data-doc="docs/qa_automation.html">docs/qa_automation.html</a></li>
-      <li><a class="ref-link" href="docs/socmed_plan_01.md" data-doc="docs/socmed_plan_01.md">docs/socmed_plan_01.md</a></li>
-      <li><a class="ref-link" href="docs/gaia_plans.md" data-doc="docs/gaia_plans.md">docs/gaia_plans.md</a></li>
-      <li><a class="ref-link" href="docs/venturi_02.png" data-doc="docs/venturi_02.png">docs/venturi_02.png</a></li>
+      <li><a class="ref-link" href="docs/ai_business_plan.html" data-doc="docs/ai_business_plan.html">ai_business_plan.html</a></li>
+      <li><a class="ref-link" href="docs/ai_business_plan_appendix.html" data-doc="docs/ai_business_plan_appendix.html">ai_business_plan_appendix.html</a></li>
+      <li><a class="ref-link" href="docs/gaia_OS_plan.html" data-doc="docs/gaia_OS_plan.html">gaia_OS_plan.html (180-day)</a></li>
+      <li><a class="ref-link" href="docs/figma_to_site_automation.html" data-doc="docs/figma_to_site_automation.html">figma_to_site_automation.html</a></li>
+      <li><a class="ref-link" href="docs/figma_to_site_playbook_v2.html" data-doc="docs/figma_to_site_playbook_v2.html">figma_to_site_playbook_v2.html</a></li>
+      <li><a class="ref-link" href="docs/openclaw_website_playbook.html" data-doc="docs/openclaw_website_playbook.html">openclaw_website_playbook.html</a></li>
+      <li><a class="ref-link" href="docs/qa_automation.html" data-doc="docs/qa_automation.html">qa_automation.html</a></li>
+      <li><a class="ref-link" href="docs/socmed_plan.html" data-doc="docs/socmed_plan.html">socmed_plan.html</a></li>
+      <li><a class="ref-link" href="docs/specialty_service_playbook.html" data-doc="docs/specialty_service_playbook.html">specialty_service_playbook.html</a></li>
+      <li><a class="ref-link" href="docs/venturi_02.png" data-doc="docs/venturi_02.png">venturi_02.png</a></li>
       <li><a class="ref-link" href="https://github.com/Gaia-Digital-Agency/gaia_plans" target="_blank" rel="noopener">GitHub · gaia_plans</a></li>
       <li><a class="ref-link" href="https://github.com/Gaia-Digital-Agency/web_templatebase" target="_blank" rel="noopener">GitHub · web_templatebase</a></li>
       <li><a class="ref-link" href="https://github.com/Gaia-Digital-Agency/openclaw_var" target="_blank" rel="noopener">GitHub · openclaw_var (Victor)</a></li>
@@ -1318,6 +1407,7 @@ flowchart LR
   </a>
   <a href="#overview">Overview</a>
   <a href="#plan">Plan</a>
+  <a href="#implementation">Impl</a>
   <a href="#figma">Figma→Site</a>
   <a href="#full-service">Full Service</a>
   <a href="#socmed">Socmed</a>
@@ -1385,9 +1475,9 @@ flowchart LR
 
   /* Keyboard: 1–7 section jumps, 0 Top, Esc modal close */
   const keyMap = {
-    '1':'overview', '2':'plan', '3':'figma',
-    '4':'full-service', '5':'socmed', '6':'poc',
-    '7':'appendix', '0':'top'
+    '1':'overview', '2':'plan', '3':'implementation',
+    '4':'figma', '5':'full-service', '6':'socmed',
+    '7':'poc', '8':'appendix', '0':'top'
   };
   document.addEventListener('keydown', (event) => {
     const tag = document.activeElement && document.activeElement.tagName;
