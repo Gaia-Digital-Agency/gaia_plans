@@ -1,6 +1,6 @@
 # Gaia Plans Presentation
 
-Gaia Digital Agency — **Unified Operating Model & System Blueprints**. A single-page, GitHub Pages-hosted presentation that bundles the Business Plan and every service blueprint (Figma→Site, Full Service, Social Media, Live POC) into one navigable `index.html`.
+Gaia Digital Agency — **Unified Operating Model & System Blueprints**. A single-page, GitHub Pages-hosted presentation that bundles the Business Plan and every service blueprint (Implementation, Figma→Site, Full Service, Social Media, Live POC) into one navigable static site.
 
 > **Live site:** https://gaia-digital-agency.github.io/gaia_plans/
 
@@ -10,11 +10,12 @@ Gaia Digital Agency — **Unified Operating Model & System Blueprints**. A singl
 |---|---|---|---|
 | 1 | **Overview** — About this report + Main Architecture (GCP · Openclaw · Claude) | 1 page | — |
 | 2 | **Business Plan — Venturi Model** | What · Architecture | Strategic |
-| 3 | **Figma → Site + QA Automation** | What (Figma→MCP→Site→QA→85%→Manual) · Architecture | No agent |
-| 4 | **Full Service (Templatebase + Victor)** | What · Architecture | Agent Active |
-| 5 | **Social Media Automation (SOMA)** | What + Architecture (combined) | Planned — agent not yet built |
-| 6 | **Full Service POC — Schoolcatering + Brian** | What + Architecture (combined) | Live |
-| 7 | **Appendix + References** — Change Mgmt · Timeline · Principles · Reference docs | 1 page | — |
+| 3 | **Implementation — 180-Day Gaia OS Build** | 1 page | Active |
+| 4 | **Figma → Site + QA Automation** | What (Figma→MCP→Site→QA→85%→Manual) · Architecture | No agent |
+| 5 | **Full Service (Templatebase + Victor)** | What · Architecture | Agent Active |
+| 6 | **Social Media Automation (SOMA)** | What + Architecture (combined) | Planned — agent not yet built |
+| 7 | **Full Service POC — Schoolcatering + Brian** | What + Architecture (combined) | Live |
+| 8 | **Appendix + References** — Change Mgmt · Timeline · Principles · Reference docs | 1 page | — |
 
 **Total:** exactly 10 printed pages (one per section card).
 
@@ -22,9 +23,9 @@ Gaia Digital Agency — **Unified Operating Model & System Blueprints**. A singl
 
 Sticky top nav + bottom mirror nav:
 
-`Overview · Plan · Figma→Site · Full Service · Socmed · POC · Appendix`
+`Overview · Plan · Impl · Figma→Site · Full Service · Socmed · POC · Appendix`
 
-Keyboard shortcuts: <kbd>1</kbd> Overview · <kbd>2</kbd> Plan · <kbd>3</kbd> Figma→Site · <kbd>4</kbd> Full Service · <kbd>5</kbd> Socmed · <kbd>6</kbd> POC · <kbd>7</kbd> Appendix · <kbd>0</kbd> Top · <kbd>Esc</kbd> closes the reference doc viewer.
+Keyboard shortcuts: <kbd>1</kbd> Overview · <kbd>2</kbd> Plan · <kbd>3</kbd> Implementation · <kbd>4</kbd> Figma→Site · <kbd>5</kbd> Full Service · <kbd>6</kbd> Socmed · <kbd>7</kbd> POC · <kbd>8</kbd> Appendix · <kbd>0</kbd> Top · <kbd>Esc</kbd> closes the reference doc viewer.
 
 Per-section `↑ Top` links, Prev/Next links, and deep-linkable anchors (`#overview` … `#appendix`).
 
@@ -49,7 +50,9 @@ Per-section `↑ Top` links, Prev/Next links, and deep-linkable anchors (`#overv
 
 ```
 plan_presentation/
-├── index.html                 Single-page presentation (10 sections)
+├── index.html                 Single-page presentation markup (10 sections)
+├── styles.css                 Presentation styling, print rules, responsive layout
+├── script.js                  Mermaid setup, modal viewer, keyboard navigation
 ├── README.md                  This file
 ├── .nojekyll                  Disables Jekyll on GitHub Pages so assets/ + docs/*.md serve as-is
 ├── .github/workflows/
