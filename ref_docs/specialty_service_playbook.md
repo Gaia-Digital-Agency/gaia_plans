@@ -14,7 +14,7 @@ population.
 > - [`openclaw_website_playbook.md`](./openclaw_website_playbook.md) — the
 >   generic `/api/web-manager/*` pattern (Victor × templategen).
 > - [`figma_to_site_playbook.md`](../rhproperties_react/docs/figma_to_site_playbook.md) —
->   building a VRTPN site from a Figma design.
+>   building a 3PRVTN site from a Figma design.
 
 ---
 

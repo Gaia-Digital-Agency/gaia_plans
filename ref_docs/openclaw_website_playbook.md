@@ -7,7 +7,7 @@ across two VMs (`gda-ai01` for the agents, `gda-s01` for the site), recorded so
 the next site can be onboarded without re-deriving the contract.
 
 > **Companion doc:** [`docs/figma_to_site_playbook.md`](../rhproperties_react/docs/figma_to_site_playbook.md)
-> is the reference for *building* a VRTPN site from a Figma design. This
+> is the reference for *building* a 3PRVTN site from a Figma design. This
 > document picks up where that one leaves off — how an agent operates that
 > site after it's live.
 
@@ -251,8 +251,7 @@ fails, the user-facing reply is: *"One moment, please try again shortly."*
 ## 5. Phase 3 — The templategen site
 
 `templategen` is the reference website that Victor's `web-manager` operates.
-It's a textbook VRTPN stack (Vite SSR here replaced with Next.js, but same
-shape): Next.js + React + Tailwind + **P**ayload CMS + Node + Postgres.
+It's a textbook 3PRVTN stack (PostgreSQL + Payload Headless CMS + Python + ReactJS + ViteJS + TailwindCSS + NodeJS; ViteJS is replaced with Next.js on templategen).
 
 ### 5.1 Filesystem + ports
 
@@ -831,7 +830,7 @@ wrapper does this transparently.
 
 ## 12. Onboarding a new website
 
-To point Victor at a new VRTPN site (e.g. `rhproperties` once it's live):
+To point Victor at a new 3PRVTN site (e.g. `rhproperties` once it's live):
 
 ### 12.1 On the site
 

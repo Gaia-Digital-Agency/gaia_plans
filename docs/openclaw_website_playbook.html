@@ -107,7 +107,7 @@
 <h1 id="openclaw--website-playbook-victor--templategen">Openclaw → Website Playbook (Victor × templategen)</h1>
 <p>End-to-end reference for how the <strong>Openclaw</strong> agent runtime (branded "Victor" at Gaia) manages a Payload + Next.js website — using <code>templategen.gaiada.online</code> as the canonical live integration. Everything here is what's actually wired up across two VMs (<code>gda-ai01</code> for the agents, <code>gda-s01</code> for the site), recorded so the next site can be onboarded without re-deriving the contract.</p>
 <blockquote>
-<p><strong>Companion doc:</strong> <a href="../rhproperties_react/docs/figma_to_site_playbook.md"><code>docs/figma_to_site_playbook.md</code></a> is the reference for <em>building</em> a VRTPN site from a Figma design. This document picks up where that one leaves off — how an agent operates that site after it's live.</p>
+<p><strong>Companion doc:</strong> <a href="../rhproperties_react/docs/figma_to_site_playbook.md"><code>docs/figma_to_site_playbook.md</code></a> is the reference for <em>building</em> a 3PRVTN site from a Figma design. This document picks up where that one leaves off — how an agent operates that site after it's live.</p>
 </blockquote>
 <hr />
 <h2 id="table-of-contents">Table of contents</h2>
@@ -403,7 +403,7 @@
 <p>Rule: Victor uses <strong><code>sessions_spawn</code></strong> (never <code>sessions_send</code>). If spawn fails, the user-facing reply is: <em>"One moment, please try again shortly."</em></p>
 <hr />
 <h2 id="5-phase-3--the-templategen-site">5. Phase 3 — The templategen site</h2>
-<p><code>templategen</code> is the reference website that Victor's <code>web-manager</code> operates. It's a textbook VRTPN stack (Vite SSR here replaced with Next.js, but same shape): Next.js + React + Tailwind + <strong>P</strong>ayload CMS + Node + Postgres.</p>
+<p><code>templategen</code> is the reference website that Victor's <code>web-manager</code> operates. It's a textbook 3PRVTN stack (PostgreSQL + Payload Headless CMS + Python + ReactJS + ViteJS + TailwindCSS + NodeJS; ViteJS is replaced with Next.js on templategen).</p>
 <h3 id="51-filesystem--ports">5.1 Filesystem + ports</h3>
 <pre><code>/var/www/templategen/
 ├── ecosystem.config.cjs     PM2 apps (templategen-cms :4005, templategen-web :3005)
@@ -957,7 +957,7 @@ Authorization: JWT &lt;jwt&gt;
 <p>Tokens from <code>/api/users/login</code> are short-lived. On <code>401</code>, re-login and retry — do not treat an expired token as a failure. The <code>web-manager</code> script wrapper does this transparently.</p>
 <hr />
 <h2 id="12-onboarding-a-new-website">12. Onboarding a new website</h2>
-<p>To point Victor at a new VRTPN site (e.g. <code>rhproperties</code> once it's live):</p>
+<p>To point Victor at a new 3PRVTN site (e.g. <code>rhproperties</code> once it's live):</p>
 <h3 id="121-on-the-site">12.1 On the site</h3>
 <ol>
 <li>Implement (or inherit from templategen) the <code>/api/web-manager/*</code> routes.</li>

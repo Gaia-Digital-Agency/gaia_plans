@@ -113,7 +113,7 @@
 </ul>
 </nav>
 <h1 id="figma--site-playbook-rh-properties">Figma → Site Playbook (RH Properties)</h1>
-<p>End-to-end reference for turning a Figma design into a production real-estate site on the VRTPN stack (<strong>V</strong>ite SSR + <strong>R</strong>eact + <strong>T</strong>ailwind + <strong>P</strong>ayload CMS + <strong>N</strong>ode + Postgres). Everything in this doc is what we actually did on this project, recorded so the next project can copy the steps without re-deriving them.</p>
+<p>End-to-end reference for turning a Figma design into a production real-estate site on the 3PRVTN stack (<strong>P</strong>ostgreSQL + <strong>P</strong>ayload Headless CMS + <strong>P</strong>ython + <strong>R</strong>eactJS + <strong>V</strong>iteJS + <strong>T</strong>ailwindCSS + <strong>N</strong>odeJS). Everything in this doc is what we actually did on this project, recorded so the next project can copy the steps without re-deriving them.</p>
 <blockquote>
 <p><strong>Companion doc:</strong> <a href="./figma_automation.md"><code>docs/figma_automation.md</code></a> is the chronological work log — the <em>narrative</em> of what happened day by day. This document is the <em>playbook</em> — clean steps, decisions, and references.</p>
 </blockquote>
@@ -238,7 +238,7 @@
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a><span class="co"># nginx vhost + SSL (see §5)</span></span></code></pre></div>
 <hr />
 <h2 id="3-phase-1--scaffold-from-templatebase">3. Phase 1 — Scaffold from <code>templatebase</code></h2>
-<p><code>templatebase</code> is our VRTPN starter at <code>/var/www/templatebase</code>. We copy, not fork, because we want a clean git history and independent deploys.</p>
+<p><code>templatebase</code> is our 3PRVTN starter at <code>/var/www/templatebase</code>. We copy, not fork, because we want a clean git history and independent deploys.</p>
 <p><strong>On the server:</strong></p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="co"># 1) copy files (exclude node_modules, .git, build artefacts)</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a><span class="fu">sudo</span> rsync -a <span class="kw">\</span></span>
@@ -805,7 +805,7 @@ server {
 <div class="sourceCode" id="cb29"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true"></a><span class="va">ASSET=$(</span><span class="ex">curl</span> -s https://<span class="op">&lt;</span>host<span class="op">&gt;</span>/admin <span class="kw">|</span> <span class="fu">grep</span> -oE <span class="st">&#39;href=&quot;/_next/[^&quot;]*\.css&quot;&#39;</span> <span class="kw">|</span> <span class="fu">head</span> -1 <span class="kw">|</span> <span class="fu">sed</span> <span class="st">&#39;s/href=&quot;//;s/&quot;//&#39;</span><span class="va">)</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true"></a><span class="ex">curl</span> -sI <span class="st">&quot;https://&lt;host&gt;</span><span class="va">$ASSET</span><span class="st">&quot;</span> <span class="kw">|</span> <span class="fu">head</span> -1   # expect 200</span></code></pre></div>
 <blockquote>
-<p>This bug affects templatebase and anything scaffolded from it. Mirror the fix in every VRTPN project's vhost.</p>
+<p>This bug affects templatebase and anything scaffolded from it. Mirror the fix in every 3PRVTN project's vhost.</p>
 </blockquote>
 <h3 id="186-figma-mcp-needs-the-desktop-app">18.6 Figma MCP needs the desktop app</h3>
 <p>Error: <code>No Figma window open</code>. Open the file in the Figma <strong>desktop</strong> app (not the browser), and make sure Dev Mode is on.</p>

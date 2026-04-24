@@ -85,7 +85,7 @@
     <img src="assets/venturi_flow.svg" alt="The Venturi flow — chaotic client demand compressed by the AI stack and talent pool into laminar high-velocity output" class="venturi-img" />
   </div>
   <p class="section-desc">
-    AI on its own is just a tool. Its job here is <strong>compression</strong>: take the turbulent, chaotic stream of client demand on the left — hospitality, F&amp;B, branding, web, content — and squeeze it through a narrow throat where the proprietary <strong>VRTN stack</strong> plus a fixed <strong>25-person talent pool</strong> compose the work. What exits on the right is <strong>laminar</strong>: parallel, high-velocity output at elite standard. The point isn't that AI replaces people. It's that AI <em>turns mess into flow</em> so a small team can deliver the volume of a much bigger one — elite-standard digital assets, autonomous guest ecosystems, operational alpha.
+    AI on its own is just a tool. Its job here is <strong>compression</strong>: take the turbulent, chaotic stream of client demand on the left — hospitality, F&amp;B, branding, web, content — and squeeze it through a narrow throat where the proprietary <strong>3PRVTN stack</strong> (<strong>P</strong>ostgreSQL · <strong>P</strong>ayload Headless CMS · <strong>P</strong>ython · <strong>R</strong>eactJS · <strong>V</strong>iteJS · <strong>T</strong>ailwindCSS · <strong>N</strong>odeJS) plus a fixed <strong>25-person talent pool</strong> compose the work. What exits on the right is <strong>laminar</strong>: parallel, high-velocity output at elite standard. The point isn't that AI replaces people. It's that AI <em>turns mess into flow</em> so a small team can deliver the volume of a much bigger one — elite-standard digital assets, autonomous guest ecosystems, operational alpha.
   </p>
 
   <h3>Table of contents</h3>
@@ -461,7 +461,7 @@ flowchart TD
   <div class="chip-row">
     <span class="chip blue">Figma MCP</span>
     <span class="chip purple">Claude Code</span>
-    <span class="chip blue">Templatebase (VRTPN)</span>
+    <span class="chip blue">Templatebase (3PRVTN)</span>
     <span class="chip teal">Python QA engine</span>
     <span class="chip">Lighthouse · axe · ZAP · SEMrush · Screaming Frog · BrowserStack · GA4</span>
     <span class="chip ink">GCP hosting</span>
@@ -513,7 +513,7 @@ flowchart LR
 
     FIG["Figma<br/>Design source"]:::design --> MCP["Figma MCP<br/>tokens + frames"]:::design
     MCP --> CC["Claude Code<br/>(developer-invoked)<br/>generates code"]:::ai
-    CC --> TB["Templatebase (VRTPN)<br/>Vite SSR · React 19 · Tailwind v4<br/>+ Payload CMS"]:::build
+    CC --> TB["Templatebase (3PRVTN)<br/>PostgreSQL · Payload Headless CMS · Python<br/>ReactJS · ViteJS · TailwindCSS · NodeJS"]:::build
     TB --> QA["Python QA Engine<br/>Lighthouse · axe · ZAP<br/>SEMrush · Screaming Frog<br/>BrowserStack · GA4"]:::check
     QA -.fail.-> CC
     QA --> M85["85% READY<br/>Build + QA passes"]:::milestone
@@ -528,7 +528,7 @@ flowchart LR
     <tbody>
       <tr><td><strong>Figma</strong></td><td>Figma file</td><td>Design source of truth</td></tr>
       <tr><td><strong>MCP</strong></td><td>Figma MCP server</td><td>Exposes tokens + frame structures to tooling</td></tr>
-      <tr><td><strong>Build</strong></td><td>Claude Code + Templatebase</td><td>Generates code into <code>packages/cms</code> (Payload + Next 16) and <code>packages/web</code> (Vite SSR + React 19 + Tailwind v4)</td></tr>
+      <tr><td><strong>Build</strong></td><td>Claude Code + Templatebase</td><td>Generates code into the 3PRVTN stack: PostgreSQL, Payload Headless CMS, Python, ReactJS, ViteJS, TailwindCSS, NodeJS.</td></tr>
       <tr><td><strong>QA</strong></td><td>Python orchestrator + 7 web tools</td><td>Performance, accessibility, SEO, security, crawlability, cross-browser, analytics checks → Claude produces action items</td></tr>
       <tr><td><strong>85% milestone</strong></td><td>—</td><td>Artifact is buildable, tested, hosted in staging, awaiting human finish</td></tr>
       <tr><td><strong>Human finisher</strong></td><td>Developer</td><td>Content polish, copy, visual edge cases, accessibility nits, last-mile decisions</td></tr>
@@ -628,7 +628,7 @@ flowchart LR
     VIC --> AN["analyst"]:::ai
 
     VIC --> CC["Claude Code<br/>build + refactor"]:::build
-    CC --> TB["Templatebase (VRTPN)<br/>Vite SSR · React 19 · Tailwind v4"]:::build
+    CC --> TB["Templatebase (3PRVTN)<br/>PostgreSQL · Payload Headless CMS · Python<br/>ReactJS · ViteJS · TailwindCSS · NodeJS"]:::build
     WM --> PAY["Payload CMS<br/>Next 16 admin + REST/GraphQL"]:::cms
     TB <--> PAY
 
@@ -647,7 +647,7 @@ flowchart LR
       <tr><td><strong>web-manager</strong></td><td><code>workspace-web-manager</code></td><td>Publishes / updates content on templategen.gaiada.online</td></tr>
       <tr><td><strong>copywriter · writer · booking · drive-manager · analyst</strong></td><td><code>workspace-*</code></td><td>Each owns a domain slice (content · email · calendar · Drive · doc analysis)</td></tr>
       <tr><td><strong>Claude Code</strong></td><td>Anthropic</td><td>Code generation/refactor into Templatebase packages</td></tr>
-      <tr><td><strong>Templatebase</strong></td><td><code>web_templatebase</code> (VRTPN)</td><td>Vite SSR + React 19 + Tailwind v4 + Payload CMS + Node + Postgres</td></tr>
+      <tr><td><strong>Templatebase</strong></td><td><code>web_templatebase</code> (3PRVTN)</td><td>PostgreSQL + Payload Headless CMS + Python + ReactJS + ViteJS + TailwindCSS + NodeJS</td></tr>
       <tr><td><strong>Python QA</strong></td><td>QA automation</td><td>7-tool scan; Claude produces action items on failure</td></tr>
       <tr><td><strong>GCP</strong></td><td>Cloud Run · Postgres · CDN</td><td>Production runtime + revalidation + preview</td></tr>
     </tbody>
@@ -901,7 +901,7 @@ flowchart LR
     <tbody>
       <tr><td><strong>AI</strong></td><td>Ad-hoc ChatGPT + Gemini</td><td>Claude (primary) + OpenAI + Gemini + DeepSeek</td></tr>
       <tr><td><strong>Infra</strong></td><td>Mixed hosting</td><td>GCP-led hybrid</td></tr>
-      <tr><td><strong>Build</strong></td><td>Per-project tooling</td><td>Templatebase (Vite+React+Tailwind+Payload) + SaaS (Next/NestJS)</td></tr>
+      <tr><td><strong>Build</strong></td><td>Per-project tooling</td><td>Templatebase (3PRVTN) + SaaS (Next/NestJS)</td></tr>
       <tr><td><strong>QA</strong></td><td>Manual spreadsheets</td><td>Python engine + 7 web tools</td></tr>
       <tr><td><strong>Knowledge</strong></td><td>Scattered</td><td>Central KB + Vector DB + MCP</td></tr>
       <tr><td><strong>Analytics</strong></td><td>Reports on request</td><td>BigQuery + Looker dashboards</td></tr>

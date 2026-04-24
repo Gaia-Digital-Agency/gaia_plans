@@ -1,8 +1,7 @@
 # Figma → Site Playbook (RH Properties)
 
 End-to-end reference for turning a Figma design into a production real-estate
-site on the VRTPN stack (**V**ite SSR + **R**eact + **T**ailwind + **P**ayload
-CMS + **N**ode + Postgres). Everything in this doc is what we actually did on
+site on the 3PRVTN stack (**P**ostgreSQL + **P**ayload Headless CMS + **P**ython + **R**eactJS + **V**iteJS + **T**ailwindCSS + **N**odeJS). Everything in this doc is what we actually did on
 this project, recorded so the next project can copy the steps without
 re-deriving them.
 
@@ -106,7 +105,7 @@ sudo npm i -g pnpm pm2
 
 ## 3. Phase 1 — Scaffold from `templatebase`
 
-`templatebase` is our VRTPN starter at `/var/www/templatebase`. We copy, not fork, because we want a clean git history and independent deploys.
+`templatebase` is our 3PRVTN starter at `/var/www/templatebase`. We copy, not fork, because we want a clean git history and independent deploys.
 
 **On the server:**
 
@@ -758,7 +757,7 @@ ASSET=$(curl -s https://<host>/admin | grep -oE 'href="/_next/[^"]*\.css"' | hea
 curl -sI "https://<host>$ASSET" | head -1   # expect 200
 ```
 
-> This bug affects templatebase and anything scaffolded from it. Mirror the fix in every VRTPN project's vhost.
+> This bug affects templatebase and anything scaffolded from it. Mirror the fix in every 3PRVTN project's vhost.
 
 ### 18.6 Figma MCP needs the desktop app
 

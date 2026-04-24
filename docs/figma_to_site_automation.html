@@ -240,9 +240,10 @@
 <h1 id="figma-site-playbook-rh-properties">Figma → Site Playbook (RH
 Properties)</h1>
 <p>End-to-end reference for turning a Figma design into a production
-real-estate site on the VRTPN stack (<strong>V</strong>ite SSR +
-<strong>R</strong>eact + <strong>T</strong>ailwind +
-<strong>P</strong>ayload CMS + <strong>N</strong>ode + Postgres).
+real-estate site on the 3PRVTN stack (<strong>P</strong>ostgreSQL +
+<strong>P</strong>ayload Headless CMS + <strong>P</strong>ython +
+<strong>R</strong>eactJS + <strong>V</strong>iteJS +
+<strong>T</strong>ailwindCSS + <strong>N</strong>odeJS).
 Everything in this doc is what we actually did on this project, recorded
 so the next project can copy the steps without re-deriving them.</p>
 <blockquote>
@@ -403,7 +404,7 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># nginx vhost + SSL (see §5)</span></span></code></pre></div>
 <h2 id="phase-1-scaffold-from-templatebase">3. Phase 1 — Scaffold from
 <code>templatebase</code></h2>
-<p><code>templatebase</code> is our VRTPN starter at
+<p><code>templatebase</code> is our 3PRVTN starter at
 <code>/var/www/templatebase</code>. We copy, not fork, because we want a
 clean git history and independent deploys.</p>
 <p><strong>On the server:</strong></p>
@@ -1227,7 +1228,7 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb29-1"><a href=
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-sI</span> <span class="st">&quot;https://&lt;host&gt;</span><span class="va">$ASSET</span><span class="st">&quot;</span> <span class="kw">|</span> <span class="fu">head</span> <span class="at">-1</span>   <span class="co"># expect 200</span></span></code></pre></div>
 <blockquote>
 <p>This bug affects templatebase and anything scaffolded from it. Mirror
-the fix in every VRTPN project’s vhost.</p>
+the fix in every 3PRVTN project’s vhost.</p>
 </blockquote>
 <h3 id="figma-mcp-needs-the-desktop-app">18.6 Figma MCP needs the
 desktop app</h3>

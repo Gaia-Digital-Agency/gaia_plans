@@ -82,7 +82,7 @@ plan_presentation/
 | Repo | Role |
 |---|---|
 | [`gaia_plans`](https://github.com/Gaia-Digital-Agency/gaia_plans) | This presentation |
-| [`web_templatebase`](https://github.com/Gaia-Digital-Agency/web_templatebase) | VRTPN-stack starter (Vite SSR + React 19 + Tailwind v4 + Payload CMS + Node + Postgres) |
+| [`web_templatebase`](https://github.com/Gaia-Digital-Agency/web_templatebase) | 3PRVTN-stack starter (PostgreSQL + Payload Headless CMS + Python + ReactJS + ViteJS + TailwindCSS + NodeJS) |
 | [`openclaw_var`](https://github.com/Gaia-Digital-Agency/openclaw_var) | **Victor** — Openclaw agent for Full Service (Part 4) |
 | [`openclaw_bsc`](https://github.com/Gaia-Digital-Agency/openclaw_bsc) | **Brian** — Openclaw agent for Schoolcatering POC (Part 6) |
 | [`blossom_schoolcatering`](https://github.com/Gaia-Digital-Agency/blossom_schoolcatering) | Full-working-service POC product (Next.js + NestJS + Postgres) |
