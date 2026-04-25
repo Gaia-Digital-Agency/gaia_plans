@@ -151,7 +151,7 @@
 
   <h3>Main architecture — GCP · Openclaw · Claude</h3>
   <p class="section-desc">
-    The shape everything else plugs into. Core = GCP + Claude. Ring 1 = Claude products used by the team. Ring 2 = Ops layer (Python QA + Openclaw). Ring 3 = 7 client service verticals. Support layer = Knowledge Base, MCP connectors, HITL review, feedback loop.
+    The shape everything else plugs into. Core = GCP + Claude. Ring 1 = Claude products used by the team. Ring 2 = Ops layer (Python QA + Openclaw). Ring 3 = 7 client service verticals. Support layer = GitHub (knowledge management center), Knowledge Base, MCP connectors, HITL review, feedback loop.
   </p>
   <div class="diagram-wrap">
     <div class="mermaid">
@@ -194,6 +194,7 @@ flowchart TB
     end
 
     subgraph SUPPORT["Support &amp; Governance"]
+        GH["GitHub<br/>Knowledge Management Center"]
         KB["Knowledge Base"]
         MCP["MCP Connectors"]
         HITL["Human-in-the-Loop"]
@@ -203,18 +204,21 @@ flowchart TB
     CLAUDE --> CC & CW & CD & CH
     CC & CW & CD & CH --> QA & OC
     OC --> HOSP & FB & WEB & SEO & BRAND & ADS & SMM
+    GH -.-> CLAUDE
+    GH -.-> KB
     KB -.-> CLAUDE
     MCP -.-> CLAUDE
     HITL -.-> OC
     RING3 -.-> LOOP
     LOOP -.-> KB
+    LOOP -.-> GH
 
     class GCP core
     class CLAUDE engine
     class CC,CW,CD,CH tools
     class QA,OC ops
     class HOSP,FB,WEB,SEO,BRAND,ADS,SMM services
-    class KB,MCP,LOOP support
+    class GH,KB,MCP,LOOP support
     class HITL governance
     </div>
   </div>
@@ -934,6 +938,7 @@ flowchart LR
       <li><a class="ref-link" href="docs/socmed_plan.html" data-doc="docs/socmed_plan.html">socmed_plan.html</a></li>
       <li><a class="ref-link" href="docs/specialty_service_playbook.html" data-doc="docs/specialty_service_playbook.html">specialty_service_playbook.html</a></li>
       <li><a class="ref-link" href="docs/venturi_02.png" data-doc="docs/venturi_02.png">venturi_02.png</a></li>
+      <li><a class="ref-link" href="docs/project_request.md" data-doc="docs/project_request.md">project_request.md (AI tool request template)</a></li>
       <li><a class="ref-link" href="https://github.com/Gaia-Digital-Agency/gaia_plans" target="_blank" rel="noopener">GitHub · gaia_plans</a></li>
       <li><a class="ref-link" href="https://github.com/Gaia-Digital-Agency/web_templatebase" target="_blank" rel="noopener">GitHub · web_templatebase</a></li>
       <li><a class="ref-link" href="https://github.com/Gaia-Digital-Agency/openclaw_var" target="_blank" rel="noopener">GitHub · openclaw_var (Victor)</a></li>
